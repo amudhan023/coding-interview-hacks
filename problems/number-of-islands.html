@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Number of Islands — Interview Hacks</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+</head>
+<body data-page-title="Number of Islands">
+  <nav class="topnav">
+    <a href="/" class="topnav__logo" style="text-decoration:none;"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect width="20" height="20" rx="5" fill="var(--accent)"/><path d="M5 7l3 3-3 3M10 14h5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Interview<span>Hacks</span></span></a>
+    <div class="topnav__search"><svg class="topnav__search-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M11 11l3 3"/></svg><input type="text" id="search-input" placeholder="Search topics…" autocomplete="off" /><span class="topnav__kbd">/</span><div class="search-results" id="search-results"></div></div>
+    <div class="topnav__actions"><button class="btn-icon" id="theme-toggle" title="Toggle theme"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button></div>
+  </nav>
+
+  <div class="page-layout">
+    <aside class="sidebar">
+      <div class="sidebar__section"><div class="sidebar__label">On this page</div><nav class="toc"><a href="#summary" class="toc-link">Problem Summary</a><a href="#pattern" class="toc-link">Pattern</a><a href="#visualization" class="toc-link">Visualization</a><a href="#brute-force" class="toc-link">Brute Force</a><a href="#optimal" class="toc-link">Optimal Solution</a><a href="#python-code" class="toc-link">Python 2 Code</a><a href="#dry-run" class="toc-link">Dry Run</a><a href="#complexity" class="toc-link">Complexity</a><a href="#variations" class="toc-link">Variations</a><a href="#related" class="toc-link">Related Problems</a></nav></div>
+      <div class="sidebar__section"><div class="sidebar__label">Problems</div><a href="/problems/two-sum.html" class="sidebar__link">Two Sum</a><a href="/problems/number-of-islands.html" class="sidebar__link active">Number of Islands</a><a href="/problems/redundant-connection.html" class="sidebar__link">Redundant Connection</a></div>
+      <div class="sidebar__section"><div class="sidebar__label">Recently Viewed</div><div id="recently-viewed"></div></div>
+    </aside>
+
+    <main class="content">
+      <nav class="breadcrumbs"><a href="/">Home</a><span class="breadcrumbs__sep">›</span><a href="/problems/">Problems</a><span class="breadcrumbs__sep">›</span><span class="breadcrumbs__current">Number of Islands</span></nav>
+
+      <div class="page-header">
+        <div class="page-header__badges"><span class="badge badge--medium">Medium</span><span class="badge badge--cat">Graphs</span><span class="badge badge--cat">BFS</span><span class="badge badge--cat">DFS</span></div>
+        <h1>Number of Islands <span style="color:var(--text-muted);font-weight:400;font-size:1.2rem;">LC #200</span></h1>
+        <div class="page-header__meta"><span>⏱ 7 min revision</span><span>🎯 BFS/DFS/Union Find</span><span>📌 Frequency: Very High</span></div>
+      </div>
+
+      <section class="section" id="summary">
+        <h2><span class="section-num">1</span> Problem Summary</h2>
+        <div class="callout callout--info"><strong>Problem</strong>Given a 2D grid of <code>'1'</code>s (land) and <code>'0'</code>s (water), count the number of islands. An island is surrounded by water and formed by connecting adjacent land cells horizontally or vertically.</div>
+        <pre style="background:var(--bg-code);border:1px solid var(--border);border-radius:8px;padding:1rem;font-family:var(--font-mono);font-size:0.875rem;color:var(--text-primary);margin-top:0.75rem;">Input:
+11110
+11010
+11000
+00000
+
+Output: 1  (all connected land is one island)</pre>
+      </section>
+
+      <section class="section" id="pattern">
+        <h2><span class="section-num">2</span> Pattern</h2>
+        <div class="callout callout--success"><strong>Connected Components in a 2D Grid</strong>Count how many distinct connected components of '1's exist. When you find an unvisited '1', that's a new island — flood fill it entirely (mark all connected '1's as visited) before moving on.</div>
+        <p style="margin-top:0.5rem;">Three valid approaches: BFS (level-order flood), DFS (recursive flood), or Union Find (merge adjacent '1's, count components).</p>
+      </section>
+
+      <section class="section" id="visualization">
+        <h2><span class="section-num">3</span> Visualization</h2>
+        <div class="viz-container">
+          <svg viewBox="0 0 680 280" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+            <!-- Grid — 3 islands -->
+            <text x="20" y="25" font-size="12" fill="var(--text-muted)">Example: 3 islands</text>
+
+            <!-- Island 1 (top-left) — purple -->
+            <rect x="20"  y="35" width="40" height="40" rx="4" fill="var(--accent-subtle)"     stroke="var(--accent)"   stroke-width="2"/>
+            <text x="40"  y="61" text-anchor="middle" font-size="16" font-weight="700" fill="var(--accent)">1</text>
+            <rect x="62"  y="35" width="40" height="40" rx="4" fill="var(--accent-subtle)"     stroke="var(--accent)"   stroke-width="2"/>
+            <text x="82"  y="61" text-anchor="middle" font-size="16" font-weight="700" fill="var(--accent)">1</text>
+            <rect x="20"  y="77" width="40" height="40" rx="4" fill="var(--accent-subtle)"     stroke="var(--accent)"   stroke-width="2"/>
+            <text x="40"  y="103" text-anchor="middle" font-size="16" font-weight="700" fill="var(--accent)">1</text>
+
+            <!-- Island 2 (right) — cyan -->
+            <rect x="146" y="35" width="40" height="40" rx="4" fill="rgba(6,182,212,.15)"      stroke="var(--accent-2)" stroke-width="2"/>
+            <text x="166" y="61" text-anchor="middle" font-size="16" font-weight="700" fill="var(--accent-2)">1</text>
+            <rect x="188" y="35" width="40" height="40" rx="4" fill="rgba(6,182,212,.15)"      stroke="var(--accent-2)" stroke-width="2"/>
+            <text x="208" y="61" text-anchor="middle" font-size="16" font-weight="700" fill="var(--accent-2)">1</text>
+
+            <!-- Island 3 (bottom) — green -->
+            <rect x="104" y="119" width="40" height="40" rx="4" fill="rgba(16,185,129,.15)"    stroke="var(--success)"  stroke-width="2"/>
+            <text x="124" y="145" text-anchor="middle" font-size="16" font-weight="700" fill="var(--success)">1</text>
+
+            <!-- Water cells -->
+            <rect x="104" y="35"  width="40" height="40" rx="4" fill="rgba(6,182,212,.04)" stroke="var(--border)" stroke-width="1"/>
+            <text x="124" y="61"  text-anchor="middle" font-size="16" fill="var(--text-muted)">0</text>
+            <rect x="62"  y="77"  width="40" height="40" rx="4" fill="rgba(6,182,212,.04)" stroke="var(--border)" stroke-width="1"/>
+            <text x="82"  y="103" text-anchor="middle" font-size="16" fill="var(--text-muted)">0</text>
+            <rect x="104" y="77"  width="40" height="40" rx="4" fill="rgba(6,182,212,.04)" stroke="var(--border)" stroke-width="1"/>
+            <text x="124" y="103" text-anchor="middle" font-size="16" fill="var(--text-muted)">0</text>
+            <rect x="146" y="77"  width="40" height="40" rx="4" fill="rgba(6,182,212,.04)" stroke="var(--border)" stroke-width="1"/>
+            <text x="166" y="103" text-anchor="middle" font-size="16" fill="var(--text-muted)">0</text>
+            <rect x="188" y="77"  width="40" height="40" rx="4" fill="rgba(6,182,212,.04)" stroke="var(--border)" stroke-width="1"/>
+            <text x="208" y="103" text-anchor="middle" font-size="16" fill="var(--text-muted)">0</text>
+
+            <!-- Count legend -->
+            <text x="280" y="55"  font-size="13" fill="var(--text-secondary)">Island <tspan fill="var(--accent)" font-weight="700">1</tspan> — top-left cluster (3 cells)</text>
+            <text x="280" y="80"  font-size="13" fill="var(--text-secondary)">Island <tspan fill="var(--accent-2)" font-weight="700">2</tspan> — top-right pair (2 cells)</text>
+            <text x="280" y="105" font-size="13" fill="var(--text-secondary)">Island <tspan fill="var(--success)" font-weight="700">3</tspan> — lone cell (1 cell)</text>
+            <text x="280" y="140" font-size="16" font-weight="700" fill="var(--text-primary)">Total islands: <tspan fill="var(--success)">3</tspan></text>
+
+            <!-- Algorithm sketch -->
+            <text x="20"  y="195" font-size="12" fill="var(--text-muted)" font-weight="600">DFS flood fill approach</text>
+            <text x="20"  y="215" font-size="12" fill="var(--text-secondary)">Scan grid. Hit '1'? → count++, DFS to sink entire island (mark all connected '1's as '0').</text>
+            <text x="20"  y="235" font-size="12" fill="var(--text-secondary)">Continue scan. Each new '1' encountered is a fresh undiscovered island.</text>
+          </svg>
+        </div>
+      </section>
+
+      <section class="section" id="brute-force">
+        <h2><span class="section-num">4</span> Brute Force</h2>
+        <p>The "brute force" here is the naive union find without path compression, or the O(V+E) BFS/DFS itself — there's really no worse approach since you must visit every cell at least once. The main differentiation is BFS vs DFS vs Union Find.</p>
+      </section>
+
+      <section class="section" id="optimal">
+        <h2><span class="section-num">5</span> Optimal Solution</h2>
+        <p>All three approaches (BFS, DFS, Union Find) are O(m × n) — optimal because you must visit every cell. The difference is implementation complexity and preference.</p>
+        <div class="tricks-grid">
+          <div class="trick-card"><div class="trick-card__icon">🔵</div><h4>DFS (simplest)</h4><p>Recursive. Hit '1' → count++, recurse in 4 directions marking visited. Clean but risks stack overflow on huge grids.</p></div>
+          <div class="trick-card"><div class="trick-card__icon">🟢</div><h4>BFS</h4><p>Queue-based flood fill. Same logic, different data structure. Better for very deep grids (no recursion limit).</p></div>
+          <div class="trick-card"><div class="trick-card__icon">🟡</div><h4>Union Find</h4><p>Connect adjacent '1's, count remaining components. Overkill here but required if asked to handle dynamic additions.</p></div>
+        </div>
+      </section>
+
+      <section class="section" id="python-code">
+        <h2><span class="section-num">6</span> Python 2 Code</h2>
+
+        <h3>DFS (Recommended for interviews)</h3>
+        <div class="code-block">
+          <div class="code-block__header"><span class="code-block__lang">Python 2 — DFS</span><button class="code-copy-btn">Copy</button></div>
+          <pre><code>class Solution(object):
+    def numIslands(self, grid):
+        if not grid: return 0
+        rows, cols = len(grid), len(grid[0])
+        count = 0
+
+        def dfs(r, c):
+            if r < 0 or r >= rows or c < 0 or c >= cols:
+                return
+            if grid[r][c] != '1':
+                return
+            grid[r][c] = '0'           # mark as visited (sink the island)
+            dfs(r+1, c); dfs(r-1, c)
+            dfs(r, c+1); dfs(r, c-1)
+
+        for r in xrange(rows):
+            for c in xrange(cols):
+                if grid[r][c] == '1':
+                    count += 1
+                    dfs(r, c)          # flood fill this island
+
+        return count</code></pre>
+        </div>
+
+        <h3>BFS</h3>
+        <div class="code-block">
+          <div class="code-block__header"><span class="code-block__lang">Python 2 — BFS</span><button class="code-copy-btn">Copy</button></div>
+          <pre><code>from collections import deque
+
+class Solution(object):
+    def numIslands(self, grid):
+        if not grid: return 0
+        rows, cols = len(grid), len(grid[0])
+        count = 0
+        dirs  = [(1,0),(-1,0),(0,1),(0,-1)]
+
+        for r in xrange(rows):
+            for c in xrange(cols):
+                if grid[r][c] == '1':
+                    count += 1
+                    grid[r][c] = '0'
+                    queue = deque([(r, c)])
+                    while queue:
+                        cr, cc = queue.popleft()
+                        for dr, dc in dirs:
+                            nr, nc = cr+dr, cc+dc
+                            if 0 <= nr < rows and 0 <= nc < cols and grid[nr][nc] == '1':
+                                grid[nr][nc] = '0'   # mark on enqueue
+                                queue.append((nr, nc))
+        return count</code></pre>
+        </div>
+
+        <h3>Union Find</h3>
+        <div class="code-block">
+          <div class="code-block__header"><span class="code-block__lang">Python 2 — Union Find</span><button class="code-copy-btn">Copy</button></div>
+          <pre><code>class Solution(object):
+    def numIslands(self, grid):
+        if not grid: return 0
+        rows, cols = len(grid), len(grid[0])
+
+        parent = list(xrange(rows * cols))
+        count  = sum(grid[r][c] == '1'
+                     for r in xrange(rows)
+                     for c in xrange(cols))
+
+        def find(x):
+            while parent[x] != x:
+                parent[x] = parent[parent[x]]
+                x = parent[x]
+            return x
+
+        def union(x, y):
+            px, py = find(x), find(y)
+            if px != py:
+                parent[px] = py
+                return True
+            return False
+
+        for r in xrange(rows):
+            for c in xrange(cols):
+                if grid[r][c] == '1':
+                    for dr, dc in [(1,0),(0,1)]:   # only right & down to avoid duplicates
+                        nr, nc = r+dr, c+dc
+                        if 0 <= nr < rows and 0 <= nc < cols and grid[nr][nc] == '1':
+                            if union(r*cols+c, nr*cols+nc):
+                                count -= 1
+
+        return count</code></pre>
+        </div>
+      </section>
+
+      <section class="section" id="dry-run">
+        <h2><span class="section-num">7</span> Dry Run (DFS)</h2>
+        <p style="margin-bottom:0.75rem;">Grid: [["1","1","0"],["0","1","0"],["0","0","1"]] — 2 islands</p>
+        <div class="steps">
+          <div class="step"><div class="step__num">1</div><div class="step__content"><h4>r=0, c=0 → '1'</h4><p>count=1. Call dfs(0,0). Mark (0,0)='0'. Recurse to (0,1).</p></div></div>
+          <div class="step"><div class="step__num">2</div><div class="step__content"><h4>dfs(0,1)</h4><p>Mark (0,1)='0'. Recurse to (0,2)='0' (stop), (1,1)='1' (continue).</p></div></div>
+          <div class="step"><div class="step__num">3</div><div class="step__content"><h4>dfs(1,1)</h4><p>Mark (1,1)='0'. All neighbors are '0' or OOB. Backtrack. Island 1 fully sunk.</p></div></div>
+          <div class="step"><div class="step__num">4</div><div class="step__content"><h4>Continue scan... r=2, c=2 → '1'</h4><p>count=2. dfs(2,2) sinks the single cell. Done. Return 2.</p></div></div>
+        </div>
+      </section>
+
+      <section class="section" id="complexity">
+        <h2><span class="section-num">8</span> Complexity Analysis</h2>
+        <table class="complexity-table">
+          <thead><tr><th>Approach</th><th>Time</th><th>Space</th></tr></thead>
+          <tbody>
+            <tr><td>DFS</td><td>O(m × n)</td><td>O(m × n) recursion stack</td></tr>
+            <tr><td>BFS</td><td>O(m × n)</td><td>O(min(m,n)) queue at most</td></tr>
+            <tr><td>Union Find</td><td>O(m × n × α)</td><td>O(m × n)</td></tr>
+          </tbody>
+        </table>
+        <div class="callout callout--info"><strong>Space clarification</strong>DFS worst case (grid full of 1s): recursion depth = m×n, so O(m×n) stack. BFS: the queue holds at most the boundary of an island, which is O(min(m,n)) for a snake-shaped island.</div>
+      </section>
+
+      <section class="section" id="variations">
+        <h2><span class="section-num">9</span> Variations</h2>
+        <div class="tricks-grid">
+          <div class="trick-card"><div class="trick-card__icon">🌊</div><h4>Number of Islands II (LC 305)</h4><p>Islands added dynamically. Must use Union Find — rebuild BFS/DFS from scratch each time would be O(n × k). Union Find handles each add in O(α(n)).</p></div>
+          <div class="trick-card"><div class="trick-card__icon">🏔️</div><h4>Max Area of Island (LC 695)</h4><p>Same flood fill, but track size during DFS. Return max size across all islands.</p></div>
+          <div class="trick-card"><div class="trick-card__icon">🌍</div><h4>Surrounded Regions (LC 130)</h4><p>BFS from all border '0's, mark connected '0's as safe, flip remaining '0's to 'X'.</p></div>
+          <div class="trick-card"><div class="trick-card__icon">🔢</div><h4>Count Sub Islands (LC 1905)</h4><p>DFS on grid2. If any cell in grid2 island is '1' but grid1 is '0', that island is NOT a sub-island.</p></div>
+        </div>
+      </section>
+
+      <section class="section" id="related">
+        <h2><span class="section-num">10</span> Related Problems</h2>
+        <div class="related-grid">
+          <a href="/concepts/bfs.html"                    class="related-card">BFS</a>
+          <a href="/concepts/dfs.html"                    class="related-card">DFS</a>
+          <a href="/concepts/union-find.html"             class="related-card">Union Find</a>
+          <a href="/problems/redundant-connection.html"   class="related-card">Redundant Connection</a>
+          <a href="/problems/two-sum.html"                class="related-card">Two Sum</a>
+        </div>
+      </section>
+
+      <nav class="page-nav">
+        <a href="/problems/two-sum.html" class="page-nav__btn" data-nav="prev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg><div><div class="page-nav__btn__label">Previous</div><div class="page-nav__btn__title">Two Sum</div></div></a>
+        <a href="/problems/redundant-connection.html" class="page-nav__btn page-nav__btn--next" data-nav="next"><div><div class="page-nav__btn__label">Next</div><div class="page-nav__btn__title">Redundant Connection</div></div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></a>
+      </nav>
+    </main>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script src="/assets/js/main.js"></script>
+</body>
+</html>

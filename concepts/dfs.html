@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DFS — Interview Hacks</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+</head>
+<body data-page-title="DFS">
+  <nav class="topnav">
+    <a href="/" class="topnav__logo" style="text-decoration:none;"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect width="20" height="20" rx="5" fill="var(--accent)"/><path d="M5 7l3 3-3 3M10 14h5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Interview<span>Hacks</span></span></a>
+    <div class="topnav__search"><svg class="topnav__search-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M11 11l3 3"/></svg><input type="text" id="search-input" placeholder="Search topics…" autocomplete="off" /><span class="topnav__kbd">/</span><div class="search-results" id="search-results"></div></div>
+    <div class="topnav__actions"><button class="btn-icon" id="theme-toggle" title="Toggle theme"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button></div>
+  </nav>
+
+  <div class="page-layout">
+    <aside class="sidebar">
+      <div class="sidebar__section"><div class="sidebar__label">On this page</div><nav class="toc"><a href="#overview" class="toc-link">Overview</a><a href="#why-asked" class="toc-link">Why Interviewers Ask</a><a href="#recognition" class="toc-link">Pattern Recognition</a><a href="#core-idea" class="toc-link">Core Idea</a><a href="#visualization" class="toc-link">Visualization</a><a href="#complexity" class="toc-link">Complexity</a><a href="#tricks" class="toc-link">Tricks</a><a href="#mistakes" class="toc-link">Common Mistakes</a><a href="#python-code" class="toc-link">Python 2 Template</a><a href="#variations" class="toc-link">Variations</a><a href="#leetcode" class="toc-link">LeetCode Problems</a><a href="#walkthrough" class="toc-link">Walkthrough</a><a href="#mental-model" class="toc-link">Mental Model</a><a href="#revision" class="toc-link">Revision Notes</a><a href="#related" class="toc-link">Related Concepts</a></nav></div>
+      <div class="sidebar__section"><div class="sidebar__label">Concepts</div><a href="/concepts/prefix-sum.html" class="sidebar__link">Prefix Sum</a><a href="/concepts/bfs.html" class="sidebar__link">BFS</a><a href="/concepts/dfs.html" class="sidebar__link active">DFS</a><a href="/concepts/union-find.html" class="sidebar__link">Union Find</a><a href="/concepts/dijkstra.html" class="sidebar__link">Dijkstra</a><a href="/concepts/dynamic-programming.html" class="sidebar__link">Dynamic Programming</a></div>
+      <div class="sidebar__section"><div class="sidebar__label">Recently Viewed</div><div id="recently-viewed"></div></div>
+    </aside>
+
+    <main class="content">
+      <nav class="breadcrumbs"><a href="/">Home</a><span class="breadcrumbs__sep">›</span><a href="/concepts/">Concepts</a><span class="breadcrumbs__sep">›</span><span class="breadcrumbs__current">DFS</span></nav>
+
+      <div class="page-header">
+        <div class="page-header__badges"><span class="badge badge--easy">Easy</span><span class="badge badge--cat">Graphs</span><span class="badge badge--cat">Trees</span></div>
+        <h1>Depth-First Search <span style="color:var(--text-muted);font-weight:400;">(DFS)</span></h1>
+        <div class="page-header__meta"><span>⏱ 7 min revision</span><span>🎯 O(V+E) time</span><span>📌 Frequency: Very High</span></div>
+      </div>
+
+      <section class="section" id="overview">
+        <h2><span class="section-num">1</span> Concept Overview</h2>
+        <p>DFS explores a graph by going as <strong>deep as possible</strong> along each branch before backtracking. It uses a stack — either the call stack (recursion) or an explicit stack.</p>
+        <p style="margin-top:0.75rem;">Unlike BFS, DFS doesn't guarantee shortest path. Its strength is in <strong>exploring all possibilities</strong>: cycle detection, topological sort, connected components, and combinatorial search (backtracking).</p>
+        <div class="callout callout--info"><strong>Intuition</strong>Imagine exploring a maze. DFS picks a direction and goes all the way to the end (or a dead end), then backtracks and tries the next direction. It's "go deep, then backtrack" vs BFS's "go wide."</div>
+      </section>
+
+      <section class="section" id="why-asked">
+        <h2><span class="section-num">2</span> Why Interviewers Ask It</h2>
+        <p>DFS tests recursion fluency, cycle detection, and backtracking — skills that matter for tree problems, graph problems, and combinatorial search. It's also the basis for topological sort (Kahn's or recursive DFS), which appears heavily in dependency/scheduling problems.</p>
+      </section>
+
+      <section class="section" id="recognition">
+        <h2><span class="section-num">3</span> Pattern Recognition</h2>
+        <div class="callout callout--success"><strong>Use DFS when you see</strong>"Explore all paths" · "All combinations/permutations" · "Cycle detection" · "Topological order" · "Is there a path?" · "Tree traversals (in/pre/post-order)" · Backtracking problems</div>
+        <p>BFS finds the <em>shortest</em> path. DFS finds <em>any</em> path, or checks <em>all</em> paths. If the problem doesn't require minimum distance, DFS is usually simpler to code.</p>
+      </section>
+
+      <section class="section" id="core-idea">
+        <h2><span class="section-num">4</span> Core Idea</h2>
+        <p><strong>Recurse into neighbors, mark visited, backtrack.</strong> The recursion call stack automatically acts as your stack. For very deep graphs (risk of recursion limit), use an explicit stack with iteration.</p>
+        <div class="callout callout--warning"><strong>Python recursion limit</strong>Python's default recursion limit is 1000. For deep graphs, add <code>sys.setrecursionlimit(10000)</code> or convert to iterative DFS.</div>
+      </section>
+
+      <section class="section" id="visualization">
+        <h2><span class="section-num">5</span> Visualization</h2>
+        <div class="viz-container">
+          <svg viewBox="0 0 680 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+            <!-- Tree edges -->
+            <line x1="200" y1="60"  x2="110" y2="150" stroke="var(--border)" stroke-width="2"/>
+            <line x1="200" y1="60"  x2="290" y2="150" stroke="var(--border)" stroke-width="2"/>
+            <line x1="110" y1="150" x2="60"  y2="240" stroke="var(--border)" stroke-width="2"/>
+            <line x1="110" y1="150" x2="160" y2="240" stroke="var(--border)" stroke-width="2"/>
+            <line x1="290" y1="150" x2="240" y2="240" stroke="var(--border)" stroke-width="2"/>
+            <line x1="290" y1="150" x2="340" y2="240" stroke="var(--border)" stroke-width="2"/>
+
+            <!-- DFS traversal arrows (pre-order: A B D E C F G) -->
+            <path d="M 200,60 Q 145,90 110,150" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-dasharray="5 3" marker-end="url(#arr)"/>
+            <path d="M 110,150 Q 80,195 60,240" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-dasharray="5 3" marker-end="url(#arr)"/>
+
+            <defs><marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="var(--accent)"/></marker></defs>
+
+            <!-- Nodes with visit order numbers -->
+            <circle cx="200" cy="60"  r="24" fill="var(--accent-subtle)"       stroke="var(--accent)"   stroke-width="2.5"/>
+            <text x="200" y="65"  text-anchor="middle" font-size="14" font-weight="700" fill="var(--accent)">A</text>
+            <text x="200" y="40"  text-anchor="middle" font-size="10" fill="var(--accent)">①</text>
+
+            <circle cx="110" cy="150" r="24" fill="rgba(6,182,212,.12)"          stroke="var(--accent-2)" stroke-width="2"/>
+            <text x="110" y="155" text-anchor="middle" font-size="14" font-weight="700" fill="var(--accent-2)">B</text>
+            <text x="110" y="130" text-anchor="middle" font-size="10" fill="var(--accent-2)">②</text>
+
+            <circle cx="290" cy="150" r="24" fill="rgba(6,182,212,.12)"          stroke="var(--accent-2)" stroke-width="2"/>
+            <text x="290" y="155" text-anchor="middle" font-size="14" font-weight="700" fill="var(--accent-2)">C</text>
+            <text x="290" y="130" text-anchor="middle" font-size="10" fill="var(--accent-2)">⑤</text>
+
+            <circle cx="60"  cy="240" r="24" fill="rgba(16,185,129,.12)"         stroke="var(--success)"  stroke-width="2"/>
+            <text x="60"  y="245" text-anchor="middle" font-size="14" font-weight="700" fill="var(--success)">D</text>
+            <text x="60"  y="220" text-anchor="middle" font-size="10" fill="var(--success)">③</text>
+
+            <circle cx="160" cy="240" r="24" fill="rgba(16,185,129,.12)"         stroke="var(--success)"  stroke-width="2"/>
+            <text x="160" y="245" text-anchor="middle" font-size="14" font-weight="700" fill="var(--success)">E</text>
+            <text x="160" y="220" text-anchor="middle" font-size="10" fill="var(--success)">④</text>
+
+            <circle cx="240" cy="240" r="24" fill="rgba(16,185,129,.12)"         stroke="var(--success)"  stroke-width="2"/>
+            <text x="240" y="245" text-anchor="middle" font-size="14" font-weight="700" fill="var(--success)">F</text>
+            <text x="240" y="220" text-anchor="middle" font-size="10" fill="var(--success)">⑥</text>
+
+            <circle cx="340" cy="240" r="24" fill="rgba(16,185,129,.12)"         stroke="var(--success)"  stroke-width="2"/>
+            <text x="340" y="245" text-anchor="middle" font-size="14" font-weight="700" fill="var(--success)">G</text>
+            <text x="340" y="220" text-anchor="middle" font-size="10" fill="var(--success)">⑦</text>
+
+            <!-- Call stack -->
+            <text x="430" y="40"  font-size="12" fill="var(--text-muted)" font-weight="600">Call Stack (pre-order DFS)</text>
+            <text x="430" y="65"  font-size="12" fill="var(--text-secondary)">dfs(A) → dfs(B) → dfs(D)</text>
+            <text x="430" y="85"  font-size="12" fill="var(--text-secondary)">D has no children → return</text>
+            <text x="430" y="105" font-size="12" fill="var(--text-secondary)">backtrack → dfs(E)</text>
+            <text x="430" y="125" font-size="12" fill="var(--text-secondary)">E has no children → return</text>
+            <text x="430" y="145" font-size="12" fill="var(--text-secondary)">backtrack → dfs(C) → dfs(F)</text>
+            <text x="430" y="165" font-size="12" fill="var(--text-secondary)">F has no children → return</text>
+            <text x="430" y="185" font-size="12" fill="var(--text-secondary)">backtrack → dfs(G)</text>
+
+            <text x="430" y="225" font-size="12" fill="var(--text-muted)" font-weight="600">Visit Order (pre-order)</text>
+            <text x="430" y="250" font-size="16" font-weight="700" fill="var(--text-primary)">A B D E C F G</text>
+          </svg>
+        </div>
+      </section>
+
+      <section class="section" id="complexity">
+        <h2><span class="section-num">6</span> Complexity</h2>
+        <table class="complexity-table">
+          <thead><tr><th>Metric</th><th>Time</th><th>Space</th></tr></thead>
+          <tbody>
+            <tr><td>Graph (adjacency list)</td><td>O(V + E)</td><td>O(V) call stack</td></tr>
+            <tr><td>Grid (m × n)</td><td>O(m × n)</td><td>O(m × n)</td></tr>
+            <tr><td>Backtracking (permutations)</td><td>O(n!)</td><td>O(n)</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="section" id="tricks">
+        <h2><span class="section-num">7</span> Common Tricks</h2>
+        <div class="tricks-grid">
+          <div class="trick-card"><div class="trick-card__icon">🔄</div><h4>Three Colors for Cycle Detection</h4><p>WHITE=0 (unvisited), GRAY=1 (in current path), BLACK=2 (done). If you hit GRAY, you found a back edge (cycle).</p></div>
+          <div class="trick-card"><div class="trick-card__icon">📋</div><h4>Topological Sort</h4><p>Do DFS, append node to result AFTER all its children are processed (post-order). Reverse the result.</p></div>
+          <div class="trick-card"><div class="trick-card__icon">↩️</div><h4>Backtracking Pattern</h4><p>Before recursing: add to state. After recursing: remove from state. This "undo" is the heart of backtracking.</p></div>
+          <div class="trick-card"><div class="trick-card__icon">🔢</div><h4>Iterative DFS</h4><p>Replace recursion with an explicit stack. Push neighbors in reverse order to maintain left-to-right traversal order.</p></div>
+        </div>
+      </section>
+
+      <section class="section" id="mistakes">
+        <h2><span class="section-num">8</span> Common Mistakes</h2>
+        <div class="callout callout--danger"><strong>Mistake 1 — Not tracking visited nodes in graphs (vs. trees)</strong>Trees have no cycles, so visited tracking is optional. Graphs can have cycles — without visited, DFS loops forever.</div>
+        <div class="callout callout--danger"><strong>Mistake 2 — Forgetting to undo state in backtracking</strong>If you append to a path before recursing, you must pop after. Missing the undo step corrupts the path for sibling branches.</div>
+        <div class="callout callout--warning"><strong>Mistake 3 — Using DFS for shortest path</strong>DFS finds a path, not the shortest path. Use BFS for unweighted shortest paths.</div>
+        <div class="callout callout--warning"><strong>Mistake 4 — Stack overflow on large inputs</strong>Python's recursion limit is 1000. Use iterative DFS or increase the limit with sys.setrecursionlimit() for large graphs.</div>
+      </section>
+
+      <section class="section" id="python-code">
+        <h2><span class="section-num">9</span> Python 2 Template</h2>
+        <h3>Recursive DFS — Graph</h3>
+        <div class="code-block">
+          <div class="code-block__header"><span class="code-block__lang">Python 2</span><button class="code-copy-btn">Copy</button></div>
+          <pre><code>def dfs(graph, node, visited=None):
+    if visited is None:
+        visited = set()
+    visited.add(node)
+    for neighbor in graph[node]:
+        if neighbor not in visited:
+            dfs(graph, neighbor, visited)
+    return visited
+
+# Example
+graph = {0:[1,2], 1:[0,3], 2:[0], 3:[1]}
+print dfs(graph, 0)   # {0, 1, 2, 3}</code></pre>
+        </div>
+
+        <h3>Iterative DFS — Graph</h3>
+        <div class="code-block">
+          <div class="code-block__header"><span class="code-block__lang">Python 2</span><button class="code-copy-btn">Copy</button></div>
+          <pre><code>def dfs_iterative(graph, start):
+    visited = set()
+    stack   = [start]
+    order   = []
+
+    while stack:
+        node = stack.pop()
+        if node in visited:
+            continue
+        visited.add(node)
+        order.append(node)
+        for neighbor in reversed(graph[node]):   # reversed to preserve order
+            if neighbor not in visited:
+                stack.append(neighbor)
+
+    return order</code></pre>
+        </div>
+
+        <h3>Cycle Detection (directed graph — 3 colors)</h3>
+        <div class="code-block">
+          <div class="code-block__header"><span class="code-block__lang">Python 2</span><button class="code-copy-btn">Copy</button></div>
+          <pre><code>WHITE, GRAY, BLACK = 0, 1, 2
+
+def has_cycle(graph, n):
+    color = [WHITE] * n
+
+    def dfs(node):
+        color[node] = GRAY
+        for nb in graph[node]:
+            if color[nb] == GRAY:   # back edge = cycle
+                return True
+            if color[nb] == WHITE and dfs(nb):
+                return True
+        color[node] = BLACK
+        return False
+
+    return any(dfs(i) for i in xrange(n) if color[i] == WHITE)</code></pre>
+        </div>
+
+        <h3>Backtracking Template</h3>
+        <div class="code-block">
+          <div class="code-block__header"><span class="code-block__lang">Python 2</span><button class="code-copy-btn">Copy</button></div>
+          <pre><code>def backtrack(candidates, target, start, path, result):
+    if target == 0:
+        result.append(list(path))   # found a valid combination
+        return
+    for i in xrange(start, len(candidates)):
+        if candidates[i] > target:
+            break
+        path.append(candidates[i])          # choose
+        backtrack(candidates, target - candidates[i], i, path, result)
+        path.pop()                          # undo (backtrack)</code></pre>
+        </div>
+      </section>
+
+      <section class="section" id="variations">
+        <h2><span class="section-num">10</span> Python 2 Variations</h2>
+        <h3>Topological Sort (DFS post-order)</h3>
+        <div class="code-block">
+          <div class="code-block__header"><span class="code-block__lang">Python 2</span><button class="code-copy-btn">Copy</button></div>
+          <pre><code>def topological_sort(graph, n):
+    visited = set()
+    result  = []
+
+    def dfs(node):
+        visited.add(node)
+        for nb in graph[node]:
+            if nb not in visited:
+                dfs(nb)
+        result.append(node)   # post-order: add AFTER children
+
+    for node in xrange(n):
+        if node not in visited:
+            dfs(node)
+
+    return result[::-1]   # reverse gives topological order</code></pre>
+        </div>
+      </section>
+
+      <section class="section" id="leetcode">
+        <h2><span class="section-num">11</span> LeetCode Problems</h2>
+        <h3>Easy</h3>
+        <div class="problem-list">
+          <div class="problem-item"><div class="problem-item__num" style="background:rgba(16,185,129,.12);color:var(--diff-easy);">E</div><div class="problem-item__info"><div class="problem-item__name"><a href="https://leetcode.com/problems/maximum-depth-of-binary-tree/" target="_blank">104. Maximum Depth of Binary Tree</a></div><div class="problem-item__why">Classic recursive DFS — return 1 + max(left, right)</div></div><span class="badge badge--easy">Easy</span></div>
+          <div class="problem-item"><div class="problem-item__num" style="background:rgba(16,185,129,.12);color:var(--diff-easy);">E</div><div class="problem-item__info"><div class="problem-item__name"><a href="https://leetcode.com/problems/flood-fill/" target="_blank">733. Flood Fill</a></div><div class="problem-item__why">DFS painting — propagate new color to all connected same-color cells</div></div><span class="badge badge--easy">Easy</span></div>
+        </div>
+        <h3 style="margin-top:1rem;">Medium</h3>
+        <div class="problem-list">
+          <div class="problem-item"><div class="problem-item__num" style="background:rgba(245,158,11,.12);color:var(--diff-medium);">M</div><div class="problem-item__info"><div class="problem-item__name"><a href="https://leetcode.com/problems/number-of-islands/" target="_blank">200. Number of Islands</a></div><div class="problem-item__why">DFS flood fill — sink each island, count calls</div></div><span class="badge badge--medium">Medium</span></div>
+          <div class="problem-item"><div class="problem-item__num" style="background:rgba(245,158,11,.12);color:var(--diff-medium);">M</div><div class="problem-item__info"><div class="problem-item__name"><a href="https://leetcode.com/problems/course-schedule/" target="_blank">207. Course Schedule</a></div><div class="problem-item__why">Cycle detection in directed graph using DFS 3-color</div></div><span class="badge badge--medium">Medium</span></div>
+          <div class="problem-item"><div class="problem-item__num" style="background:rgba(245,158,11,.12);color:var(--diff-medium);">M</div><div class="problem-item__info"><div class="problem-item__name"><a href="https://leetcode.com/problems/combination-sum/" target="_blank">39. Combination Sum</a></div><div class="problem-item__why">Backtracking DFS — explore all combinations that sum to target</div></div><span class="badge badge--medium">Medium</span></div>
+        </div>
+        <h3 style="margin-top:1rem;">Hard</h3>
+        <div class="problem-list">
+          <div class="problem-item"><div class="problem-item__num" style="background:rgba(239,68,68,.12);color:var(--diff-hard);">H</div><div class="problem-item__info"><div class="problem-item__name"><a href="https://leetcode.com/problems/word-search-ii/" target="_blank">212. Word Search II</a></div><div class="problem-item__why">DFS + Trie — explore grid paths matching dictionary words</div></div><span class="badge badge--hard">Hard</span></div>
+        </div>
+      </section>
+
+      <section class="section" id="walkthrough">
+        <h2><span class="section-num">12</span> Step-by-Step Walkthrough</h2>
+        <p style="margin-bottom:0.75rem;">Problem: <em>Detect cycle in graph with edges: 0→1, 1→2, 2→0 (directed).</em></p>
+        <div class="steps">
+          <div class="step"><div class="step__num">1</div><div class="step__content"><h4>Start dfs(0)</h4><p>color[0] = GRAY. Visit neighbors: [1].</p></div></div>
+          <div class="step"><div class="step__num">2</div><div class="step__content"><h4>dfs(1)</h4><p>color[1] = GRAY. Visit neighbors: [2].</p></div></div>
+          <div class="step"><div class="step__num">3</div><div class="step__content"><h4>dfs(2)</h4><p>color[2] = GRAY. Visit neighbors: [0].</p></div></div>
+          <div class="step"><div class="step__num">4</div><div class="step__content"><h4>Check neighbor 0</h4><p>color[0] == GRAY! Back edge found. Return True — cycle detected: 0 → 1 → 2 → 0.</p></div></div>
+        </div>
+      </section>
+
+      <section class="section" id="mental-model">
+        <h2><span class="section-num">13</span> Mental Model</h2>
+        <div class="callout callout--info"><strong>Think of DFS as "commit fully, then reconsider"</strong>You're navigating a choose-your-own-adventure book. DFS reads every path to its end before flipping back to try a different choice. BFS reads all options at chapter 1, then all options at chapter 2. DFS dives all the way to the final chapter first.</div>
+      </section>
+
+      <section class="section" id="revision">
+        <h2><span class="section-num">14</span> Revision Notes</h2>
+        <div class="revision-box">
+          <h3>⚡ 1-Minute Review</h3>
+          <ul>
+            <li>Uses a <strong>stack</strong> (recursion call stack, or explicit)</li>
+            <li>Does NOT guarantee shortest path — use BFS for that</li>
+            <li>Tree DFS: no visited set needed (no cycles in trees)</li>
+            <li>Graph DFS: always track visited to avoid infinite loops</li>
+            <li>Cycle detection: use WHITE/GRAY/BLACK coloring for directed graphs</li>
+            <li>Backtracking = DFS + undo state after each recursive call</li>
+            <li>Topological sort = DFS post-order, then reverse</li>
+            <li>Python recursion limit = 1000. Use iterative for deep graphs.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section" id="related">
+        <h2><span class="section-num">15</span> Related Concepts</h2>
+        <div class="related-grid">
+          <a href="/concepts/bfs.html"                  class="related-card">BFS</a>
+          <a href="/concepts/union-find.html"           class="related-card">Union Find</a>
+          <a href="/concepts/dynamic-programming.html"  class="related-card">Dynamic Programming</a>
+          <a href="/problems/number-of-islands.html"    class="related-card">Number of Islands</a>
+        </div>
+      </section>
+
+      <div class="next-topic-banner">
+        <div class="next-topic-banner__text"><h4>Recommended Next</h4><h3>Union Find</h3><p>Another way to solve connected-component problems — faster for dynamic graphs.</p></div>
+        <a href="/concepts/union-find.html" class="btn btn--primary" data-nav="next">Study Union Find →</a>
+      </div>
+
+      <nav class="page-nav">
+        <a href="/concepts/bfs.html" class="page-nav__btn" data-nav="prev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg><div><div class="page-nav__btn__label">Previous</div><div class="page-nav__btn__title">BFS</div></div></a>
+        <a href="/concepts/union-find.html" class="page-nav__btn page-nav__btn--next" data-nav="next"><div><div class="page-nav__btn__label">Next</div><div class="page-nav__btn__title">Union Find</div></div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></a>
+      </nav>
+    </main>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script src="/assets/js/main.js"></script>
+</body>
+</html>

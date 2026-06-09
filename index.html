@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coding Interview Hacks — Dashboard</title>
+  <meta name="description" content="Visual coding interview knowledge base for rapid revision. Patterns, algorithms, data structures, and LeetCode walkthroughs." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <style>
+    /* Dashboard-only styles */
+    .dashboard-search-wrapper {
+      max-width: 560px;
+      margin: 0 auto 2rem;
+      position: relative;
+    }
+    .dashboard-search-wrapper input {
+      width: 100%;
+      padding: 0.85rem 1rem 0.85rem 3rem;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-size: 1rem;
+      outline: none;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+    .dashboard-search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(99,102,241,0.15);
+    }
+    .dashboard-search-wrapper input::placeholder { color: var(--text-muted); }
+    .dashboard-search-icon {
+      position: absolute; left: 1rem; top: 50%; transform: translateY(-50%);
+      color: var(--text-muted); pointer-events: none;
+    }
+    .dashboard-search-kbd {
+      position: absolute; right: 1rem; top: 50%; transform: translateY(-50%);
+      background: var(--bg-code); border: 1px solid var(--border);
+      border-radius: 4px; padding: 2px 7px; font-size: 0.75rem;
+      color: var(--text-muted); font-family: var(--font-mono); pointer-events: none;
+    }
+
+    .recently-added {
+      max-width: 1100px; margin: 0 auto 2rem; padding: 0 1.5rem;
+    }
+    .recently-added-list {
+      display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 0.75rem;
+    }
+    .recently-added-chip {
+      display: flex; align-items: center; gap: 0.4rem;
+      padding: 0.35rem 0.85rem;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius-full); font-size: 0.8rem;
+      color: var(--text-secondary); transition: all var(--transition);
+      cursor: pointer; text-decoration: none;
+    }
+    .recently-added-chip:hover { border-color: var(--accent); color: var(--accent); }
+    .recently-added-chip .new-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent-2); flex-shrink: 0;
+    }
+  </style>
+</head>
+<body data-page-title="Dashboard">
+
+  <!-- Top Navigation -->
+  <nav class="topnav">
+    <div class="topnav__logo">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="flex-shrink:0">
+        <rect width="20" height="20" rx="5" fill="var(--accent)"/>
+        <path d="M5 7l3 3-3 3M10 14h5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>Interview<span>Hacks</span></span>
+    </div>
+
+    <div class="topnav__search">
+      <svg class="topnav__search-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+        <circle cx="7" cy="7" r="5"/><path d="M11 11l3 3"/>
+      </svg>
+      <input type="text" id="search-input" placeholder="Search topics…" autocomplete="off" />
+      <span class="topnav__kbd">/</span>
+      <div class="search-results" id="search-results"></div>
+    </div>
+
+    <div class="topnav__actions">
+      <button class="btn-icon" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle theme">
+        <svg id="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+        </svg>
+      </button>
+      <a href="https://github.com/amudhan023/coding-interview-hacks" target="_blank" class="btn-icon" title="GitHub">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+        </svg>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <h1>Your Interview <span class="highlight">Cheat Sheet</span></h1>
+    <p>Patterns, algorithms, and problems — distilled for rapid revision right before an interview.</p>
+
+    <div class="dashboard-search-wrapper">
+      <svg class="dashboard-search-icon" width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+        <circle cx="7" cy="7" r="5"/><path d="M11 11l3 3"/>
+      </svg>
+      <input type="text" placeholder="Search patterns, algorithms, problems…" autocomplete="off"
+        oninput="document.getElementById('search-input').value=this.value; document.getElementById('search-input').dispatchEvent(new Event('input'))"
+        onfocus="document.getElementById('search-input').focus()" />
+      <span class="dashboard-search-kbd">press /</span>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-bar">
+      <div class="stat-item">
+        <div class="stat-item__num" id="stat-concepts">6</div>
+        <div class="stat-item__label">Concepts</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-item__num" id="stat-problems">3</div>
+        <div class="stat-item__label">Problems</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-item__num">19</div>
+        <div class="stat-item__label">Categories</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-item__num">~7 min</div>
+        <div class="stat-item__label">Avg Revision</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recently Added -->
+  <section class="recently-added">
+    <div class="section-header" style="padding:0; margin-bottom:0.75rem;">
+      <h2 style="font-size:0.9rem; color:var(--text-muted); font-weight:600; text-transform:uppercase; letter-spacing:0.06em;">Recently Added</h2>
+    </div>
+    <div class="recently-added-list">
+      <a href="/concepts/union-find.html"          class="recently-added-chip"><span class="new-dot"></span>Union Find</a>
+      <a href="/concepts/dijkstra.html"             class="recently-added-chip"><span class="new-dot"></span>Dijkstra</a>
+      <a href="/concepts/dynamic-programming.html"  class="recently-added-chip"><span class="new-dot"></span>Dynamic Programming</a>
+      <a href="/problems/redundant-connection.html" class="recently-added-chip"><span class="new-dot"></span>Redundant Connection</a>
+      <a href="/problems/number-of-islands.html"    class="recently-added-chip"><span class="new-dot"></span>Number of Islands</a>
+    </div>
+  </section>
+
+  <!-- Category Filter -->
+  <div class="filter-bar">
+    <button class="filter-chip active" data-category="all">All</button>
+    <button class="filter-chip" data-category="arrays">Arrays</button>
+    <button class="filter-chip" data-category="graphs">Graphs</button>
+    <button class="filter-chip" data-category="dynamic programming">Dynamic Programming</button>
+    <button class="filter-chip" data-category="union find">Union Find</button>
+    <button class="filter-chip" data-category="trees">Trees</button>
+    <button class="filter-chip" data-category="strings">Strings</button>
+    <button class="filter-chip" data-category="binary search">Binary Search</button>
+    <button class="filter-chip" data-category="sliding window">Sliding Window</button>
+  </div>
+
+  <!-- Topic Grid — Concepts -->
+  <div class="section-header" style="margin-bottom:0.75rem; padding-top:0.5rem;">
+    <h2>Concepts</h2>
+    <a href="/concepts/">View all →</a>
+  </div>
+
+  <div class="topic-grid">
+
+    <a href="/concepts/prefix-sum.html" class="topic-card" data-category="arrays" style="text-decoration:none; color:inherit;">
+      <div class="topic-card__header">
+        <div class="topic-card__title">Prefix Sum</div>
+        <div class="topic-card__badges">
+          <span class="badge badge--easy">Easy</span>
+          <span class="badge badge--cat">Arrays</span>
+        </div>
+      </div>
+      <div class="topic-card__pattern">⚡ Range Query Precomputation</div>
+      <div class="topic-card__takeaway">Precompute cumulative sums to answer any subarray sum query in O(1). Essential for sliding window and interval problems.</div>
+      <div class="topic-card__footer">
+        <span class="topic-card__time">⏱ 5 min</span>
+        <span>O(n) time · O(n) space</span>
+      </div>
+    </a>
+
+    <a href="/concepts/bfs.html" class="topic-card" data-category="graphs" style="text-decoration:none; color:inherit;">
+      <div class="topic-card__header">
+        <div class="topic-card__title">Breadth-First Search</div>
+        <div class="topic-card__badges">
+          <span class="badge badge--easy">Easy</span>
+          <span class="badge badge--cat">Graphs</span>
+        </div>
+      </div>
+      <div class="topic-card__pattern">⚡ Level Order Traversal</div>
+      <div class="topic-card__takeaway">Queue-based layer-by-layer exploration. Guarantees shortest path in unweighted graphs. Go-to for grid problems.</div>
+      <div class="topic-card__footer">
+        <span class="topic-card__time">⏱ 7 min</span>
+        <span>O(V+E) time · O(V) space</span>
+      </div>
+    </a>
+
+    <a href="/concepts/dfs.html" class="topic-card" data-category="graphs" style="text-decoration:none; color:inherit;">
+      <div class="topic-card__header">
+        <div class="topic-card__title">Depth-First Search</div>
+        <div class="topic-card__badges">
+          <span class="badge badge--easy">Easy</span>
+          <span class="badge badge--cat">Graphs</span>
+        </div>
+      </div>
+      <div class="topic-card__pattern">⚡ Backtracking / Explore All Paths</div>
+      <div class="topic-card__takeaway">Recursively dive deep before backtracking. Powers cycle detection, topological sort, and combinatorial search.</div>
+      <div class="topic-card__footer">
+        <span class="topic-card__time">⏱ 7 min</span>
+        <span>O(V+E) time · O(V) space</span>
+      </div>
+    </a>
+
+    <a href="/concepts/union-find.html" class="topic-card" data-category="union find" style="text-decoration:none; color:inherit;">
+      <div class="topic-card__header">
+        <div class="topic-card__title">Union Find (DSU)</div>
+        <div class="topic-card__badges">
+          <span class="badge badge--medium">Medium</span>
+          <span class="badge badge--cat">Union Find</span>
+        </div>
+      </div>
+      <div class="topic-card__pattern">⚡ Connected Components</div>
+      <div class="topic-card__takeaway">Near O(1) merge and find for connected components. Detects cycles, builds MSTs. Path compression is the key trick.</div>
+      <div class="topic-card__footer">
+        <span class="topic-card__time">⏱ 8 min</span>
+        <span>O(α(n)) per op</span>
+      </div>
+    </a>
+
+    <a href="/concepts/dijkstra.html" class="topic-card" data-category="graphs" style="text-decoration:none; color:inherit;">
+      <div class="topic-card__header">
+        <div class="topic-card__title">Dijkstra's Algorithm</div>
+        <div class="topic-card__badges">
+          <span class="badge badge--hard">Hard</span>
+          <span class="badge badge--cat">Graphs</span>
+        </div>
+      </div>
+      <div class="topic-card__pattern">⚡ Greedy + Priority Queue</div>
+      <div class="topic-card__takeaway">Greedily expand the minimum-cost frontier using a min-heap. Solves single-source shortest path in weighted graphs.</div>
+      <div class="topic-card__footer">
+        <span class="topic-card__time">⏱ 10 min</span>
+        <span>O((V+E) log V)</span>
+      </div>
+    </a>
+
+    <a href="/concepts/dynamic-programming.html" class="topic-card" data-category="dynamic programming" style="text-decoration:none; color:inherit;">
+      <div class="topic-card__header">
+        <div class="topic-card__title">Dynamic Programming</div>
+        <div class="topic-card__badges">
+          <span class="badge badge--hard">Hard</span>
+          <span class="badge badge--cat">DP</span>
+        </div>
+      </div>
+      <div class="topic-card__pattern">⚡ Memoization / Tabulation</div>
+      <div class="topic-card__takeaway">Cache overlapping subproblems. Identify state + transition. Covers 30–40% of hard LeetCode problems.</div>
+      <div class="topic-card__footer">
+        <span class="topic-card__time">⏱ 10 min</span>
+        <span>Varies by problem</span>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- Topic Grid — Problems -->
+  <div class="section-header" style="margin-bottom:0.75rem; padding-top:0.5rem;">
+    <h2>Problems</h2>
+    <a href="/problems/">View all →</a>
+  </div>
+
+  <div class="topic-grid">
+
+    <a href="/problems/two-sum.html" class="topic-card" data-category="arrays" style="text-decoration:none; color:inherit;">
+      <div class="topic-card__header">
+        <div class="topic-card__title">Two Sum</div>
+        <div class="topic-card__badges">
+          <span class="badge badge--easy">Easy</span>
+          <span class="badge badge--cat">Arrays</span>
+        </div>
+      </div>
+      <div class="topic-card__pattern">⚡ Hash Map Complement</div>
+      <div class="topic-card__takeaway">Store each number's complement in a hash map. Classic pattern for pair-finding in O(n) time.</div>
+      <div class="topic-card__footer">
+        <span class="topic-card__time">⏱ 5 min</span>
+        <span>LC #1</span>
+      </div>
+    </a>
+
+    <a href="/problems/number-of-islands.html" class="topic-card" data-category="graphs" style="text-decoration:none; color:inherit;">
+      <div class="topic-card__header">
+        <div class="topic-card__title">Number of Islands</div>
+        <div class="topic-card__badges">
+          <span class="badge badge--medium">Medium</span>
+          <span class="badge badge--cat">Graphs</span>
+        </div>
+      </div>
+      <div class="topic-card__pattern">⚡ BFS / DFS Grid Flood Fill</div>
+      <div class="topic-card__takeaway">Count connected components in a 2D grid. Classic application of BFS, DFS, or Union Find.</div>
+      <div class="topic-card__footer">
+        <span class="topic-card__time">⏱ 7 min</span>
+        <span>LC #200</span>
+      </div>
+    </a>
+
+    <a href="/problems/redundant-connection.html" class="topic-card" data-category="union find" style="text-decoration:none; color:inherit;">
+      <div class="topic-card__header">
+        <div class="topic-card__title">Redundant Connection</div>
+        <div class="topic-card__badges">
+          <span class="badge badge--medium">Medium</span>
+          <span class="badge badge--cat">Union Find</span>
+        </div>
+      </div>
+      <div class="topic-card__pattern">⚡ Union Find Cycle Detection</div>
+      <div class="topic-card__takeaway">Find the edge that creates a cycle using Union Find. If both nodes already share a root, that edge is redundant.</div>
+      <div class="topic-card__footer">
+        <span class="topic-card__time">⏱ 7 min</span>
+        <span>LC #684</span>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- Keyboard Shortcuts hint -->
+  <div style="text-align:center; padding: 1rem 1.5rem 3rem; color: var(--text-muted); font-size: 0.8rem;">
+    <kbd style="background:var(--bg-card);border:1px solid var(--border);border-radius:4px;padding:2px 6px;font-family:var(--font-mono);">←</kbd>
+    <kbd style="background:var(--bg-card);border:1px solid var(--border);border-radius:4px;padding:2px 6px;font-family:var(--font-mono);">→</kbd>
+    navigate &nbsp;·&nbsp;
+    <kbd style="background:var(--bg-card);border:1px solid var(--border);border-radius:4px;padding:2px 6px;font-family:var(--font-mono);">/</kbd>
+    search
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="/assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Union Find (DSU) — Interview Hacks</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+</head>
+<body data-page-title="Union Find">
+
+  <!-- Top Nav -->
+  <nav class="topnav">
+    <a href="/" class="topnav__logo" style="text-decoration:none;">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect width="20" height="20" rx="5" fill="var(--accent)"/><path d="M5 7l3 3-3 3M10 14h5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Interview<span>Hacks</span></span>
+    </a>
+    <div class="topnav__search">
+      <svg class="topnav__search-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M11 11l3 3"/></svg>
+      <input type="text" id="search-input" placeholder="Search topics…" autocomplete="off" />
+      <span class="topnav__kbd">/</span>
+      <div class="search-results" id="search-results"></div>
+    </div>
+    <div class="topnav__actions">
+      <button class="btn-icon" id="theme-toggle" title="Toggle theme">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <div class="page-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar__section">
+        <div class="sidebar__label">On this page</div>
+        <nav class="toc">
+          <a href="#overview"        class="toc-link">Overview</a>
+          <a href="#why-asked"       class="toc-link">Why Interviewers Ask</a>
+          <a href="#recognition"     class="toc-link">Pattern Recognition</a>
+          <a href="#core-idea"       class="toc-link">Core Idea</a>
+          <a href="#visualization"   class="toc-link">Visualization</a>
+          <a href="#complexity"      class="toc-link">Complexity</a>
+          <a href="#tricks"          class="toc-link">Tricks</a>
+          <a href="#mistakes"        class="toc-link">Common Mistakes</a>
+          <a href="#python-code"     class="toc-link">Python 2 Template</a>
+          <a href="#variations"      class="toc-link">Variations</a>
+          <a href="#leetcode"        class="toc-link">LeetCode Problems</a>
+          <a href="#walkthrough"     class="toc-link">Walkthrough</a>
+          <a href="#mental-model"    class="toc-link">Mental Model</a>
+          <a href="#revision"        class="toc-link">Revision Notes</a>
+          <a href="#related"         class="toc-link">Related Concepts</a>
+        </nav>
+      </div>
+      <div class="sidebar__section">
+        <div class="sidebar__label">Concepts</div>
+        <a href="/concepts/prefix-sum.html"         class="sidebar__link">Prefix Sum</a>
+        <a href="/concepts/bfs.html"                class="sidebar__link">BFS</a>
+        <a href="/concepts/dfs.html"                class="sidebar__link">DFS</a>
+        <a href="/concepts/union-find.html"         class="sidebar__link active">Union Find</a>
+        <a href="/concepts/dijkstra.html"           class="sidebar__link">Dijkstra</a>
+        <a href="/concepts/dynamic-programming.html" class="sidebar__link">Dynamic Programming</a>
+      </div>
+      <div class="sidebar__section">
+        <div class="sidebar__label">Recently Viewed</div>
+        <div id="recently-viewed"></div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="content">
+      <!-- Breadcrumbs -->
+      <nav class="breadcrumbs">
+        <a href="/">Home</a><span class="breadcrumbs__sep">›</span>
+        <a href="/concepts/">Concepts</a><span class="breadcrumbs__sep">›</span>
+        <span class="breadcrumbs__current">Union Find</span>
+      </nav>
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="page-header__badges">
+          <span class="badge badge--medium">Medium</span>
+          <span class="badge badge--cat">Union Find</span>
+          <span class="badge badge--cat">Graphs</span>
+        </div>
+        <h1>Union Find <span style="color:var(--text-muted);font-weight:400;">(Disjoint Set Union)</span></h1>
+        <div class="page-header__meta">
+          <span>⏱ 8 min revision</span>
+          <span>🎯 O(α(n)) per operation</span>
+          <span>📌 Frequency: Very High</span>
+        </div>
+      </div>
+
+      <!-- 1. Overview -->
+      <section class="section" id="overview">
+        <h2><span class="section-num">1</span> Concept Overview</h2>
+        <p>Union Find (also called Disjoint Set Union or DSU) is a data structure that tracks which elements belong to the same <strong>connected component</strong>. Think of it as a forest of trees where each tree represents one group.</p>
+        <p style="margin-top:0.75rem;">You have two core operations:</p>
+        <ul style="margin: 0.5rem 0 0.5rem 1.25rem; color: var(--text-secondary); line-height: 2;">
+          <li><code>find(x)</code> — Which group does x belong to? Returns the root of x's tree.</li>
+          <li><code>union(x, y)</code> — Merge the groups of x and y into one.</li>
+        </ul>
+        <div class="callout callout--info">
+          <strong>Intuition</strong>
+          Imagine students in a classroom. Initially everyone is their own group. When two students become friends, their friend groups merge. <code>find</code> tells you which friend group someone belongs to. <code>union</code> merges two friend groups.
+        </div>
+      </section>
+
+      <!-- 2. Why Asked -->
+      <section class="section" id="why-asked">
+        <h2><span class="section-num">2</span> Why Interviewers Ask It</h2>
+        <p>Union Find tests whether you can recognize <strong>dynamic connectivity</strong> problems — problems where groups form incrementally. It's a clean separator between candidates who know data structures deeply and those who only know BFS/DFS.</p>
+        <p style="margin-top:0.5rem;">It appears in: Kruskal's MST, cycle detection in undirected graphs, grouping problems, and any "how many connected components" question where edges arrive one at a time.</p>
+      </section>
+
+      <!-- 3. Recognition -->
+      <section class="section" id="recognition">
+        <h2><span class="section-num">3</span> Pattern Recognition</h2>
+        <div class="callout callout--success">
+          <strong>Use Union Find when you see</strong>
+          "Connected components" · "Are X and Y in the same group?" · "How many distinct groups?" · "Does adding this edge create a cycle?" · "Merge groups dynamically"
+        </div>
+        <p>Key tell: the problem adds edges/relationships one at a time and asks whether two nodes are connected. BFS/DFS rebuild everything from scratch — Union Find is incremental and faster.</p>
+      </section>
+
+      <!-- 4. Core Idea -->
+      <section class="section" id="core-idea">
+        <h2><span class="section-num">4</span> Core Idea</h2>
+        <p>Each element starts as its own parent (<code>parent[i] = i</code>). To find the root, follow parent pointers until you reach a node that points to itself. To union two elements, set one's root to be the parent of the other.</p>
+        <p style="margin-top:0.75rem;"><strong>Two critical optimizations make it nearly O(1):</strong></p>
+
+        <div class="tricks-grid" style="margin-top:0.75rem;">
+          <div class="trick-card">
+            <div class="trick-card__icon">🔗</div>
+            <h4>Path Compression</h4>
+            <p>During <code>find</code>, make every node on the path point directly to the root. Flattens the tree for future lookups.</p>
+          </div>
+          <div class="trick-card">
+            <div class="trick-card__icon">⚖️</div>
+            <h4>Union by Rank</h4>
+            <p>Always attach the smaller tree under the root of the larger tree. Keeps trees shallow. Use <code>rank[]</code> or <code>size[]</code>.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. Visualization -->
+      <section class="section" id="visualization">
+        <h2><span class="section-num">5</span> Visualization</h2>
+        <p>Watch how parent arrays evolve through union operations, and see path compression flatten the tree:</p>
+
+        <div class="viz-container">
+          <svg id="uf-svg" viewBox="0 0 680 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+            <!-- Step labels -->
+            <text id="step-label" x="340" y="22" text-anchor="middle" font-size="13" fill="var(--accent)" font-weight="600">Step 1 of 5 — Initial State</text>
+
+            <!-- Parent Array Label -->
+            <text x="20" y="55" font-size="11" fill="var(--text-muted)">parent[]</text>
+
+            <!-- Parent array boxes (top) -->
+            <g id="parent-row"></g>
+
+            <!-- Tree visualization (bottom) -->
+            <g id="tree-vis"></g>
+
+            <!-- Step description -->
+            <text id="step-desc" x="340" y="305" text-anchor="middle" font-size="11" fill="var(--text-muted)"></text>
+          </svg>
+          <div class="viz-controls">
+            <button class="btn btn--primary" onclick="UFViz.prev()">← Prev</button>
+            <button class="btn btn--primary" onclick="UFViz.next()">Next →</button>
+            <button class="btn" onclick="UFViz.reset()">↺ Reset</button>
+          </div>
+        </div>
+
+        <script>
+        const UFViz = (() => {
+          const NODES = 5;
+          const STEPS = [
+            {
+              label: "Step 1 of 5 — Initial State",
+              parent: [0,1,2,3,4],
+              rank:   [0,0,0,0,0],
+              highlight: [],
+              desc: "Each node is its own parent. 5 separate components.",
+              edges: []
+            },
+            {
+              label: "Step 2 of 5 — union(0, 1)",
+              parent: [1,1,2,3,4],
+              rank:   [0,1,0,0,0],
+              highlight: [0,1],
+              desc: "union(0,1): node 0's parent becomes 1. rank[1] increases.",
+              edges: [[0,1]]
+            },
+            {
+              label: "Step 3 of 5 — union(2, 3)",
+              parent: [1,1,3,3,4],
+              rank:   [0,1,0,1,0],
+              highlight: [2,3],
+              desc: "union(2,3): node 2's parent becomes 3.",
+              edges: [[0,1],[2,3]]
+            },
+            {
+              label: "Step 4 of 5 — union(0, 2)",
+              parent: [1,3,3,3,4],
+              rank:   [0,1,0,1,0],
+              highlight: [0,2],
+              desc: "union(0,2): find(0)=1, find(2)=3. Equal rank — attach 1 under 3.",
+              edges: [[0,1],[2,3],[1,3]]
+            },
+            {
+              label: "Step 5 of 5 — Path Compression: find(0)",
+              parent: [3,3,3,3,4],
+              rank:   [0,1,0,1,0],
+              highlight: [0,1,3],
+              desc: "find(0): path 0→1→3. After compression, 0 and 1 both point directly to 3.",
+              edges: [[0,3],[2,3],[1,3]]
+            }
+          ];
+
+          let current = 0;
+
+          const COLORS = {
+            default: 'var(--bg-code)',
+            highlight: 'var(--accent)',
+            root: 'var(--success)',
+            stroke: 'var(--border)',
+            text: 'var(--text-primary)'
+          };
+
+          function render() {
+            const step = STEPS[current];
+            const svg = document.getElementById('uf-svg');
+
+            document.getElementById('step-label').textContent = step.label;
+            document.getElementById('step-desc').textContent = step.desc;
+
+            // --- Parent array row ---
+            const pr = document.getElementById('parent-row');
+            pr.innerHTML = '';
+            const boxW = 60, boxH = 30, startX = 60, y = 40;
+            for (let i = 0; i < NODES; i++) {
+              const x = startX + i * (boxW + 8);
+              const isHL = step.highlight.includes(i);
+              // Box
+              const rect = document.createElementNS('http://www.w3.org/2000/svg','rect');
+              rect.setAttribute('x', x); rect.setAttribute('y', y);
+              rect.setAttribute('width', boxW); rect.setAttribute('height', boxH);
+              rect.setAttribute('rx', '6');
+              rect.setAttribute('fill', isHL ? 'var(--accent-subtle)' : 'var(--bg-code)');
+              rect.setAttribute('stroke', isHL ? 'var(--accent)' : 'var(--border)');
+              rect.setAttribute('stroke-width', '1.5');
+              pr.appendChild(rect);
+              // Index
+              const idx = document.createElementNS('http://www.w3.org/2000/svg','text');
+              idx.setAttribute('x', x + boxW/2); idx.setAttribute('y', y - 5);
+              idx.setAttribute('text-anchor','middle'); idx.setAttribute('font-size','10');
+              idx.setAttribute('fill','var(--text-muted)');
+              idx.textContent = i;
+              pr.appendChild(idx);
+              // Parent value
+              const val = document.createElementNS('http://www.w3.org/2000/svg','text');
+              val.setAttribute('x', x + boxW/2); val.setAttribute('y', y + 20);
+              val.setAttribute('text-anchor','middle'); val.setAttribute('font-size','14');
+              val.setAttribute('font-weight','600');
+              val.setAttribute('fill', isHL ? 'var(--accent)' : 'var(--text-primary)');
+              val.textContent = step.parent[i];
+              pr.appendChild(val);
+            }
+
+            // --- Tree visualization ---
+            const tv = document.getElementById('tree-vis');
+            tv.innerHTML = '';
+            // Node positions (fixed layout)
+            const positions = [
+              [90, 190],   // 0
+              [180, 150],  // 1
+              [300, 190],  // 2
+              [390, 150],  // 3
+              [530, 190],  // 4
+            ];
+            // Draw edges
+            step.edges.forEach(([a,b]) => {
+              const [ax,ay] = positions[a], [bx,by] = positions[b];
+              const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+              line.setAttribute('x1',ax); line.setAttribute('y1',ay);
+              line.setAttribute('x2',bx); line.setAttribute('y2',by);
+              line.setAttribute('stroke','var(--accent)');
+              line.setAttribute('stroke-width','2');
+              line.setAttribute('stroke-dasharray','4 2');
+              tv.appendChild(line);
+            });
+            // Draw nodes
+            positions.forEach(([cx,cy], i) => {
+              const isHL = step.highlight.includes(i);
+              const isRoot = step.parent[i] === i;
+              const circle = document.createElementNS('http://www.w3.org/2000/svg','circle');
+              circle.setAttribute('cx',cx); circle.setAttribute('cy',cy); circle.setAttribute('r','22');
+              circle.setAttribute('fill', isRoot ? 'rgba(16,185,129,.15)' : (isHL ? 'var(--accent-subtle)' : 'var(--bg-code)'));
+              circle.setAttribute('stroke', isRoot ? 'var(--success)' : (isHL ? 'var(--accent)' : 'var(--border)'));
+              circle.setAttribute('stroke-width','2');
+              tv.appendChild(circle);
+              const label = document.createElementNS('http://www.w3.org/2000/svg','text');
+              label.setAttribute('x',cx); label.setAttribute('y',cy+5);
+              label.setAttribute('text-anchor','middle'); label.setAttribute('font-size','15');
+              label.setAttribute('font-weight','700');
+              label.setAttribute('fill', isRoot ? 'var(--success)' : (isHL ? 'var(--accent)' : 'var(--text-primary)'));
+              label.textContent = i;
+              tv.appendChild(label);
+              if (isRoot) {
+                const rt = document.createElementNS('http://www.w3.org/2000/svg','text');
+                rt.setAttribute('x',cx); rt.setAttribute('y',cy+36);
+                rt.setAttribute('text-anchor','middle'); rt.setAttribute('font-size','9');
+                rt.setAttribute('fill','var(--success)'); rt.textContent='root';
+                tv.appendChild(rt);
+              }
+            });
+          }
+
+          function next()  { if (current < STEPS.length-1) { current++; render(); } }
+          function prev()  { if (current > 0) { current--; render(); } }
+          function reset() { current = 0; render(); }
+
+          document.addEventListener('DOMContentLoaded', render);
+          return { next, prev, reset };
+        })();
+        </script>
+      </section>
+
+      <!-- 6. Complexity -->
+      <section class="section" id="complexity">
+        <h2><span class="section-num">6</span> Complexity</h2>
+        <table class="complexity-table">
+          <thead><tr><th>Operation</th><th>Time</th><th>Space</th></tr></thead>
+          <tbody>
+            <tr><td>find (with path compression)</td><td>O(α(n)) ≈ O(1)</td><td>—</td></tr>
+            <tr><td>union (with rank)</td><td>O(α(n)) ≈ O(1)</td><td>—</td></tr>
+            <tr><td>Initialization</td><td>O(n)</td><td>O(n)</td></tr>
+            <tr><td>m operations on n elements</td><td>O(m · α(n))</td><td>O(n)</td></tr>
+          </tbody>
+        </table>
+        <div class="callout callout--info">
+          <strong>α(n) — Inverse Ackermann Function</strong>
+          For all practical purposes α(n) ≤ 4. The function grows so slowly that it's effectively constant. Never say O(1) in interviews — say "inverse Ackermann, essentially constant."
+        </div>
+      </section>
+
+      <!-- 7. Tricks -->
+      <section class="section" id="tricks">
+        <h2><span class="section-num">7</span> Common Tricks</h2>
+        <div class="tricks-grid">
+          <div class="trick-card">
+            <div class="trick-card__icon">⚡</div>
+            <h4>Recursive Path Compression</h4>
+            <p>One-liner: <code>parent[x] = find(parent[x])</code>. Clean and effective. Points every ancestor directly to root during the find call itself.</p>
+          </div>
+          <div class="trick-card">
+            <div class="trick-card__icon">📊</div>
+            <h4>Track Component Count</h4>
+            <p>Initialize <code>count = n</code>. Decrement by 1 inside <code>union</code> only when the roots differ. Gives you live component count for free.</p>
+          </div>
+          <div class="trick-card">
+            <div class="trick-card__icon">🎯</div>
+            <h4>Cycle Detection</h4>
+            <p>If <code>find(u) == find(v)</code> before calling <code>union(u,v)</code>, the edge (u,v) creates a cycle — u and v are already connected.</p>
+          </div>
+          <div class="trick-card">
+            <div class="trick-card__icon">🔢</div>
+            <h4>Union by Size vs Rank</h4>
+            <p>Use <code>size[]</code> instead of <code>rank[]</code> when you need to know component sizes. Merge smaller under larger. Same asymptotic performance.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 8. Mistakes -->
+      <section class="section" id="mistakes">
+        <h2><span class="section-num">8</span> Common Mistakes</h2>
+        <div class="callout callout--danger">
+          <strong>Mistake 1 — Forgetting path compression</strong>
+          Without it, find() is O(n) in the worst case. Always use <code>parent[x] = find(parent[x])</code>.
+        </div>
+        <div class="callout callout--danger">
+          <strong>Mistake 2 — Union without checking if roots are the same</strong>
+          Calling union on already-connected nodes corrupts rank. Always check <code>find(x) != find(y)</code> before merging.
+        </div>
+        <div class="callout callout--warning">
+          <strong>Mistake 3 — Forgetting to decrement component count</strong>
+          If the problem asks for the number of components, you need to track this explicitly.
+        </div>
+        <div class="callout callout--warning">
+          <strong>Mistake 4 — Using Union Find for directed graphs</strong>
+          Union Find works on undirected graphs only. For directed graphs use DFS/topological sort.
+        </div>
+      </section>
+
+      <!-- 9. Python 2 Template -->
+      <section class="section" id="python-code">
+        <h2><span class="section-num">9</span> Python 2 Template</h2>
+
+        <h3>Optimal (Path Compression + Union by Rank)</h3>
+        <div class="code-block">
+          <div class="code-block__header">
+            <span class="code-block__lang">Python 2</span>
+            <button class="code-copy-btn">Copy</button>
+          </div>
+          <pre><code>class UnionFind(object):
+    def __init__(self, n):
+        self.parent = range(n)        # parent[i] = i initially
+        self.rank   = [0] * n
+        self.count  = n               # number of components
+
+    def find(self, x):
+        if self.parent[x] != x:
+            self.parent[x] = self.find(self.parent[x])  # path compression
+        return self.parent[x]
+
+    def union(self, x, y):
+        px, py = self.find(x), self.find(y)
+        if px == py:
+            return False              # already connected, would create cycle
+        # union by rank
+        if self.rank[px] < self.rank[py]:
+            px, py = py, px           # ensure px has higher rank
+        self.parent[py] = px
+        if self.rank[px] == self.rank[py]:
+            self.rank[px] += 1
+        self.count -= 1
+        return True
+
+    def connected(self, x, y):
+        return self.find(x) == self.find(y)
+
+
+# Example usage
+uf = UnionFind(5)
+uf.union(0, 1)
+uf.union(2, 3)
+print uf.connected(0, 1)   # True
+print uf.connected(0, 2)   # False
+print uf.count             # 3 components: {0,1}, {2,3}, {4}</code></pre>
+        </div>
+
+        <h3>Minimal (Interviews — fits in 10 lines)</h3>
+        <div class="code-block">
+          <div class="code-block__header">
+            <span class="code-block__lang">Python 2</span>
+            <button class="code-copy-btn">Copy</button>
+          </div>
+          <pre><code>parent = range(n)
+
+def find(x):
+    while parent[x] != x:
+        parent[x] = parent[parent[x]]   # path compression (halving)
+        x = parent[x]
+    return x
+
+def union(x, y):
+    px, py = find(x), find(y)
+    if px != py:
+        parent[px] = py</code></pre>
+        </div>
+      </section>
+
+      <!-- 10. Variations -->
+      <section class="section" id="variations">
+        <h2><span class="section-num">10</span> Python 2 Variations</h2>
+
+        <h3>Union by Size (track component sizes)</h3>
+        <div class="code-block">
+          <div class="code-block__header">
+            <span class="code-block__lang">Python 2</span>
+            <button class="code-copy-btn">Copy</button>
+          </div>
+          <pre><code>class UnionFind(object):
+    def __init__(self, n):
+        self.parent = range(n)
+        self.size   = [1] * n   # size of each component
+        self.count  = n
+
+    def find(self, x):
+        if self.parent[x] != x:
+            self.parent[x] = self.find(self.parent[x])
+        return self.parent[x]
+
+    def union(self, x, y):
+        px, py = self.find(x), self.find(y)
+        if px == py: return False
+        if self.size[px] < self.size[py]:
+            px, py = py, px
+        self.parent[py] = px
+        self.size[px]  += self.size[py]
+        self.count     -= 1
+        return True
+
+    def get_size(self, x):
+        return self.size[self.find(x)]</code></pre>
+        </div>
+
+        <h3>With Weighted / Bipartite Grouping</h3>
+        <div class="code-block">
+          <div class="code-block__header">
+            <span class="code-block__lang">Python 2</span>
+            <button class="code-copy-btn">Copy</button>
+          </div>
+          <pre><code># For problems like "enemy-friend grouping" (LC 399 Evaluate Division)
+# extend nodes: node i's "enemy" = node i + n
+parent = range(2 * n)
+
+def find(x):
+    if parent[x] != x:
+        parent[x] = find(parent[x])
+    return parent[x]
+
+def union_enemies(x, y):
+    # x and y are enemies: connect x with y's enemy, y with x's enemy
+    union(x, y + n)
+    union(x + n, y)</code></pre>
+        </div>
+      </section>
+
+      <!-- 11. LeetCode Problems -->
+      <section class="section" id="leetcode">
+        <h2><span class="section-num">11</span> LeetCode Problems</h2>
+
+        <h3>Easy</h3>
+        <div class="problem-list">
+          <div class="problem-item">
+            <div class="problem-item__num" style="background:rgba(16,185,129,.12);color:var(--diff-easy);">E</div>
+            <div class="problem-item__info">
+              <div class="problem-item__name"><a href="https://leetcode.com/problems/find-if-path-exists-in-graph/" target="_blank">1971. Find if Path Exists in Graph</a></div>
+              <div class="problem-item__why">Direct application — are two nodes connected?</div>
+            </div>
+            <span class="badge badge--easy">Easy</span>
+          </div>
+        </div>
+
+        <h3 style="margin-top:1rem;">Medium</h3>
+        <div class="problem-list">
+          <div class="problem-item">
+            <div class="problem-item__num" style="background:rgba(245,158,11,.12);color:var(--diff-medium);">M</div>
+            <div class="problem-item__info">
+              <div class="problem-item__name"><a href="https://leetcode.com/problems/number-of-islands/" target="_blank">200. Number of Islands</a></div>
+              <div class="problem-item__why">Count connected components in a 2D grid</div>
+            </div>
+            <span class="badge badge--medium">Medium</span>
+          </div>
+          <div class="problem-item">
+            <div class="problem-item__num" style="background:rgba(245,158,11,.12);color:var(--diff-medium);">M</div>
+            <div class="problem-item__info">
+              <div class="problem-item__name"><a href="https://leetcode.com/problems/redundant-connection/" target="_blank">684. Redundant Connection</a></div>
+              <div class="problem-item__why">Detect cycle using union — if already connected, edge is redundant</div>
+            </div>
+            <span class="badge badge--medium">Medium</span>
+          </div>
+          <div class="problem-item">
+            <div class="problem-item__num" style="background:rgba(245,158,11,.12);color:var(--diff-medium);">M</div>
+            <div class="problem-item__info">
+              <div class="problem-item__name"><a href="https://leetcode.com/problems/accounts-merge/" target="_blank">721. Accounts Merge</a></div>
+              <div class="problem-item__why">Group accounts sharing an email using Union Find on email addresses</div>
+            </div>
+            <span class="badge badge--medium">Medium</span>
+          </div>
+        </div>
+
+        <h3 style="margin-top:1rem;">Hard</h3>
+        <div class="problem-list">
+          <div class="problem-item">
+            <div class="problem-item__num" style="background:rgba(239,68,68,.12);color:var(--diff-hard);">H</div>
+            <div class="problem-item__info">
+              <div class="problem-item__name"><a href="https://leetcode.com/problems/number-of-islands-ii/" target="_blank">305. Number of Islands II</a></div>
+              <div class="problem-item__why">Dynamic island addition — must update component count after each union</div>
+            </div>
+            <span class="badge badge--hard">Hard</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 12. Walkthrough -->
+      <section class="section" id="walkthrough">
+        <h2><span class="section-num">12</span> Step-by-Step Walkthrough</h2>
+        <p style="margin-bottom:0.75rem;">Problem: <em>Given edges [[1,2],[2,3],[3,4],[1,4],[1,5]], find the redundant connection.</em></p>
+        <div class="steps">
+          <div class="step"><div class="step__num">1</div><div class="step__content"><h4>Initialize</h4><p>parent = [0,1,2,3,4,5], count = 5. Each node is its own component.</p></div></div>
+          <div class="step"><div class="step__num">2</div><div class="step__content"><h4>union(1, 2)</h4><p>find(1)=1, find(2)=2. Different roots → merge. parent[2]=1. count=4.</p></div></div>
+          <div class="step"><div class="step__num">3</div><div class="step__content"><h4>union(2, 3)</h4><p>find(2)=1, find(3)=3. Different → merge. parent[3]=1. count=3.</p></div></div>
+          <div class="step"><div class="step__num">4</div><div class="step__content"><h4>union(3, 4)</h4><p>find(3)=1, find(4)=4. Different → merge. parent[4]=1. count=2.</p></div></div>
+          <div class="step"><div class="step__num">5</div><div class="step__content"><h4>union(1, 4) — Cycle!</h4><p>find(1)=1, find(4)=1. <strong>Same root!</strong> This edge [1,4] would create a cycle. Return it as the redundant connection.</p></div></div>
+        </div>
+      </section>
+
+      <!-- 13. Mental Model -->
+      <section class="section" id="mental-model">
+        <h2><span class="section-num">13</span> Mental Model</h2>
+        <div class="callout callout--info">
+          <strong>Think of it as a "club membership" system</strong>
+          Each person starts in their own solo club. <code>union(x, y)</code> = merge club x and club y. <code>find(x)</code> = who is the president of x's club? Two people are in the same club iff they have the same president. Path compression = every member updates their records to know the president directly (skip the chain).
+        </div>
+      </section>
+
+      <!-- 14. Revision Notes -->
+      <section class="section" id="revision">
+        <h2><span class="section-num">14</span> Revision Notes</h2>
+        <div class="revision-box">
+          <h3>⚡ 1-Minute Review</h3>
+          <ul>
+            <li>Two operations: <code>find(x)</code> → root of x's tree; <code>union(x,y)</code> → merge trees</li>
+            <li>Path compression: <code>parent[x] = find(parent[x])</code> — flattens tree on the fly</li>
+            <li>Union by rank: attach smaller tree under larger — keeps height O(log n)</li>
+            <li>Together → O(α(n)) ≈ O(1) per operation</li>
+            <li>Cycle detection: if <code>find(u) == find(v)</code>, edge (u,v) creates a cycle</li>
+            <li>Track component count: start at n, decrement each successful union</li>
+            <li>Works on <strong>undirected</strong> graphs only</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 15. Related Concepts -->
+      <section class="section" id="related">
+        <h2><span class="section-num">15</span> Related Concepts</h2>
+        <div class="related-grid">
+          <a href="/concepts/bfs.html"                 class="related-card">BFS</a>
+          <a href="/concepts/dfs.html"                 class="related-card">DFS</a>
+          <a href="/concepts/dijkstra.html"            class="related-card">Dijkstra</a>
+          <a href="/problems/number-of-islands.html"   class="related-card">Number of Islands</a>
+          <a href="/problems/redundant-connection.html" class="related-card">Redundant Connection</a>
+        </div>
+      </section>
+
+      <!-- Next Topic Banner -->
+      <div class="next-topic-banner">
+        <div class="next-topic-banner__text">
+          <h4>Recommended Next</h4>
+          <h3>Dijkstra's Algorithm</h3>
+          <p>Build on graph traversal — now handle weighted edges with a priority queue.</p>
+        </div>
+        <a href="/concepts/dijkstra.html" class="btn btn--primary" data-nav="next">Study Dijkstra →</a>
+      </div>
+
+      <!-- Page Navigation -->
+      <nav class="page-nav">
+        <a href="/concepts/dfs.html" class="page-nav__btn" data-nav="prev">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          <div><div class="page-nav__btn__label">Previous</div><div class="page-nav__btn__title">DFS</div></div>
+        </a>
+        <a href="/concepts/dijkstra.html" class="page-nav__btn page-nav__btn--next" data-nav="next">
+          <div><div class="page-nav__btn__label">Next</div><div class="page-nav__btn__title">Dijkstra</div></div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        </a>
+      </nav>
+
+    </main>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="/assets/js/main.js"></script>
+</body>
+</html>

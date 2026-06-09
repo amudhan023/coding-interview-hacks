@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Redundant Connection — Interview Hacks</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+</head>
+<body data-page-title="Redundant Connection">
+  <nav class="topnav">
+    <a href="/" class="topnav__logo" style="text-decoration:none;"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect width="20" height="20" rx="5" fill="var(--accent)"/><path d="M5 7l3 3-3 3M10 14h5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Interview<span>Hacks</span></span></a>
+    <div class="topnav__search"><svg class="topnav__search-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M11 11l3 3"/></svg><input type="text" id="search-input" placeholder="Search topics…" autocomplete="off" /><span class="topnav__kbd">/</span><div class="search-results" id="search-results"></div></div>
+    <div class="topnav__actions"><button class="btn-icon" id="theme-toggle" title="Toggle theme"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button></div>
+  </nav>
+
+  <div class="page-layout">
+    <aside class="sidebar">
+      <div class="sidebar__section"><div class="sidebar__label">On this page</div><nav class="toc"><a href="#summary" class="toc-link">Problem Summary</a><a href="#pattern" class="toc-link">Pattern</a><a href="#visualization" class="toc-link">Visualization</a><a href="#brute-force" class="toc-link">Brute Force</a><a href="#optimal" class="toc-link">Optimal Solution</a><a href="#python-code" class="toc-link">Python 2 Code</a><a href="#dry-run" class="toc-link">Dry Run</a><a href="#complexity" class="toc-link">Complexity</a><a href="#variations" class="toc-link">Variations</a><a href="#related" class="toc-link">Related Problems</a></nav></div>
+      <div class="sidebar__section"><div class="sidebar__label">Problems</div><a href="/problems/two-sum.html" class="sidebar__link">Two Sum</a><a href="/problems/number-of-islands.html" class="sidebar__link">Number of Islands</a><a href="/problems/redundant-connection.html" class="sidebar__link active">Redundant Connection</a></div>
+      <div class="sidebar__section"><div class="sidebar__label">Recently Viewed</div><div id="recently-viewed"></div></div>
+    </aside>
+
+    <main class="content">
+      <nav class="breadcrumbs"><a href="/">Home</a><span class="breadcrumbs__sep">›</span><a href="/problems/">Problems</a><span class="breadcrumbs__sep">›</span><span class="breadcrumbs__current">Redundant Connection</span></nav>
+
+      <div class="page-header">
+        <div class="page-header__badges"><span class="badge badge--medium">Medium</span><span class="badge badge--cat">Union Find</span><span class="badge badge--cat">Graphs</span></div>
+        <h1>Redundant Connection <span style="color:var(--text-muted);font-weight:400;font-size:1.2rem;">LC #684</span></h1>
+        <div class="page-header__meta"><span>⏱ 7 min revision</span><span>🎯 Union Find Cycle Detection</span><span>📌 Frequency: High</span></div>
+      </div>
+
+      <section class="section" id="summary">
+        <h2><span class="section-num">1</span> Problem Summary</h2>
+        <div class="callout callout--info"><strong>Problem</strong>You are given a tree with n nodes numbered 1 to n, plus one extra edge that creates a cycle. Return that extra (redundant) edge. If multiple answers exist, return the last one in the input.</div>
+        <p style="margin-top:0.75rem;"><strong>Example:</strong> edges = [[1,2],[1,3],[2,3]] → [2,3]</p>
+        <p>1–2 and 1–3 form a valid tree. Adding 2–3 creates a cycle: 1–2–3–1. The redundant edge is [2,3].</p>
+      </section>
+
+      <section class="section" id="pattern">
+        <h2><span class="section-num">2</span> Pattern</h2>
+        <div class="callout callout--success"><strong>Union Find Cycle Detection</strong>Process edges one by one. For each edge [u, v]: if find(u) == find(v), they're already connected — this edge creates a cycle → it's the redundant one. Otherwise, union(u, v) and continue.</div>
+        <p>Key insight: in a tree, every edge connects two different components. The first edge where both endpoints are already in the same component <em>is</em> the redundant edge.</p>
+      </section>
+
+      <section class="section" id="visualization">
+        <h2><span class="section-num">3</span> Visualization</h2>
+        <div class="viz-container">
+          <svg viewBox="0 0 680 280" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+            <!-- Tree (before redundant edge) -->
+            <text x="60" y="25" text-anchor="middle" font-size="12" fill="var(--text-muted)" font-weight="600">Valid Tree</text>
+            <line x1="60" y1="70"  x2="30"  y2="130" stroke="var(--border)" stroke-width="2"/>
+            <line x1="60" y1="70"  x2="90"  y2="130" stroke="var(--border)" stroke-width="2"/>
+            <circle cx="60"  cy="60"  r="20" fill="var(--accent-subtle)"     stroke="var(--accent)"   stroke-width="2"/>
+            <text x="60"  y="65"  text-anchor="middle" font-size="14" font-weight="700" fill="var(--accent)">1</text>
+            <circle cx="30"  cy="140" r="20" fill="var(--accent-subtle)"     stroke="var(--accent)"   stroke-width="2"/>
+            <text x="30"  y="145" text-anchor="middle" font-size="14" font-weight="700" fill="var(--accent)">2</text>
+            <circle cx="90"  cy="140" r="20" fill="var(--accent-subtle)"     stroke="var(--accent)"   stroke-width="2"/>
+            <text x="90"  y="145" text-anchor="middle" font-size="14" font-weight="700" fill="var(--accent)">3</text>
+
+            <!-- Redundant edge -->
+            <text x="190" y="25" text-anchor="middle" font-size="12" fill="var(--danger)" font-weight="600">+ Redundant Edge [2,3]</text>
+            <line x1="190" y1="70"  x2="160" y2="130" stroke="var(--border)" stroke-width="2"/>
+            <line x1="190" y1="70"  x2="220" y2="130" stroke="var(--border)" stroke-width="2"/>
+            <line x1="160" y1="150" x2="220" y2="150" stroke="var(--danger)" stroke-width="3" stroke-dasharray="6 3"/>
+            <circle cx="190" cy="60"  r="20" fill="var(--accent-subtle)"  stroke="var(--accent)"  stroke-width="2"/>
+            <text x="190" y="65"  text-anchor="middle" font-size="14" font-weight="700" fill="var(--accent)">1</text>
+            <circle cx="160" cy="140" r="20" fill="var(--accent-subtle)"  stroke="var(--accent)"  stroke-width="2"/>
+            <text x="160" y="145" text-anchor="middle" font-size="14" font-weight="700" fill="var(--accent)">2</text>
+            <circle cx="220" cy="140" r="20" fill="var(--accent-subtle)"  stroke="var(--accent)"  stroke-width="2"/>
+            <text x="220" y="145" text-anchor="middle" font-size="14" font-weight="700" fill="var(--accent)">3</text>
+            <text x="190" y="178" text-anchor="middle" font-size="11" fill="var(--danger)">creates cycle: 1→2→3→1</text>
+
+            <!-- Union Find walkthrough -->
+            <text x="340" y="25" font-size="12" fill="var(--text-muted)" font-weight="600">Union Find trace</text>
+
+            <text x="340" y="55"  font-size="12" fill="var(--text-secondary)">Edge [1,2]: find(1)=1, find(2)=2 → different</text>
+            <text x="340" y="73"  font-size="12" fill="var(--success)">  union(1,2). parent[2]=1.</text>
+
+            <text x="340" y="100" font-size="12" fill="var(--text-secondary)">Edge [1,3]: find(1)=1, find(3)=3 → different</text>
+            <text x="340" y="118" font-size="12" fill="var(--success)">  union(1,3). parent[3]=1.</text>
+
+            <text x="340" y="145" font-size="12" fill="var(--text-secondary)">Edge [2,3]: find(2)=1, find(3)=1 → <tspan fill="var(--danger)" font-weight="700">SAME!</tspan></text>
+            <text x="340" y="163" font-size="12" fill="var(--danger)" font-weight="600">  Cycle detected → return [2,3] ✓</text>
+
+            <rect x="336" y="170" width="310" height="36" rx="6" fill="rgba(16,185,129,.08)" stroke="var(--success)" stroke-width="1.5"/>
+            <text x="491" y="184" text-anchor="middle" font-size="11" fill="var(--text-muted)">Rule:</text>
+            <text x="491" y="200" text-anchor="middle" font-size="12" fill="var(--success)">if find(u) == find(v) → redundant edge found</text>
+          </svg>
+        </div>
+      </section>
+
+      <section class="section" id="brute-force">
+        <h2><span class="section-num">4</span> Brute Force — DFS O(n²)</h2>
+        <p>For each edge, check if a path already exists between its endpoints using DFS. If yes, this edge is redundant. O(n) per check × O(n) edges = O(n²).</p>
+        <div class="code-block">
+          <div class="code-block__header"><span class="code-block__lang">Python 2 — Brute Force</span><button class="code-copy-btn">Copy</button></div>
+          <pre><code>class Solution(object):
+    def findRedundantConnection(self, edges):
+        graph = {}
+
+        def has_path(src, dst, visited):
+            if src == dst: return True
+            visited.add(src)
+            for nb in graph.get(src, []):
+                if nb not in visited and has_path(nb, dst, visited):
+                    return True
+            return False
+
+        for u, v in edges:
+            if has_path(u, v, set()):   # path already exists?
+                return [u, v]
+            graph.setdefault(u, []).append(v)
+            graph.setdefault(v, []).append(u)
+
+        return []</code></pre>
+        </div>
+      </section>
+
+      <section class="section" id="optimal">
+        <h2><span class="section-num">5</span> Optimal Solution — Union Find O(n · α(n))</h2>
+        <p>Union Find tells you in near-O(1) whether two nodes are already connected. Process each edge: if both endpoints have the same root, you found the redundant edge. Otherwise, union them.</p>
+        <div class="callout callout--success"><strong>The elegant rule</strong>A redundant edge is one where both endpoints are already in the same connected component when we try to process it. Union Find detects this instantly.</div>
+      </section>
+
+      <section class="section" id="python-code">
+        <h2><span class="section-num">6</span> Python 2 Code</h2>
+        <div class="code-block">
+          <div class="code-block__header"><span class="code-block__lang">Python 2 — Union Find (Optimal)</span><button class="code-copy-btn">Copy</button></div>
+          <pre><code>class Solution(object):
+    def findRedundantConnection(self, edges):
+        n = len(edges)
+        parent = range(n + 1)   # 1-indexed nodes
+        rank   = [0] * (n + 1)
+
+        def find(x):
+            if parent[x] != x:
+                parent[x] = find(parent[x])   # path compression
+            return parent[x]
+
+        def union(x, y):
+            px, py = find(x), find(y)
+            if px == py:
+                return False   # already connected — redundant edge
+            if rank[px] < rank[py]:
+                px, py = py, px
+            parent[py] = px
+            if rank[px] == rank[py]:
+                rank[px] += 1
+            return True
+
+        for u, v in edges:
+            if not union(u, v):
+                return [u, v]
+
+        return []</code></pre>
+        </div>
+      </section>
+
+      <section class="section" id="dry-run">
+        <h2><span class="section-num">7</span> Dry Run</h2>
+        <p style="margin-bottom:0.75rem;">edges = [[1,2],[2,3],[3,4],[1,4],[1,5]]</p>
+        <div class="steps">
+          <div class="step"><div class="step__num">1</div><div class="step__content"><h4>[1,2]</h4><p>find(1)=1, find(2)=2. Different → union. parent[2]=1.</p></div></div>
+          <div class="step"><div class="step__num">2</div><div class="step__content"><h4>[2,3]</h4><p>find(2)=1, find(3)=3. Different → union. parent[3]=1.</p></div></div>
+          <div class="step"><div class="step__num">3</div><div class="step__content"><h4>[3,4]</h4><p>find(3)=1, find(4)=4. Different → union. parent[4]=1.</p></div></div>
+          <div class="step"><div class="step__num">4</div><div class="step__content"><h4>[1,4] — CYCLE!</h4><p>find(1)=1, find(4)=1. <strong>Same root!</strong> Union returns False. Return [1,4].</p></div></div>
+        </div>
+      </section>
+
+      <section class="section" id="complexity">
+        <h2><span class="section-num">8</span> Complexity Analysis</h2>
+        <table class="complexity-table">
+          <thead><tr><th>Approach</th><th>Time</th><th>Space</th></tr></thead>
+          <tbody>
+            <tr><td>Brute force DFS per edge</td><td>O(n²)</td><td>O(n)</td></tr>
+            <tr><td>Union Find (with path compression + rank)</td><td>O(n · α(n)) ≈ O(n)</td><td>O(n)</td></tr>
+          </tbody>
+        </table>
+        <div class="callout callout--info"><strong>Why Union Find wins here</strong>DFS checks full connectivity on each new edge — O(n) per edge. Union Find maintains connectivity incrementally — O(α(n)) per edge, effectively constant.</div>
+      </section>
+
+      <section class="section" id="variations">
+        <h2><span class="section-num">9</span> Variations</h2>
+        <div class="tricks-grid">
+          <div class="trick-card"><div class="trick-card__icon">🔢</div><h4>Redundant Connection II (LC 685)</h4><p>Directed graph. Harder — handle two cases: node with two parents, or cycle without such a node. Requires careful Union Find with rollback.</p></div>
+          <div class="trick-card"><div class="trick-card__icon">🌳</div><h4>Kruskal's MST</h4><p>Same Union Find logic — process edges sorted by weight, skip edges where both endpoints share a root. The accepted edges form the MST.</p></div>
+          <div class="trick-card"><div class="trick-card__icon">🔗</div><h4>Graph Valid Tree (LC 261)</h4><p>n nodes and n-1 edges? Check: 1) No cycle (Union Find), 2) All connected (count=1). Both conditions → valid tree.</p></div>
+          <div class="trick-card"><div class="trick-card__icon">🌐</div><h4>Number of Connected Components</h4><p>Same Union Find structure. Count how many nodes have parent[x]==x after all unions. That's the component count.</p></div>
+        </div>
+      </section>
+
+      <section class="section" id="related">
+        <h2><span class="section-num">10</span> Related Problems</h2>
+        <div class="related-grid">
+          <a href="/concepts/union-find.html"           class="related-card">Union Find</a>
+          <a href="/concepts/dfs.html"                  class="related-card">DFS</a>
+          <a href="/problems/number-of-islands.html"    class="related-card">Number of Islands</a>
+          <a href="/problems/two-sum.html"              class="related-card">Two Sum</a>
+        </div>
+      </section>
+
+      <nav class="page-nav">
+        <a href="/problems/number-of-islands.html" class="page-nav__btn" data-nav="prev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg><div><div class="page-nav__btn__label">Previous</div><div class="page-nav__btn__title">Number of Islands</div></div></a>
+        <a href="/" class="page-nav__btn page-nav__btn--next" data-nav="next"><div><div class="page-nav__btn__label">Back</div><div class="page-nav__btn__title">Dashboard</div></div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></a>
+      </nav>
+    </main>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script src="/assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dynamic Programming — Interview Hacks</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+</head>
+<body data-page-title="Dynamic Programming">
+  <nav class="topnav">
+    <a href="/" class="topnav__logo" style="text-decoration:none;"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect width="20" height="20" rx="5" fill="var(--accent)"/><path d="M5 7l3 3-3 3M10 14h5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Interview<span>Hacks</span></span></a>
+    <div class="topnav__search"><svg class="topnav__search-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M11 11l3 3"/></svg><input type="text" id="search-input" placeholder="Search topics…" autocomplete="off" /><span class="topnav__kbd">/</span><div class="search-results" id="search-results"></div></div>
+    <div class="topnav__actions"><button class="btn-icon" id="theme-toggle" title="Toggle theme"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button></div>
+  </nav>
+
+  <div class="page-layout">
+    <aside class="sidebar">
+      <div class="sidebar__section"><div class="sidebar__label">On this page</div><nav class="toc"><a href="#overview" class="toc-link">Overview</a><a href="#why-asked" class="toc-link">Why Interviewers Ask</a><a href="#recognition" class="toc-link">Pattern Recognition</a><a href="#core-idea" class="toc-link">Core Idea</a><a href="#visualization" class="toc-link">Visualization</a><a href="#complexity" class="toc-link">Complexity</a><a href="#tricks" class="toc-link">Tricks</a><a href="#mistakes" class="toc-link">Common Mistakes</a><a href="#python-code" class="toc-link">Python 2 Template</a><a href="#variations" class="toc-link">Variations</a><a href="#leetcode" class="toc-link">LeetCode Problems</a><a href="#walkthrough" class="toc-link">Walkthrough</a><a href="#mental-model" class="toc-link">Mental Model</a><a href="#revision" class="toc-link">Revision Notes</a><a href="#related" class="toc-link">Related Concepts</a></nav></div>
+      <div class="sidebar__section"><div class="sidebar__label">Concepts</div><a href="/concepts/prefix-sum.html" class="sidebar__link">Prefix Sum</a><a href="/concepts/bfs.html" class="sidebar__link">BFS</a><a href="/concepts/dfs.html" class="sidebar__link">DFS</a><a href="/concepts/union-find.html" class="sidebar__link">Union Find</a><a href="/concepts/dijkstra.html" class="sidebar__link">Dijkstra</a><a href="/concepts/dynamic-programming.html" class="sidebar__link active">Dynamic Programming</a></div>
+      <div class="sidebar__section"><div class="sidebar__label">Recently Viewed</div><div id="recently-viewed"></div></div>
+    </aside>
+
+    <main class="content">
+      <nav class="breadcrumbs"><a href="/">Home</a><span class="breadcrumbs__sep">›</span><a href="/concepts/">Concepts</a><span class="breadcrumbs__sep">›</span><span class="breadcrumbs__current">Dynamic Programming</span></nav>
+
+      <div class="page-header">
+        <div class="page-header__badges"><span class="badge badge--hard">Hard</span><span class="badge badge--cat">Dynamic Programming</span></div>
+        <h1>Dynamic Programming</h1>
+        <div class="page-header__meta"><span>⏱ 10 min revision</span><span>🎯 Overlapping Subproblems</span><span>📌 Frequency: Very High</span></div>
+      </div>
+
+      <section class="section" id="overview">
+        <h2><span class="section-num">1</span> Concept Overview</h2>
+        <p>Dynamic Programming (DP) solves complex problems by breaking them into <strong>overlapping subproblems</strong> and <strong>caching</strong> their results. Instead of recomputing the same subproblem multiple times (like naive recursion), DP computes each subproblem exactly once.</p>
+        <p style="margin-top:0.75rem;">Two approaches: <strong>Top-down (memoization)</strong> — recursion + cache; <strong>Bottom-up (tabulation)</strong> — fill a table iteratively from base cases up.</p>
+        <div class="callout callout--info"><strong>Two required properties for DP</strong><strong>1. Overlapping subproblems</strong> — same subproblems recur (not like Divide & Conquer where subproblems are independent). <strong>2. Optimal substructure</strong> — optimal solution of the problem contains optimal solutions of subproblems.</div>
+      </section>
+
+      <section class="section" id="why-asked">
+        <h2><span class="section-num">2</span> Why Interviewers Ask It</h2>
+        <p>DP problems constitute 30–40% of LeetCode Hard problems. They test whether you can identify the state space, define a recurrence relation, and handle base cases. It's the deepest algorithmic skill tested at senior levels — correctly identifying the DP state separates strong candidates from the rest.</p>
+      </section>
+
+      <section class="section" id="recognition">
+        <h2><span class="section-num">3</span> Pattern Recognition</h2>
+        <div class="callout callout--success"><strong>Use DP when you see</strong>"Count the number of ways" · "Minimum/maximum of something" · "Can you achieve X?" · Problems with choices at each step · "Is this possible?" (boolean DP) · String matching, knapsack, coin change, path problems</div>
+        <p>Ask yourself: <em>"If I knew the answer to a smaller version of this problem, could I build the answer to the full problem?"</em> If yes, that's DP.</p>
+        <p style="margin-top:0.5rem;">Red flag for backtracking instead: "find ALL solutions" or "list every combination" — DP counts/optimizes, backtracking enumerates.</p>
+      </section>
+
+      <section class="section" id="core-idea">
+        <h2><span class="section-num">4</span> Core Idea</h2>
+        <p>The DP problem-solving framework:</p>
+        <div class="steps" style="margin-top:0.75rem;">
+          <div class="step"><div class="step__num">1</div><div class="step__content"><h4>Define the state</h4><p><code>dp[i]</code> = ? What does this index represent? Be precise. "dp[i] = minimum cost to reach index i" is a valid state. "dp[i] = something with i" is not.</p></div></div>
+          <div class="step"><div class="step__num">2</div><div class="step__content"><h4>Write the recurrence</h4><p>How do we compute dp[i] from smaller subproblems? <code>dp[i] = min(dp[i-1] + cost[i], dp[i-2] + cost[i])</code></p></div></div>
+          <div class="step"><div class="step__num">3</div><div class="step__content"><h4>Identify base cases</h4><p>What are the smallest valid values? <code>dp[0] = 0</code>, <code>dp[1] = cost[0]</code></p></div></div>
+          <div class="step"><div class="step__num">4</div><div class="step__content"><h4>Determine traversal order</h4><p>Bottom-up: ensure subproblems are solved before the current problem. Usually left-to-right, or outer-to-inner for 2D.</p></div></div>
+        </div>
+      </section>
+
+      <section class="section" id="visualization">
+        <h2><span class="section-num">5</span> Visualization — Fibonacci / Memoization</h2>
+        <div class="viz-container">
+          <svg viewBox="0 0 680 280" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+            <!-- Naive recursion tree (left) -->
+            <text x="160" y="22" text-anchor="middle" font-size="12" fill="var(--danger)" font-weight="600">Naive: O(2^n) — redundant calls</text>
+
+            <line x1="160" y1="45" x2="90"  y2="90"  stroke="var(--danger)" stroke-width="1.5" opacity="0.5"/>
+            <line x1="160" y1="45" x2="230" y2="90"  stroke="var(--danger)" stroke-width="1.5" opacity="0.5"/>
+            <line x1="90"  y1="90" x2="50"  y2="135" stroke="var(--danger)" stroke-width="1.5" opacity="0.5"/>
+            <line x1="90"  y1="90" x2="130" y2="135" stroke="var(--danger)" stroke-width="1.5" opacity="0.5"/>
+            <line x1="230" y1="90" x2="190" y2="135" stroke="var(--danger)" stroke-width="1.5" opacity="0.5"/>
+            <line x1="230" y1="90" x2="270" y2="135" stroke="var(--danger)" stroke-width="1.5" opacity="0.5"/>
+
+            <circle cx="160" cy="45"  r="18" fill="rgba(239,68,68,.15)" stroke="var(--danger)" stroke-width="1.5"/>
+            <text x="160" y="50"  text-anchor="middle" font-size="11" fill="var(--danger)">f(5)</text>
+            <circle cx="90"  cy="90"  r="18" fill="rgba(239,68,68,.1)"  stroke="var(--danger)" stroke-width="1.5"/>
+            <text x="90"  y="95"  text-anchor="middle" font-size="11" fill="var(--danger)">f(4)</text>
+            <circle cx="230" cy="90"  r="18" fill="rgba(239,68,68,.1)"  stroke="var(--danger)" stroke-width="1.5"/>
+            <text x="230" y="95"  text-anchor="middle" font-size="11" fill="var(--danger)">f(3)</text>
+            <circle cx="50"  cy="135" r="18" fill="rgba(239,68,68,.1)"  stroke="var(--danger)" stroke-width="1.5"/>
+            <text x="50"  y="140" text-anchor="middle" font-size="11" fill="var(--danger)">f(3)</text>
+            <circle cx="130" cy="135" r="18" fill="rgba(239,68,68,.1)"  stroke="var(--danger)" stroke-width="1.5"/>
+            <text x="130" y="140" text-anchor="middle" font-size="11" fill="var(--danger)">f(2)</text>
+            <circle cx="190" cy="135" r="18" fill="rgba(239,68,68,.1)"  stroke="var(--danger)" stroke-width="1.5"/>
+            <text x="190" y="140" text-anchor="middle" font-size="11" fill="var(--danger)">f(2)</text>
+            <circle cx="270" cy="135" r="18" fill="rgba(239,68,68,.1)"  stroke="var(--danger)" stroke-width="1.5"/>
+            <text x="270" y="140" text-anchor="middle" font-size="11" fill="var(--danger)">f(1)</text>
+
+            <text x="50"  cy="135" x1="50"  y1="135" font-size="9" fill="var(--danger)" text-anchor="middle">f(3) computed twice!</text>
+
+            <!-- DP table (right) -->
+            <text x="510" y="22" text-anchor="middle" font-size="12" fill="var(--success)" font-weight="600">DP: O(n) — each subproblem once</text>
+
+            <!-- Bottom-up table -->
+            <g>
+              <rect x="380" y="35" width="52" height="36" rx="6" fill="var(--bg-code)" stroke="var(--success)" stroke-width="1.5"/>
+              <text x="406" y="52" text-anchor="middle" font-size="10" fill="var(--text-muted)">dp[0]</text>
+              <text x="406" y="66" text-anchor="middle" font-size="13" font-weight="700" fill="var(--success)">0</text>
+
+              <rect x="440" y="35" width="52" height="36" rx="6" fill="var(--bg-code)" stroke="var(--success)" stroke-width="1.5"/>
+              <text x="466" y="52" text-anchor="middle" font-size="10" fill="var(--text-muted)">dp[1]</text>
+              <text x="466" y="66" text-anchor="middle" font-size="13" font-weight="700" fill="var(--success)">1</text>
+
+              <rect x="500" y="35" width="52" height="36" rx="6" fill="var(--bg-code)" stroke="var(--success)" stroke-width="1.5"/>
+              <text x="526" y="52" text-anchor="middle" font-size="10" fill="var(--text-muted)">dp[2]</text>
+              <text x="526" y="66" text-anchor="middle" font-size="13" font-weight="700" fill="var(--success)">1</text>
+
+              <rect x="560" y="35" width="52" height="36" rx="6" fill="var(--bg-code)" stroke="var(--success)" stroke-width="1.5"/>
+              <text x="586" y="52" text-anchor="middle" font-size="10" fill="var(--text-muted)">dp[3]</text>
+              <text x="586" y="66" text-anchor="middle" font-size="13" font-weight="700" fill="var(--success)">2</text>
+
+              <rect x="620" y="35" width="52" height="36" rx="6" fill="var(--bg-code)" stroke="var(--accent)" stroke-width="2"/>
+              <text x="646" y="52" text-anchor="middle" font-size="10" fill="var(--accent)">dp[4]</text>
+              <text x="646" y="66" text-anchor="middle" font-size="13" font-weight="700" fill="var(--accent)">3</text>
+            </g>
+
+            <!-- Recurrence arrows -->
+            <path d="M 406,71 L 406,90 L 496,90 L 496,71" fill="none" stroke="var(--border)" stroke-width="1.5"/>
+            <text x="455" y="108" text-anchor="middle" font-size="10" fill="var(--text-muted)">dp[2] = dp[0]+dp[1]</text>
+
+            <!-- 2D DP Table (coin change) -->
+            <text x="430" y="145" font-size="11" fill="var(--text-muted)" font-weight="600">2D DP — Coin Change dp[amount]</text>
+            <text x="430" y="165" font-size="11" fill="var(--text-secondary)">coins=[1,2,5], amount=11</text>
+            <text x="430" y="183" font-size="11" fill="var(--text-secondary)">dp[0]=0 (base case)</text>
+            <text x="430" y="201" font-size="11" fill="var(--text-secondary)">dp[i] = min(dp[i-c]+1) for each coin c</text>
+            <text x="430" y="219" font-size="11" fill="var(--text-secondary)">dp[11] = 3  (5+5+1)</text>
+
+            <!-- Fill animation hint -->
+            <text x="430" y="250" font-size="10" fill="var(--text-muted)">Fill left→right. Each dp[i] depends only on dp[i-coin] (already computed)</text>
+          </svg>
+        </div>
+      </section>
+
+      <section class="section" id="complexity">
+        <h2><span class="section-num">6</span> Complexity</h2>
+        <table class="complexity-table">
+          <thead><tr><th>Problem Type</th><th>Time</th><th>Space</th></tr></thead>
+          <tbody>
+            <tr><td>1D DP (climbing stairs, coin change)</td><td>O(n × states)</td><td>O(n) or O(1) optimized</td></tr>
+            <tr><td>2D DP (grid, subsequence)</td><td>O(m × n)</td><td>O(m × n) or O(n) rolling</td></tr>
+            <tr><td>Knapsack</td><td>O(n × W)</td><td>O(W)</td></tr>
+            <tr><td>Interval DP</td><td>O(n³)</td><td>O(n²)</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="section" id="tricks">
+        <h2><span class="section-num">7</span> Common Tricks</h2>
+        <div class="tricks-grid">
+          <div class="trick-card"><div class="trick-card__icon">🔄</div><h4>Space Optimization</h4><p>If dp[i] only depends on dp[i-1] and dp[i-2], you only need 2 variables, not an array. Common in Fibonacci, Climbing Stairs, House Robber.</p></div>
+          <div class="trick-card"><div class="trick-card__icon">↔️</div><h4>Rolling Array for 2D</h4><p>If dp[i][j] only depends on dp[i-1][j], you can use two 1D arrays (current and previous row), reducing space from O(mn) to O(n).</p></div>
+          <div class="trick-card"><div class="trick-card__icon">📝</div><h4>Top-down First</h4><p>Write the recursive solution first, add <code>@lru_cache</code> or a memo dict — done. Then convert to bottom-up if needed for constant space or interview style.</p></div>
+          <div class="trick-card"><div class="trick-card__icon">🔢</div><h4>State Definition is Everything</h4><p>The hardest part is the DP state. Ask: "what information do I need at step i to make the optimal decision?" Those variables are your state.</p></div>
+        </div>
+      </section>
+
+      <section class="section" id="mistakes">
+        <h2><span class="section-num">8</span> Common Mistakes</h2>
+        <div class="callout callout--danger"><strong>Mistake 1 — Wrong recurrence direction</strong>For coin change, you go from amount 1 to target. Going backwards won't work. Always think about which direction ensures subproblems are solved before you need them.</div>
+        <div class="callout callout--danger"><strong>Mistake 2 — Incorrect base cases</strong>dp[0] is often 0 (cost) or 1 (count). Getting base cases wrong causes wrong answers that pass most test cases. Think carefully: what does dp[0] mean?</div>
+        <div class="callout callout--warning"><strong>Mistake 3 — Off-by-one in DP table size</strong>dp of size n vs n+1. For "amount" problems, dp needs size amount+1 to have dp[amount] available.</div>
+        <div class="callout callout--warning"><strong>Mistake 4 — Greedy when DP is required</strong>Greedy works when local optimum = global optimum. Greedy fails for problems like coin change with arbitrary denominations. When in doubt, think DP.</div>
+      </section>
+
+      <section class="section" id="python-code">
+        <h2><span class="section-num">9</span> Python 2 Template</h2>
+        <h3>Top-down (Memoization)</h3>
+        <div class="code-block">
+          <div class="code-block__header"><span class="code-block__lang">Python 2</span><button class="code-copy-btn">Copy</button></div>
+          <pre><code># Coin Change — Top-down with memo
+def coinChange(coins, amount):
+    memo = {}
+
+    def dp(remaining):
+        if remaining == 0: return 0
+        if remaining < 0:  return float('inf')
+        if remaining in memo: return memo[remaining]
+
+        best = float('inf')
+        for coin in coins:
+            res = dp(remaining - coin)
+            if res != float('inf'):
+                best = min(best, res + 1)
+
+        memo[remaining] = best
+        return best
+
+    result = dp(amount)
+    return result if result != float('inf') else -1</code></pre>
+        </div>
+
+        <h3>Bottom-up (Tabulation)</h3>
+        <div class="code-block">
+          <div class="code-block__header"><span class="code-block__lang">Python 2</span><button class="code-copy-btn">Copy</button></div>
+          <pre><code># Coin Change — Bottom-up tabulation
+def coinChange(coins, amount):
+    dp = [float('inf')] * (amount + 1)
+    dp[0] = 0   # base case: 0 coins to make amount 0
+
+    for amt in xrange(1, amount + 1):
+        for coin in coins:
+            if coin <= amt and dp[amt - coin] != float('inf'):
+                dp[amt] = min(dp[amt], dp[amt - coin] + 1)
+
+    return dp[amount] if dp[amount] != float('inf') else -1</code></pre>
+        </div>
+
+        <h3>Longest Common Subsequence (2D DP)</h3>
+        <div class="code-block">
+          <div class="code-block__header"><span class="code-block__lang">Python 2</span><button class="code-copy-btn">Copy</button></div>
+          <pre><code>def lcs(s1, s2):
+    m, n = len(s1), len(s2)
+    dp = [[0] * (n + 1) for _ in xrange(m + 1)]
+
+    for i in xrange(1, m + 1):
+        for j in xrange(1, n + 1):
+            if s1[i-1] == s2[j-1]:
+                dp[i][j] = dp[i-1][j-1] + 1      # characters match
+            else:
+                dp[i][j] = max(dp[i-1][j], dp[i][j-1])   # skip one
+
+    return dp[m][n]</code></pre>
+        </div>
+
+        <h3>0/1 Knapsack</h3>
+        <div class="code-block">
+          <div class="code-block__header"><span class="code-block__lang">Python 2</span><button class="code-copy-btn">Copy</button></div>
+          <pre><code>def knapsack(weights, values, capacity):
+    n = len(weights)
+    # dp[i][w] = max value using first i items with capacity w
+    dp = [[0] * (capacity + 1) for _ in xrange(n + 1)]
+
+    for i in xrange(1, n + 1):
+        for w in xrange(capacity + 1):
+            # don't take item i
+            dp[i][w] = dp[i-1][w]
+            # take item i (if it fits)
+            if weights[i-1] <= w:
+                dp[i][w] = max(dp[i][w], dp[i-1][w - weights[i-1]] + values[i-1])
+
+    return dp[n][capacity]</code></pre>
+        </div>
+      </section>
+
+      <section class="section" id="variations">
+        <h2><span class="section-num">10</span> Python 2 Variations</h2>
+        <h3>House Robber (Space-optimized)</h3>
+        <div class="code-block">
+          <div class="code-block__header"><span class="code-block__lang">Python 2</span><button class="code-copy-btn">Copy</button></div>
+          <pre><code>def rob(nums):
+    prev2 = prev1 = 0
+    for n in nums:
+        curr  = max(prev1, prev2 + n)
+        prev2 = prev1
+        prev1 = curr
+    return prev1</code></pre>
+        </div>
+
+        <h3>Longest Increasing Subsequence (O(n log n))</h3>
+        <div class="code-block">
+          <div class="code-block__header"><span class="code-block__lang">Python 2</span><button class="code-copy-btn">Copy</button></div>
+          <pre><code>import bisect
+
+def lis(nums):
+    tails = []
+    for n in nums:
+        pos = bisect.bisect_left(tails, n)
+        if pos == len(tails):
+            tails.append(n)
+        else:
+            tails[pos] = n
+    return len(tails)</code></pre>
+        </div>
+      </section>
+
+      <section class="section" id="leetcode">
+        <h2><span class="section-num">11</span> LeetCode Problems</h2>
+        <h3>Easy</h3>
+        <div class="problem-list">
+          <div class="problem-item"><div class="problem-item__num" style="background:rgba(16,185,129,.12);color:var(--diff-easy);">E</div><div class="problem-item__info"><div class="problem-item__name"><a href="https://leetcode.com/problems/climbing-stairs/" target="_blank">70. Climbing Stairs</a></div><div class="problem-item__why">Classic 1D DP — dp[i] = dp[i-1] + dp[i-2] (Fibonacci)</div></div><span class="badge badge--easy">Easy</span></div>
+          <div class="problem-item"><div class="problem-item__num" style="background:rgba(16,185,129,.12);color:var(--diff-easy);">E</div><div class="problem-item__info"><div class="problem-item__name"><a href="https://leetcode.com/problems/house-robber/" target="_blank">198. House Robber</a></div><div class="problem-item__why">1D DP with skip — rob adjacent vs skip</div></div><span class="badge badge--easy">Easy</span></div>
+        </div>
+        <h3 style="margin-top:1rem;">Medium</h3>
+        <div class="problem-list">
+          <div class="problem-item"><div class="problem-item__num" style="background:rgba(245,158,11,.12);color:var(--diff-medium);">M</div><div class="problem-item__info"><div class="problem-item__name"><a href="https://leetcode.com/problems/coin-change/" target="_blank">322. Coin Change</a></div><div class="problem-item__why">1D DP — unbounded knapsack</div></div><span class="badge badge--medium">Medium</span></div>
+          <div class="problem-item"><div class="problem-item__num" style="background:rgba(245,158,11,.12);color:var(--diff-medium);">M</div><div class="problem-item__info"><div class="problem-item__name"><a href="https://leetcode.com/problems/longest-common-subsequence/" target="_blank">1143. Longest Common Subsequence</a></div><div class="problem-item__why">2D DP — standard LCS recurrence</div></div><span class="badge badge--medium">Medium</span></div>
+          <div class="problem-item"><div class="problem-item__num" style="background:rgba(245,158,11,.12);color:var(--diff-medium);">M</div><div class="problem-item__info"><div class="problem-item__name"><a href="https://leetcode.com/problems/unique-paths/" target="_blank">62. Unique Paths</a></div><div class="problem-item__why">2D grid DP — dp[i][j] = dp[i-1][j] + dp[i][j-1]</div></div><span class="badge badge--medium">Medium</span></div>
+        </div>
+        <h3 style="margin-top:1rem;">Hard</h3>
+        <div class="problem-list">
+          <div class="problem-item"><div class="problem-item__num" style="background:rgba(239,68,68,.12);color:var(--diff-hard);">H</div><div class="problem-item__info"><div class="problem-item__name"><a href="https://leetcode.com/problems/edit-distance/" target="_blank">72. Edit Distance</a></div><div class="problem-item__why">2D DP — min operations to transform s1 to s2</div></div><span class="badge badge--hard">Hard</span></div>
+          <div class="problem-item"><div class="problem-item__num" style="background:rgba(239,68,68,.12);color:var(--diff-hard);">H</div><div class="problem-item__info"><div class="problem-item__name"><a href="https://leetcode.com/problems/burst-balloons/" target="_blank">312. Burst Balloons</a></div><div class="problem-item__why">Interval DP — think of it as "last balloon to burst"</div></div><span class="badge badge--hard">Hard</span></div>
+        </div>
+      </section>
+
+      <section class="section" id="walkthrough">
+        <h2><span class="section-num">12</span> Step-by-Step Walkthrough</h2>
+        <p style="margin-bottom:0.75rem;">Problem: <em>Coin change — coins=[1,2,5], amount=5. Min coins?</em></p>
+        <div class="steps">
+          <div class="step"><div class="step__num">1</div><div class="step__content"><h4>Initialize</h4><p>dp = [0, ∞, ∞, ∞, ∞, ∞]. dp[0]=0 (base case: 0 coins to make amount 0).</p></div></div>
+          <div class="step"><div class="step__num">2</div><div class="step__content"><h4>Fill dp[1]</h4><p>Try coin=1: dp[1-1]+1 = dp[0]+1 = 1. dp[1] = 1.</p></div></div>
+          <div class="step"><div class="step__num">3</div><div class="step__content"><h4>Fill dp[2]</h4><p>coin=1: dp[1]+1=2. coin=2: dp[0]+1=1. dp[2] = min(2,1) = 1.</p></div></div>
+          <div class="step"><div class="step__num">4</div><div class="step__content"><h4>Fill dp[3], dp[4]</h4><p>dp[3]=2 (coin=1+dp[2] or coin=2+dp[1]). dp[4]=2 (coin=2+dp[2]).</p></div></div>
+          <div class="step"><div class="step__num">5</div><div class="step__content"><h4>Fill dp[5]</h4><p>coin=5: dp[0]+1=1. dp[5] = 1. Answer: 1 coin (just the 5-coin).</p></div></div>
+        </div>
+      </section>
+
+      <section class="section" id="mental-model">
+        <h2><span class="section-num">13</span> Mental Model</h2>
+        <div class="callout callout--info"><strong>Think of DP as "lazy evaluation with a notebook"</strong>Every time you solve a subproblem, you write the answer in a notebook. Next time someone asks for the same subproblem, you just look it up. The insight is that the optimal answer to the big problem is always built from the optimal answers to smaller problems — you never need to reconsider a solved subproblem.</div>
+      </section>
+
+      <section class="section" id="revision">
+        <h2><span class="section-num">14</span> Revision Notes</h2>
+        <div class="revision-box">
+          <h3>⚡ 1-Minute Review</h3>
+          <ul>
+            <li>Two properties: <strong>overlapping subproblems</strong> + <strong>optimal substructure</strong></li>
+            <li>Define state precisely: dp[i] = "exact meaning"</li>
+            <li>Write recurrence: how does dp[i] depend on smaller dp values?</li>
+            <li>Top-down = recursion + memo dict (easier to code)</li>
+            <li>Bottom-up = loop filling table from base cases (better space)</li>
+            <li>Space optimization: if dp[i] only uses dp[i-1], use 2 variables</li>
+            <li>Common patterns: 1D linear, 2D grid, knapsack, interval, string</li>
+            <li>"Count ways" → usually dp[i] = sum. "Min/max" → dp[i] = min/max.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section" id="related">
+        <h2><span class="section-num">15</span> Related Concepts</h2>
+        <div class="related-grid">
+          <a href="/concepts/prefix-sum.html"  class="related-card">Prefix Sum</a>
+          <a href="/concepts/dfs.html"         class="related-card">DFS / Backtracking</a>
+          <a href="/concepts/dijkstra.html"    class="related-card">Dijkstra</a>
+        </div>
+      </section>
+
+      <div class="next-topic-banner">
+        <div class="next-topic-banner__text"><h4>Practice Problem</h4><h3>Two Sum</h3><p>Warm up with a simpler problem before tackling harder DP problems.</p></div>
+        <a href="/problems/two-sum.html" class="btn btn--primary" data-nav="next">Practice →</a>
+      </div>
+
+      <nav class="page-nav">
+        <a href="/concepts/dijkstra.html" class="page-nav__btn" data-nav="prev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg><div><div class="page-nav__btn__label">Previous</div><div class="page-nav__btn__title">Dijkstra</div></div></a>
+        <a href="/problems/two-sum.html" class="page-nav__btn page-nav__btn--next" data-nav="next"><div><div class="page-nav__btn__label">Next</div><div class="page-nav__btn__title">Two Sum</div></div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></a>
+      </nav>
+    </main>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script src="/assets/js/main.js"></script>
+</body>
+</html>

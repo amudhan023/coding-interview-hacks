@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dijkstra's Algorithm — Interview Hacks</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+</head>
+<body data-page-title="Dijkstra">
+  <nav class="topnav">
+    <a href="/" class="topnav__logo" style="text-decoration:none;"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect width="20" height="20" rx="5" fill="var(--accent)"/><path d="M5 7l3 3-3 3M10 14h5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Interview<span>Hacks</span></span></a>
+    <div class="topnav__search"><svg class="topnav__search-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M11 11l3 3"/></svg><input type="text" id="search-input" placeholder="Search topics…" autocomplete="off" /><span class="topnav__kbd">/</span><div class="search-results" id="search-results"></div></div>
+    <div class="topnav__actions"><button class="btn-icon" id="theme-toggle" title="Toggle theme"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button></div>
+  </nav>
+
+  <div class="page-layout">
+    <aside class="sidebar">
+      <div class="sidebar__section"><div class="sidebar__label">On this page</div><nav class="toc"><a href="#overview" class="toc-link">Overview</a><a href="#why-asked" class="toc-link">Why Interviewers Ask</a><a href="#recognition" class="toc-link">Pattern Recognition</a><a href="#core-idea" class="toc-link">Core Idea</a><a href="#visualization" class="toc-link">Visualization</a><a href="#complexity" class="toc-link">Complexity</a><a href="#tricks" class="toc-link">Tricks</a><a href="#mistakes" class="toc-link">Common Mistakes</a><a href="#python-code" class="toc-link">Python 2 Template</a><a href="#variations" class="toc-link">Variations</a><a href="#leetcode" class="toc-link">LeetCode Problems</a><a href="#walkthrough" class="toc-link">Walkthrough</a><a href="#mental-model" class="toc-link">Mental Model</a><a href="#revision" class="toc-link">Revision Notes</a><a href="#related" class="toc-link">Related Concepts</a></nav></div>
+      <div class="sidebar__section"><div class="sidebar__label">Concepts</div><a href="/concepts/prefix-sum.html" class="sidebar__link">Prefix Sum</a><a href="/concepts/bfs.html" class="sidebar__link">BFS</a><a href="/concepts/dfs.html" class="sidebar__link">DFS</a><a href="/concepts/union-find.html" class="sidebar__link">Union Find</a><a href="/concepts/dijkstra.html" class="sidebar__link active">Dijkstra</a><a href="/concepts/dynamic-programming.html" class="sidebar__link">Dynamic Programming</a></div>
+      <div class="sidebar__section"><div class="sidebar__label">Recently Viewed</div><div id="recently-viewed"></div></div>
+    </aside>
+
+    <main class="content">
+      <nav class="breadcrumbs"><a href="/">Home</a><span class="breadcrumbs__sep">›</span><a href="/concepts/">Concepts</a><span class="breadcrumbs__sep">›</span><span class="breadcrumbs__current">Dijkstra</span></nav>
+
+      <div class="page-header">
+        <div class="page-header__badges"><span class="badge badge--hard">Hard</span><span class="badge badge--cat">Graphs</span><span class="badge badge--cat">Heap</span></div>
+        <h1>Dijkstra's Shortest Path</h1>
+        <div class="page-header__meta"><span>⏱ 10 min revision</span><span>🎯 O((V+E) log V)</span><span>📌 Frequency: High</span></div>
+      </div>
+
+      <section class="section" id="overview">
+        <h2><span class="section-num">1</span> Concept Overview</h2>
+        <p>Dijkstra's algorithm finds the <strong>shortest path from a source node to all other nodes</strong> in a weighted graph with non-negative edge weights. It uses a <strong>min-heap (priority queue)</strong> to always expand the cheapest known node first.</p>
+        <p style="margin-top:0.75rem;">Think of it as BFS but with a cost-aware frontier: instead of a simple queue, you use a min-heap keyed on cost-so-far.</p>
+        <div class="callout callout--danger"><strong>Critical constraint</strong>Dijkstra requires all edge weights to be <strong>non-negative</strong>. For negative weights, use Bellman-Ford instead.</div>
+      </section>
+
+      <section class="section" id="why-asked">
+        <h2><span class="section-num">2</span> Why Interviewers Ask It</h2>
+        <p>Dijkstra tests your understanding of greedy algorithms and heap usage. It's a harder version of BFS that comes up in network routing, GPS pathfinding, and game AI. The heap management and relaxation logic reveal whether you truly understand priority-queue-based algorithms.</p>
+      </section>
+
+      <section class="section" id="recognition">
+        <h2><span class="section-num">3</span> Pattern Recognition</h2>
+        <div class="callout callout--success"><strong>Use Dijkstra when you see</strong>"Shortest path" in a <em>weighted</em> graph · "Minimum cost path" · "Cheapest route" · "Network delay time" · Any graph with non-negative edge costs where you need minimum total cost</div>
+        <p>Key tell: the graph has weighted edges AND you need the minimum total weight path. If weights are all 1 (or equal), use BFS — it's faster.</p>
+      </section>
+
+      <section class="section" id="core-idea">
+        <h2><span class="section-num">4</span> Core Idea</h2>
+        <p><strong>Greedy expansion via min-heap.</strong> Maintain a distance table <code>dist[]</code> initialized to infinity for all nodes except the source (dist[src] = 0). Use a min-heap to always expand the node with the current minimum known distance.</p>
+        <p style="margin-top:0.75rem;">When you expand node <code>u</code> with cost <code>d</code>, for each neighbor <code>v</code> with edge weight <code>w</code>: if <code>d + w &lt; dist[v]</code>, update <code>dist[v] = d + w</code> and push <code>(d+w, v)</code> to the heap. This is called <strong>relaxation</strong>.</p>
+        <div class="callout callout--info"><strong>Why greedy works here</strong>Once you pop a node from the min-heap, you have found its shortest path — no future path can be shorter (because all weights are non-negative). So you can skip it if you've seen it before.</div>
+      </section>
+
+      <section class="section" id="visualization">
+        <h2><span class="section-num">5</span> Visualization</h2>
+        <div class="viz-container">
+          <svg viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+            <!-- Edges with weights -->
+            <line x1="100" y1="150" x2="250" y2="80"  stroke="var(--border)" stroke-width="2"/>
+            <text x="162" y="100" font-size="12" fill="var(--warning)" font-weight="600">4</text>
+            <line x1="100" y1="150" x2="250" y2="220" stroke="var(--border)" stroke-width="2"/>
+            <text x="155" y="205" font-size="12" fill="var(--warning)" font-weight="600">2</text>
+            <line x1="250" y1="80"  x2="400" y2="80"  stroke="var(--border)" stroke-width="2"/>
+            <text x="312" y="72"  font-size="12" fill="var(--warning)" font-weight="600">3</text>
+            <line x1="250" y1="220" x2="400" y2="220" stroke="var(--border)" stroke-width="2"/>
+            <text x="312" y="215" font-size="12" fill="var(--warning)" font-weight="600">1</text>
+            <line x1="250" y1="80"  x2="250" y2="220" stroke="var(--border)" stroke-width="2"/>
+            <text x="255" y="158" font-size="12" fill="var(--warning)" font-weight="600">5</text>
+            <line x1="400" y1="80"  x2="400" y2="220" stroke="var(--border)" stroke-width="2"/>
+            <text x="405" y="158" font-size="12" fill="var(--warning)" font-weight="600">2</text>
+            <line x1="400" y1="220" x2="530" y2="150" stroke="var(--accent)" stroke-width="2.5"/>
+            <text x="468" y="178" font-size="12" fill="var(--success)" font-weight="700">1</text>
+
+            <!-- Nodes -->
+            <circle cx="100"  cy="150" r="28" fill="var(--accent-subtle)"      stroke="var(--accent)"   stroke-width="2.5"/>
+            <text x="100" y="147" text-anchor="middle" font-size="10" fill="var(--accent)">src</text>
+            <text x="100" y="162" text-anchor="middle" font-size="11" font-weight="700" fill="var(--accent)">A</text>
+
+            <circle cx="250"  cy="80"  r="25" fill="rgba(6,182,212,.12)"        stroke="var(--accent-2)" stroke-width="2"/>
+            <text x="250" y="86"  text-anchor="middle" font-size="14" font-weight="700" fill="var(--accent-2)">B</text>
+
+            <circle cx="250"  cy="220" r="25" fill="rgba(6,182,212,.12)"        stroke="var(--accent-2)" stroke-width="2"/>
+            <text x="250" y="226" text-anchor="middle" font-size="14" font-weight="700" fill="var(--accent-2)">C</text>
+
+            <circle cx="400"  cy="80"  r="25" fill="rgba(16,185,129,.12)"       stroke="var(--success)"  stroke-width="2"/>
+            <text x="400" y="86"  text-anchor="middle" font-size="14" font-weight="700" fill="var(--success)">D</text>
+
+            <circle cx="400"  cy="220" r="25" fill="rgba(16,185,129,.12)"       stroke="var(--success)"  stroke-width="2"/>
+            <text x="400" y="226" text-anchor="middle" font-size="14" font-weight="700" fill="var(--success)">E</text>
+
+            <circle cx="530"  cy="150" r="25" fill="rgba(239,68,68,.12)"        stroke="var(--danger)"   stroke-width="2"/>
+            <text x="530" y="156" text-anchor="middle" font-size="14" font-weight="700" fill="var(--danger)">F</text>
+
+            <!-- Distance table -->
+            <text x="580" y="40"  font-size="11" fill="var(--text-muted)" font-weight="600">dist[] after Dijkstra</text>
+            <text x="580" y="62"  font-size="12" fill="var(--text-secondary)">A = 0  (source)</text>
+            <text x="580" y="80"  font-size="12" fill="var(--text-secondary)">B = 4</text>
+            <text x="580" y="98"  font-size="12" fill="var(--text-secondary)">C = 2</text>
+            <text x="580" y="116" font-size="12" fill="var(--text-secondary)">D = 7</text>
+            <text x="580" y="134" font-size="12" fill="var(--text-secondary)">E = 3</text>
+            <text x="580" y="152" font-size="12" fill="var(--success)" font-weight="600">F = 4  ← shortest</text>
+            <text x="580" y="178" font-size="10" fill="var(--text-muted)">Path A→C→E→F = 2+1+1 = 4</text>
+
+            <!-- Heap evolution label -->
+            <text x="20" y="270" font-size="11" fill="var(--text-muted)">Heap: [(0,A)] → [(2,C),(4,B)] → [(3,E),(4,B)] → [(4,B),(4,F),(7,D)] → …</text>
+          </svg>
+        </div>
+      </section>
+
+      <section class="section" id="complexity">
+        <h2><span class="section-num">6</span> Complexity</h2>
+        <table class="complexity-table">
+          <thead><tr><th>Implementation</th><th>Time</th><th>Space</th></tr></thead>
+          <tbody>
+            <tr><td>Binary heap + adjacency list</td><td>O((V + E) log V)</td><td>O(V + E)</td></tr>
+            <tr><td>Fibonacci heap (theoretical)</td><td>O(E + V log V)</td><td>O(V)</td></tr>
+            <tr><td>Simple array (dense graphs)</td><td>O(V²)</td><td>O(V)</td></tr>
+          </tbody>
+        </table>
+        <p style="margin-top:0.75rem;color:var(--text-secondary);font-size:0.875rem;">In interviews, always use binary heap (Python's <code>heapq</code>). Never mention Fibonacci heap unless specifically asked.</p>
+      </section>
+
+      <section class="section" id="tricks">
+        <h2><span class="section-num">7</span> Common Tricks</h2>
+        <div class="tricks-grid">
+          <div class="trick-card"><div class="trick-card__icon">⏭️</div><h4>Skip Stale Entries</h4><p>Python's heapq doesn't support decrease-key. Instead, push duplicates and skip when <code>d &gt; dist[node]</code> on pop. Simpler and correct.</p></div>
+          <div class="trick-card"><div class="trick-card__icon">🎯</div><h4>Early Termination</h4><p>If you only need the shortest path to a specific target, return as soon as you pop that target from the heap.</p></div>
+          <div class="trick-card"><div class="trick-card__icon">🔄</div><h4>Reconstruct Path</h4><p>Keep a <code>prev[]</code> dictionary: <code>prev[v] = u</code> when you relax edge (u,v). Trace back from target to source to get the full path.</p></div>
+          <div class="trick-card"><div class="trick-card__icon">🌐</div><h4>K Shortest Paths</h4><p>Allow each node to be popped up to K times. The K-th pop gives the K-th shortest path (Yen's algorithm variant).</p></div>
+        </div>
+      </section>
+
+      <section class="section" id="mistakes">
+        <h2><span class="section-num">8</span> Common Mistakes</h2>
+        <div class="callout callout--danger"><strong>Mistake 1 — Using Dijkstra with negative weights</strong>Dijkstra's greedy assumption breaks with negative edges. Use Bellman-Ford (O(VE)) for negative weights.</div>
+        <div class="callout callout--danger"><strong>Mistake 2 — Not skipping stale heap entries</strong>Without <code>if d &gt; dist[node]: continue</code>, you reprocess nodes with outdated distances, ruining correctness and performance.</div>
+        <div class="callout callout--warning"><strong>Mistake 3 — Pushing to heap without checking</strong>Always check if the new distance is actually better before pushing: <code>if dist[node] + w &lt; dist[nb]: push</code>.</div>
+        <div class="callout callout--warning"><strong>Mistake 4 — Initializing dist as {}</strong>Initialize ALL nodes to infinity upfront — <code>dist = [float('inf')] * n</code>. Missing nodes will cause KeyErrors mid-traversal.</div>
+      </section>
+
+      <section class="section" id="python-code">
+        <h2><span class="section-num">9</span> Python 2 Template</h2>
+        <h3>Optimal — heapq with stale-skip</h3>
+        <div class="code-block">
+          <div class="code-block__header"><span class="code-block__lang">Python 2</span><button class="code-copy-btn">Copy</button></div>
+          <pre><code>import heapq
+
+def dijkstra(graph, src, n):
+    """
+    graph: adjacency list — graph[u] = [(v, weight), ...]
+    src:   source node
+    n:     number of nodes
+    Returns: dist[] — shortest distances from src to all nodes
+    """
+    dist = [float('inf')] * n
+    dist[src] = 0
+    heap = [(0, src)]   # (cost, node)
+
+    while heap:
+        d, u = heapq.heappop(heap)
+        if d > dist[u]:        # stale entry — skip
+            continue
+        for v, w in graph[u]:
+            new_d = d + w
+            if new_d < dist[v]:
+                dist[v] = new_d
+                heapq.heappush(heap, (new_d, v))
+
+    return dist
+
+
+# Example: graph as adjacency list
+graph = [[] for _ in xrange(5)]
+graph[0].append((1, 4))
+graph[0].append((2, 2))
+graph[2].append((3, 1))
+graph[1].append((4, 3))
+graph[3].append((4, 1))
+
+print dijkstra(graph, 0, 5)   # [0, 4, 2, 3, 4]</code></pre>
+        </div>
+
+        <h3>With Path Reconstruction</h3>
+        <div class="code-block">
+          <div class="code-block__header"><span class="code-block__lang">Python 2</span><button class="code-copy-btn">Copy</button></div>
+          <pre><code>import heapq
+
+def dijkstra_path(graph, src, dst, n):
+    dist = [float('inf')] * n
+    prev = [-1] * n
+    dist[src] = 0
+    heap = [(0, src)]
+
+    while heap:
+        d, u = heapq.heappop(heap)
+        if d > dist[u]: continue
+        if u == dst: break         # early exit if we only need one target
+        for v, w in graph[u]:
+            if d + w < dist[v]:
+                dist[v] = d + w
+                prev[v] = u
+                heapq.heappush(heap, (dist[v], v))
+
+    # Reconstruct path
+    path = []
+    node = dst
+    while node != -1:
+        path.append(node)
+        node = prev[node]
+    return dist[dst], path[::-1]</code></pre>
+        </div>
+      </section>
+
+      <section class="section" id="variations">
+        <h2><span class="section-num">10</span> Python 2 Variations</h2>
+        <h3>Dijkstra on grid (variable movement cost)</h3>
+        <div class="code-block">
+          <div class="code-block__header"><span class="code-block__lang">Python 2</span><button class="code-copy-btn">Copy</button></div>
+          <pre><code>import heapq
+
+def grid_dijkstra(grid):
+    rows, cols = len(grid), len(grid[0])
+    dist = [[float('inf')] * cols for _ in xrange(rows)]
+    dist[0][0] = grid[0][0]
+    heap = [(grid[0][0], 0, 0)]
+
+    dirs = [(0,1),(0,-1),(1,0),(-1,0)]
+    while heap:
+        d, r, c = heapq.heappop(heap)
+        if d > dist[r][c]: continue
+        for dr, dc in dirs:
+            nr, nc = r+dr, c+dc
+            if 0 <= nr < rows and 0 <= nc < cols:
+                new_d = d + grid[nr][nc]
+                if new_d < dist[nr][nc]:
+                    dist[nr][nc] = new_d
+                    heapq.heappush(heap, (new_d, nr, nc))
+
+    return dist[rows-1][cols-1]</code></pre>
+        </div>
+      </section>
+
+      <section class="section" id="leetcode">
+        <h2><span class="section-num">11</span> LeetCode Problems</h2>
+        <h3>Medium</h3>
+        <div class="problem-list">
+          <div class="problem-item"><div class="problem-item__num" style="background:rgba(245,158,11,.12);color:var(--diff-medium);">M</div><div class="problem-item__info"><div class="problem-item__name"><a href="https://leetcode.com/problems/network-delay-time/" target="_blank">743. Network Delay Time</a></div><div class="problem-item__why">Classic Dijkstra — find max of all shortest paths from source</div></div><span class="badge badge--medium">Medium</span></div>
+          <div class="problem-item"><div class="problem-item__num" style="background:rgba(245,158,11,.12);color:var(--diff-medium);">M</div><div class="problem-item__info"><div class="problem-item__name"><a href="https://leetcode.com/problems/path-with-maximum-probability/" target="_blank">1514. Path with Maximum Probability</a></div><div class="problem-item__why">Dijkstra variant — maximize product of probabilities (negate log)</div></div><span class="badge badge--medium">Medium</span></div>
+        </div>
+        <h3 style="margin-top:1rem;">Hard</h3>
+        <div class="problem-list">
+          <div class="problem-item"><div class="problem-item__num" style="background:rgba(239,68,68,.12);color:var(--diff-hard);">H</div><div class="problem-item__info"><div class="problem-item__name"><a href="https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors/" target="_blank">1334. City With Smallest Neighbors</a></div><div class="problem-item__why">Run Dijkstra from every city, count reachable cities within threshold</div></div><span class="badge badge--hard">Hard</span></div>
+          <div class="problem-item"><div class="problem-item__num" style="background:rgba(239,68,68,.12);color:var(--diff-hard);">H</div><div class="problem-item__info"><div class="problem-item__name"><a href="https://leetcode.com/problems/minimum-cost-to-reach-city-with-discounts/" target="_blank">2093. Minimum Cost to Reach City with Discounts</a></div><div class="problem-item__why">State includes discount count — Dijkstra on extended state space</div></div><span class="badge badge--hard">Hard</span></div>
+        </div>
+      </section>
+
+      <section class="section" id="walkthrough">
+        <h2><span class="section-num">12</span> Step-by-Step Walkthrough</h2>
+        <p style="margin-bottom:0.75rem;">Graph: A→B(4), A→C(2), C→D(1), B→E(3), D→E(1). Find shortest path from A.</p>
+        <div class="steps">
+          <div class="step"><div class="step__num">1</div><div class="step__content"><h4>Init</h4><p>dist=[0,∞,∞,∞,∞], heap=[(0,A)]</p></div></div>
+          <div class="step"><div class="step__num">2</div><div class="step__content"><h4>Pop (0, A)</h4><p>Relax B: dist[B]=4, push (4,B). Relax C: dist[C]=2, push (2,C). heap=[(2,C),(4,B)]</p></div></div>
+          <div class="step"><div class="step__num">3</div><div class="step__content"><h4>Pop (2, C)</h4><p>Relax D: 2+1=3 &lt; ∞, dist[D]=3, push (3,D). heap=[(3,D),(4,B)]</p></div></div>
+          <div class="step"><div class="step__num">4</div><div class="step__content"><h4>Pop (3, D)</h4><p>Relax E: 3+1=4 &lt; ∞, dist[E]=4, push (4,E). heap=[(4,B),(4,E)]</p></div></div>
+          <div class="step"><div class="step__num">5</div><div class="step__content"><h4>Pop (4, B)</h4><p>Relax E: 4+3=7 &gt; dist[E]=4. No update. Pop (4,E) — already optimal. Done.</p></div></div>
+          <div class="step"><div class="step__num">6</div><div class="step__content"><h4>Result</h4><p>dist = [0, 4, 2, 3, 4]. Shortest path A→E = 4 via A→C→D→E.</p></div></div>
+        </div>
+      </section>
+
+      <section class="section" id="mental-model">
+        <h2><span class="section-num">13</span> Mental Model</h2>
+        <div class="callout callout--info"><strong>Think of Dijkstra as "spreading ink through pipes"</strong>You pour ink at the source. It flows through pipes — wider pipes (lower weight) let it flow faster. The ink reaches each city at the exact minimum time possible. Once the ink reaches a city, that time is final and optimal. Dijkstra is just tracking when the ink arrives at each city.</div>
+      </section>
+
+      <section class="section" id="revision">
+        <h2><span class="section-num">14</span> Revision Notes</h2>
+        <div class="revision-box">
+          <h3>⚡ 1-Minute Review</h3>
+          <ul>
+            <li>Min-heap keyed on <code>(cost, node)</code></li>
+            <li>Init: dist[src]=0, all others=∞</li>
+            <li>On pop: skip if <code>d &gt; dist[node]</code> (stale entry)</li>
+            <li>Relax: if <code>d + w &lt; dist[v]</code>, update and push</li>
+            <li>Non-negative weights only — use Bellman-Ford for negatives</li>
+            <li>Time: O((V+E) log V) with binary heap</li>
+            <li>Early termination: return when target is popped</li>
+            <li>Path reconstruction: keep <code>prev[]</code> array</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section" id="related">
+        <h2><span class="section-num">15</span> Related Concepts</h2>
+        <div class="related-grid">
+          <a href="/concepts/bfs.html"         class="related-card">BFS</a>
+          <a href="/concepts/union-find.html"  class="related-card">Union Find</a>
+          <a href="/concepts/dynamic-programming.html" class="related-card">Dynamic Programming</a>
+        </div>
+      </section>
+
+      <div class="next-topic-banner">
+        <div class="next-topic-banner__text"><h4>Recommended Next</h4><h3>Dynamic Programming</h3><p>DP and Dijkstra both exploit optimal substructure — see how DP generalizes it.</p></div>
+        <a href="/concepts/dynamic-programming.html" class="btn btn--primary" data-nav="next">Study DP →</a>
+      </div>
+
+      <nav class="page-nav">
+        <a href="/concepts/union-find.html" class="page-nav__btn" data-nav="prev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg><div><div class="page-nav__btn__label">Previous</div><div class="page-nav__btn__title">Union Find</div></div></a>
+        <a href="/concepts/dynamic-programming.html" class="page-nav__btn page-nav__btn--next" data-nav="next"><div><div class="page-nav__btn__label">Next</div><div class="page-nav__btn__title">Dynamic Programming</div></div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></a>
+      </nav>
+    </main>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script src="/assets/js/main.js"></script>
+</body>
+</html>

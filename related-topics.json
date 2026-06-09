@@ -1,0 +1,11 @@
+{
+  "union-find": ["bfs", "dfs", "number-of-islands", "redundant-connection", "dijkstra"],
+  "bfs": ["dfs", "number-of-islands", "dijkstra", "union-find"],
+  "dfs": ["bfs", "number-of-islands", "union-find", "dynamic-programming"],
+  "dijkstra": ["bfs", "union-find", "dynamic-programming"],
+  "dynamic-programming": ["prefix-sum", "dfs", "dijkstra"],
+  "prefix-sum": ["dynamic-programming", "two-sum"],
+  "two-sum": ["prefix-sum", "bfs"],
+  "number-of-islands": ["bfs", "dfs", "union-find"],
+  "redundant-connection": ["union-find", "dfs", "bfs"]
+}

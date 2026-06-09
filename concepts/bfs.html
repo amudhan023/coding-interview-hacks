@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BFS — Interview Hacks</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+</head>
+<body data-page-title="BFS">
+  <nav class="topnav">
+    <a href="/" class="topnav__logo" style="text-decoration:none;"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect width="20" height="20" rx="5" fill="var(--accent)"/><path d="M5 7l3 3-3 3M10 14h5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Interview<span>Hacks</span></span></a>
+    <div class="topnav__search"><svg class="topnav__search-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M11 11l3 3"/></svg><input type="text" id="search-input" placeholder="Search topics…" autocomplete="off" /><span class="topnav__kbd">/</span><div class="search-results" id="search-results"></div></div>
+    <div class="topnav__actions"><button class="btn-icon" id="theme-toggle" title="Toggle theme"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button></div>
+  </nav>
+
+  <div class="page-layout">
+    <aside class="sidebar">
+      <div class="sidebar__section">
+        <div class="sidebar__label">On this page</div>
+        <nav class="toc">
+          <a href="#overview"      class="toc-link">Overview</a>
+          <a href="#why-asked"     class="toc-link">Why Interviewers Ask</a>
+          <a href="#recognition"   class="toc-link">Pattern Recognition</a>
+          <a href="#core-idea"     class="toc-link">Core Idea</a>
+          <a href="#visualization" class="toc-link">Visualization</a>
+          <a href="#complexity"    class="toc-link">Complexity</a>
+          <a href="#tricks"        class="toc-link">Tricks</a>
+          <a href="#mistakes"      class="toc-link">Common Mistakes</a>
+          <a href="#python-code"   class="toc-link">Python 2 Template</a>
+          <a href="#variations"    class="toc-link">Variations</a>
+          <a href="#leetcode"      class="toc-link">LeetCode Problems</a>
+          <a href="#walkthrough"   class="toc-link">Walkthrough</a>
+          <a href="#mental-model"  class="toc-link">Mental Model</a>
+          <a href="#revision"      class="toc-link">Revision Notes</a>
+          <a href="#related"       class="toc-link">Related Concepts</a>
+        </nav>
+      </div>
+      <div class="sidebar__section">
+        <div class="sidebar__label">Concepts</div>
+        <a href="/concepts/prefix-sum.html"          class="sidebar__link">Prefix Sum</a>
+        <a href="/concepts/bfs.html"                 class="sidebar__link active">BFS</a>
+        <a href="/concepts/dfs.html"                 class="sidebar__link">DFS</a>
+        <a href="/concepts/union-find.html"          class="sidebar__link">Union Find</a>
+        <a href="/concepts/dijkstra.html"            class="sidebar__link">Dijkstra</a>
+        <a href="/concepts/dynamic-programming.html" class="sidebar__link">Dynamic Programming</a>
+      </div>
+      <div class="sidebar__section"><div class="sidebar__label">Recently Viewed</div><div id="recently-viewed"></div></div>
+    </aside>
+
+    <main class="content">
+      <nav class="breadcrumbs"><a href="/">Home</a><span class="breadcrumbs__sep">›</span><a href="/concepts/">Concepts</a><span class="breadcrumbs__sep">›</span><span class="breadcrumbs__current">BFS</span></nav>
+
+      <div class="page-header">
+        <div class="page-header__badges"><span class="badge badge--easy">Easy</span><span class="badge badge--cat">Graphs</span><span class="badge badge--cat">Trees</span></div>
+        <h1>Breadth-First Search <span style="color:var(--text-muted);font-weight:400;">(BFS)</span></h1>
+        <div class="page-header__meta"><span>⏱ 7 min revision</span><span>🎯 O(V+E) time</span><span>📌 Frequency: Very High</span></div>
+      </div>
+
+      <!-- 1. Overview -->
+      <section class="section" id="overview">
+        <h2><span class="section-num">1</span> Concept Overview</h2>
+        <p>BFS explores a graph <strong>level by level</strong>, visiting all nodes at distance 1 before distance 2, distance 2 before distance 3, and so on. It uses a queue (FIFO) to track the frontier.</p>
+        <p style="margin-top:0.75rem;">The key property: BFS always finds the <strong>shortest path</strong> (fewest edges) in an unweighted graph. Once you reach a node, you've found the minimum-distance route.</p>
+        <div class="callout callout--info"><strong>Intuition</strong>Imagine dropping a stone in a pond. Ripples spread outward in concentric circles — that's BFS. Every ripple is one level. You reach every point at the nearest possible time.</div>
+      </section>
+
+      <!-- 2. Why Asked -->
+      <section class="section" id="why-asked">
+        <h2><span class="section-num">2</span> Why Interviewers Ask It</h2>
+        <p>BFS is the building block for shortest-path reasoning. Interviewers use it to test: can you translate a real-world problem into a graph and traverse it correctly? It's also the backbone of level-order tree traversal, word ladder, and grid problems.</p>
+      </section>
+
+      <!-- 3. Recognition -->
+      <section class="section" id="recognition">
+        <h2><span class="section-num">3</span> Pattern Recognition</h2>
+        <div class="callout callout--success">
+          <strong>Use BFS when you see</strong>
+          "Shortest path" · "Minimum steps/moves" · "Level order" · "Nearest X" · "Minimum number of operations" · Grid problems where each step costs 1
+        </div>
+        <p>If the problem asks for minimum distance and all edges have equal weight (or unit cost), BFS is almost always the answer.</p>
+      </section>
+
+      <!-- 4. Core Idea -->
+      <section class="section" id="core-idea">
+        <h2><span class="section-num">4</span> Core Idea</h2>
+        <p><strong>Queue + Visited set.</strong> Start by enqueuing the source node. Each iteration: dequeue a node, process it, enqueue all unvisited neighbors, mark them visited. Repeat until the queue is empty.</p>
+        <div class="callout callout--warning"><strong>Key rule</strong>Mark nodes as visited <em>when you enqueue them</em>, not when you dequeue. Otherwise you'll enqueue the same node multiple times and blow up your time complexity.</div>
+      </section>
+
+      <!-- 5. Visualization -->
+      <section class="section" id="visualization">
+        <h2><span class="section-num">5</span> Visualization</h2>
+        <div class="viz-container">
+          <svg viewBox="0 0 680 340" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+            <!-- Graph edges -->
+            <line x1="200" y1="100" x2="120" y2="200" stroke="var(--border)" stroke-width="2"/>
+            <line x1="200" y1="100" x2="280" y2="200" stroke="var(--border)" stroke-width="2"/>
+            <line x1="120" y1="200" x2="80"  y2="290" stroke="var(--border)" stroke-width="2"/>
+            <line x1="120" y1="200" x2="160" y2="290" stroke="var(--border)" stroke-width="2"/>
+            <line x1="280" y1="200" x2="240" y2="290" stroke="var(--border)" stroke-width="2"/>
+            <line x1="280" y1="200" x2="320" y2="290" stroke="var(--border)" stroke-width="2"/>
+
+            <!-- Level labels -->
+            <text x="30" y="105" font-size="11" fill="var(--accent)" font-weight="600">Level 0</text>
+            <text x="30" y="205" font-size="11" fill="var(--accent-2)" font-weight="600">Level 1</text>
+            <text x="30" y="295" font-size="11" fill="var(--success)" font-weight="600">Level 2</text>
+
+            <!-- Nodes -->
+            <circle cx="200" cy="100" r="25" fill="var(--accent-subtle)" stroke="var(--accent)" stroke-width="2.5"/>
+            <text x="200" y="105" text-anchor="middle" font-size="14" font-weight="700" fill="var(--accent)">A</text>
+
+            <circle cx="120" cy="200" r="25" fill="rgba(6,182,212,.12)" stroke="var(--accent-2)" stroke-width="2"/>
+            <text x="120" y="205" text-anchor="middle" font-size="14" font-weight="700" fill="var(--accent-2)">B</text>
+
+            <circle cx="280" cy="200" r="25" fill="rgba(6,182,212,.12)" stroke="var(--accent-2)" stroke-width="2"/>
+            <text x="280" y="205" text-anchor="middle" font-size="14" font-weight="700" fill="var(--accent-2)">C</text>
+
+            <circle cx="80"  cy="290" r="25" fill="rgba(16,185,129,.12)" stroke="var(--success)" stroke-width="2"/>
+            <text x="80"  y="295" text-anchor="middle" font-size="14" font-weight="700" fill="var(--success)">D</text>
+
+            <circle cx="160" cy="290" r="25" fill="rgba(16,185,129,.12)" stroke="var(--success)" stroke-width="2"/>
+            <text x="160" y="295" text-anchor="middle" font-size="14" font-weight="700" fill="var(--success)">E</text>
+
+            <circle cx="240" cy="290" r="25" fill="rgba(16,185,129,.12)" stroke="var(--success)" stroke-width="2"/>
+            <text x="240" y="295" text-anchor="middle" font-size="14" font-weight="700" fill="var(--success)">F</text>
+
+            <circle cx="320" cy="290" r="25" fill="rgba(16,185,129,.12)" stroke="var(--success)" stroke-width="2"/>
+            <text x="320" y="295" text-anchor="middle" font-size="14" font-weight="700" fill="var(--success)">G</text>
+
+            <!-- Queue state -->
+            <text x="420" y="50" font-size="12" fill="var(--text-muted)" font-weight="600">BFS Order</text>
+            <text x="420" y="75" font-size="13" fill="var(--text-secondary)">Queue: [A] → process A</text>
+            <text x="420" y="100" font-size="13" fill="var(--text-secondary)">Queue: [B, C] → process B</text>
+            <text x="420" y="125" font-size="13" fill="var(--text-secondary)">Queue: [C, D, E] → process C</text>
+            <text x="420" y="150" font-size="13" fill="var(--text-secondary)">Queue: [D, E, F, G] → process D</text>
+            <text x="420" y="175" font-size="13" fill="var(--text-secondary)">…and so on</text>
+
+            <text x="420" y="215" font-size="12" fill="var(--text-muted)" font-weight="600">Visit Order</text>
+            <text x="420" y="240" font-size="16" font-weight="700" fill="var(--text-primary)">A → B → C → D → E → F → G</text>
+
+            <text x="420" y="280" font-size="11" fill="var(--text-muted)">Distance from A:</text>
+            <text x="420" y="300" font-size="12" fill="var(--text-secondary)">A=0  B=1  C=1  D=2  E=2  F=2  G=2</text>
+          </svg>
+        </div>
+      </section>
+
+      <!-- 6. Complexity -->
+      <section class="section" id="complexity">
+        <h2><span class="section-num">6</span> Complexity</h2>
+        <table class="complexity-table">
+          <thead><tr><th>Metric</th><th>Time</th><th>Space</th></tr></thead>
+          <tbody>
+            <tr><td>Graph (adjacency list)</td><td>O(V + E)</td><td>O(V)</td></tr>
+            <tr><td>Grid (m × n)</td><td>O(m × n)</td><td>O(m × n)</td></tr>
+            <tr><td>Tree (level order)</td><td>O(n)</td><td>O(w) — max width</td></tr>
+          </tbody>
+        </table>
+        <div class="callout callout--info"><strong>Space caveat</strong>In a balanced binary tree, the last level has n/2 nodes — so BFS space is O(n) in the worst case, same as DFS. But for wide graphs BFS uses more memory than DFS.</div>
+      </section>
+
+      <!-- 7. Tricks -->
+      <section class="section" id="tricks">
+        <h2><span class="section-num">7</span> Common Tricks</h2>
+        <div class="tricks-grid">
+          <div class="trick-card">
+            <div class="trick-card__icon">📏</div>
+            <h4>Track Distance / Level</h4>
+            <p>Process the entire queue level at a time. Use <code>for _ in xrange(len(queue))</code> at each BFS step to know when you finish one level.</p>
+          </div>
+          <div class="trick-card">
+            <div class="trick-card__icon">🗺️</div>
+            <h4>4-Directional Grid BFS</h4>
+            <p>Define <code>dirs = [(0,1),(0,-1),(1,0),(-1,0)]</code> and iterate. Check bounds and visited status before enqueuing.</p>
+          </div>
+          <div class="trick-card">
+            <div class="trick-card__icon">🔁</div>
+            <h4>Multi-Source BFS</h4>
+            <p>Enqueue ALL source nodes at the start (e.g. all '1' cells). BFS spreads from all sources simultaneously — finds nearest for every cell.</p>
+          </div>
+          <div class="trick-card">
+            <div class="trick-card__icon">🔄</div>
+            <h4>Bidirectional BFS</h4>
+            <p>Search from both source and target simultaneously. Reduces search space from O(b^d) to O(b^(d/2)) — huge win for word ladder type problems.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 8. Mistakes -->
+      <section class="section" id="mistakes">
+        <h2><span class="section-num">8</span> Common Mistakes</h2>
+        <div class="callout callout--danger"><strong>Mistake 1 — Marking visited on dequeue, not enqueue</strong>Causes the same node to be enqueued multiple times, turning O(V+E) into O(V²) or worse in dense graphs.</div>
+        <div class="callout callout--danger"><strong>Mistake 2 — Forgetting bounds check in grid BFS</strong>Always validate <code>0 &lt;= r &lt; rows and 0 &lt;= c &lt; cols</code> before enqueuing a grid cell.</div>
+        <div class="callout callout--warning"><strong>Mistake 3 — Using BFS for weighted shortest path</strong>BFS only works when all edges have equal weight. For weighted graphs, use Dijkstra.</div>
+        <div class="callout callout--warning"><strong>Mistake 4 — Modifying the grid vs. using a visited set</strong>Modifying grid cells in-place (marking '0') is fine for problems that don't need the original grid. If you need it unchanged, use a separate <code>visited</code> set.</div>
+      </section>
+
+      <!-- 9. Python 2 Template -->
+      <section class="section" id="python-code">
+        <h2><span class="section-num">9</span> Python 2 Template</h2>
+
+        <h3>General Graph BFS</h3>
+        <div class="code-block">
+          <div class="code-block__header"><span class="code-block__lang">Python 2</span><button class="code-copy-btn">Copy</button></div>
+          <pre><code>from collections import deque
+
+def bfs(graph, start):
+    visited = set([start])
+    queue   = deque([start])
+    dist    = {start: 0}
+
+    while queue:
+        node = queue.popleft()
+        for neighbor in graph[node]:
+            if neighbor not in visited:
+                visited.add(neighbor)       # mark on ENQUEUE
+                dist[neighbor] = dist[node] + 1
+                queue.append(neighbor)
+
+    return dist
+
+# Example: adjacency list
+graph = {0: [1, 2], 1: [0, 3], 2: [0, 3], 3: [1, 2]}
+print bfs(graph, 0)   # {0:0, 1:1, 2:1, 3:2}</code></pre>
+        </div>
+
+        <h3>Level-Order BFS (process level by level)</h3>
+        <div class="code-block">
+          <div class="code-block__header"><span class="code-block__lang">Python 2</span><button class="code-copy-btn">Copy</button></div>
+          <pre><code>from collections import deque
+
+def bfs_levels(graph, start):
+    visited = set([start])
+    queue   = deque([start])
+    result  = []
+
+    while queue:
+        level = []
+        for _ in xrange(len(queue)):   # process entire level at once
+            node = queue.popleft()
+            level.append(node)
+            for neighbor in graph[node]:
+                if neighbor not in visited:
+                    visited.add(neighbor)
+                    queue.append(neighbor)
+        result.append(level)
+
+    return result</code></pre>
+        </div>
+
+        <h3>Grid BFS (4-directional)</h3>
+        <div class="code-block">
+          <div class="code-block__header"><span class="code-block__lang">Python 2</span><button class="code-copy-btn">Copy</button></div>
+          <pre><code>from collections import deque
+
+def grid_bfs(grid, start_r, start_c):
+    rows, cols = len(grid), len(grid[0])
+    dirs = [(0,1),(0,-1),(1,0),(-1,0)]
+    visited = set([(start_r, start_c)])
+    queue   = deque([(start_r, start_c, 0)])   # (row, col, dist)
+
+    while queue:
+        r, c, d = queue.popleft()
+        if r == rows-1 and c == cols-1:        # reached target
+            return d
+        for dr, dc in dirs:
+            nr, nc = r+dr, c+dc
+            if 0 <= nr < rows and 0 <= nc < cols and (nr,nc) not in visited:
+                if grid[nr][nc] != '#':         # not a wall
+                    visited.add((nr, nc))
+                    queue.append((nr, nc, d+1))
+
+    return -1   # not reachable</code></pre>
+        </div>
+      </section>
+
+      <!-- 10. Variations -->
+      <section class="section" id="variations">
+        <h2><span class="section-num">10</span> Python 2 Variations</h2>
+
+        <h3>Multi-Source BFS</h3>
+        <div class="code-block">
+          <div class="code-block__header"><span class="code-block__lang">Python 2</span><button class="code-copy-btn">Copy</button></div>
+          <pre><code># Enqueue ALL sources at distance 0
+# Classic: "distance of every cell from nearest 1" (LC 542)
+from collections import deque
+
+def multi_source_bfs(grid):
+    rows, cols = len(grid), len(grid[0])
+    dist = [[float('inf')] * cols for _ in xrange(rows)]
+    queue = deque()
+
+    for r in xrange(rows):
+        for c in xrange(cols):
+            if grid[r][c] == 1:
+                dist[r][c] = 0
+                queue.append((r, c))
+
+    dirs = [(0,1),(0,-1),(1,0),(-1,0)]
+    while queue:
+        r, c = queue.popleft()
+        for dr, dc in dirs:
+            nr, nc = r+dr, c+dc
+            if 0 <= nr < rows and 0 <= nc < cols:
+                if dist[nr][nc] > dist[r][c] + 1:
+                    dist[nr][nc] = dist[r][c] + 1
+                    queue.append((nr, nc))
+    return dist</code></pre>
+        </div>
+      </section>
+
+      <!-- 11. LeetCode -->
+      <section class="section" id="leetcode">
+        <h2><span class="section-num">11</span> LeetCode Problems</h2>
+        <h3>Easy</h3>
+        <div class="problem-list">
+          <div class="problem-item"><div class="problem-item__num" style="background:rgba(16,185,129,.12);color:var(--diff-easy);">E</div><div class="problem-item__info"><div class="problem-item__name"><a href="https://leetcode.com/problems/binary-tree-level-order-traversal/" target="_blank">102. Binary Tree Level Order Traversal</a></div><div class="problem-item__why">Classic level-order BFS on a tree</div></div><span class="badge badge--easy">Easy</span></div>
+        </div>
+        <h3 style="margin-top:1rem;">Medium</h3>
+        <div class="problem-list">
+          <div class="problem-item"><div class="problem-item__num" style="background:rgba(245,158,11,.12);color:var(--diff-medium);">M</div><div class="problem-item__info"><div class="problem-item__name"><a href="https://leetcode.com/problems/number-of-islands/" target="_blank">200. Number of Islands</a></div><div class="problem-item__why">BFS flood fill on 2D grid — count connected components</div></div><span class="badge badge--medium">Medium</span></div>
+          <div class="problem-item"><div class="problem-item__num" style="background:rgba(245,158,11,.12);color:var(--diff-medium);">M</div><div class="problem-item__info"><div class="problem-item__name"><a href="https://leetcode.com/problems/word-ladder/" target="_blank">127. Word Ladder</a></div><div class="problem-item__why">BFS on implicit graph — each word is a node, edge = 1 letter change</div></div><span class="badge badge--medium">Medium</span></div>
+          <div class="problem-item"><div class="problem-item__num" style="background:rgba(245,158,11,.12);color:var(--diff-medium);">M</div><div class="problem-item__info"><div class="problem-item__name"><a href="https://leetcode.com/problems/01-matrix/" target="_blank">542. 01 Matrix</a></div><div class="problem-item__why">Multi-source BFS from all 0s simultaneously</div></div><span class="badge badge--medium">Medium</span></div>
+          <div class="problem-item"><div class="problem-item__num" style="background:rgba(245,158,11,.12);color:var(--diff-medium);">M</div><div class="problem-item__info"><div class="problem-item__name"><a href="https://leetcode.com/problems/rotting-oranges/" target="_blank">994. Rotting Oranges</a></div><div class="problem-item__why">Multi-source BFS spreading from all rotten oranges</div></div><span class="badge badge--medium">Medium</span></div>
+        </div>
+        <h3 style="margin-top:1rem;">Hard</h3>
+        <div class="problem-list">
+          <div class="problem-item"><div class="problem-item__num" style="background:rgba(239,68,68,.12);color:var(--diff-hard);">H</div><div class="problem-item__info"><div class="problem-item__name"><a href="https://leetcode.com/problems/cut-off-trees-for-golf-event/" target="_blank">675. Cut Off Trees for Golf Event</a></div><div class="problem-item__why">BFS from each tree to next target — chained BFS</div></div><span class="badge badge--hard">Hard</span></div>
+        </div>
+      </section>
+
+      <!-- 12. Walkthrough -->
+      <section class="section" id="walkthrough">
+        <h2><span class="section-num">12</span> Step-by-Step Walkthrough</h2>
+        <p style="margin-bottom:0.75rem;">Problem: <em>Shortest path from (0,0) to (2,2) in a 3×3 grid (no obstacles).</em></p>
+        <div class="steps">
+          <div class="step"><div class="step__num">1</div><div class="step__content"><h4>Initialize</h4><p>queue = [(0,0,0)], visited = {(0,0)}. Start at top-left, distance 0.</p></div></div>
+          <div class="step"><div class="step__num">2</div><div class="step__content"><h4>Process (0,0)</h4><p>Neighbors: (0,1) and (1,0). Enqueue both with dist=1. visited={(0,0),(0,1),(1,0)}.</p></div></div>
+          <div class="step"><div class="step__num">3</div><div class="step__content"><h4>Process (0,1)</h4><p>New neighbors: (0,2) and (1,1). Enqueue with dist=2.</p></div></div>
+          <div class="step"><div class="step__num">4</div><div class="step__content"><h4>Process (1,0)</h4><p>New neighbor: (2,0) and (1,1) already visited. Enqueue (2,0) with dist=2.</p></div></div>
+          <div class="step"><div class="step__num">5</div><div class="step__content"><h4>Continue until (2,2)</h4><p>Eventually (2,2) is dequeued with dist=4. That's the answer: 4 steps.</p></div></div>
+        </div>
+      </section>
+
+      <!-- 13. Mental Model -->
+      <section class="section" id="mental-model">
+        <h2><span class="section-num">13</span> Mental Model</h2>
+        <div class="callout callout--info"><strong>Think of BFS as a spreading fire</strong>You light a fire at the source. It spreads to all adjacent cells in 1 second, then from those cells in the next second. Every cell is reached at the earliest possible time. BFS guarantees you see the shortest path first.</div>
+      </section>
+
+      <!-- 14. Revision Notes -->
+      <section class="section" id="revision">
+        <h2><span class="section-num">14</span> Revision Notes</h2>
+        <div class="revision-box">
+          <h3>⚡ 1-Minute Review</h3>
+          <ul>
+            <li>Use a <strong>queue (deque)</strong>. Never a stack for BFS.</li>
+            <li>Mark visited <strong>on enqueue</strong>, not dequeue</li>
+            <li>Guarantees shortest path in <strong>unweighted</strong> graphs only</li>
+            <li>Level-order: use <code>for _ in xrange(len(queue))</code> to process one level</li>
+            <li>Grid BFS: 4 directions, bounds check, visited set or in-place mutation</li>
+            <li>Multi-source: enqueue ALL sources at dist 0 before starting the loop</li>
+            <li>For weighted graphs → Dijkstra, not BFS</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 15. Related -->
+      <section class="section" id="related">
+        <h2><span class="section-num">15</span> Related Concepts</h2>
+        <div class="related-grid">
+          <a href="/concepts/dfs.html"                  class="related-card">DFS</a>
+          <a href="/concepts/dijkstra.html"             class="related-card">Dijkstra</a>
+          <a href="/concepts/union-find.html"           class="related-card">Union Find</a>
+          <a href="/problems/number-of-islands.html"    class="related-card">Number of Islands</a>
+        </div>
+      </section>
+
+      <div class="next-topic-banner">
+        <div class="next-topic-banner__text"><h4>Recommended Next</h4><h3>DFS</h3><p>Master the recursive counterpart — same graph, different traversal order, different guarantees.</p></div>
+        <a href="/concepts/dfs.html" class="btn btn--primary" data-nav="next">Study DFS →</a>
+      </div>
+
+      <nav class="page-nav">
+        <a href="/concepts/prefix-sum.html" class="page-nav__btn" data-nav="prev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg><div><div class="page-nav__btn__label">Previous</div><div class="page-nav__btn__title">Prefix Sum</div></div></a>
+        <a href="/concepts/dfs.html" class="page-nav__btn page-nav__btn--next" data-nav="next"><div><div class="page-nav__btn__label">Next</div><div class="page-nav__btn__title">DFS</div></div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></a>
+      </nav>
+    </main>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="/assets/js/main.js"></script>
+</body>
+</html>

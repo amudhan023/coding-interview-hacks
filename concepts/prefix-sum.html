@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prefix Sum — Interview Hacks</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+</head>
+<body data-page-title="Prefix Sum">
+  <nav class="topnav">
+    <a href="/" class="topnav__logo" style="text-decoration:none;"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect width="20" height="20" rx="5" fill="var(--accent)"/><path d="M5 7l3 3-3 3M10 14h5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Interview<span>Hacks</span></span></a>
+    <div class="topnav__search"><svg class="topnav__search-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M11 11l3 3"/></svg><input type="text" id="search-input" placeholder="Search topics…" autocomplete="off" /><span class="topnav__kbd">/</span><div class="search-results" id="search-results"></div></div>
+    <div class="topnav__actions"><button class="btn-icon" id="theme-toggle" title="Toggle theme"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button></div>
+  </nav>
+
+  <div class="page-layout">
+    <aside class="sidebar">
+      <div class="sidebar__section"><div class="sidebar__label">On this page</div><nav class="toc"><a href="#overview" class="toc-link">Overview</a><a href="#why-asked" class="toc-link">Why Interviewers Ask</a><a href="#recognition" class="toc-link">Pattern Recognition</a><a href="#core-idea" class="toc-link">Core Idea</a><a href="#visualization" class="toc-link">Visualization</a><a href="#complexity" class="toc-link">Complexity</a><a href="#tricks" class="toc-link">Tricks</a><a href="#mistakes" class="toc-link">Common Mistakes</a><a href="#python-code" class="toc-link">Python 2 Template</a><a href="#variations" class="toc-link">Variations</a><a href="#leetcode" class="toc-link">LeetCode Problems</a><a href="#walkthrough" class="toc-link">Walkthrough</a><a href="#mental-model" class="toc-link">Mental Model</a><a href="#revision" class="toc-link">Revision Notes</a><a href="#related" class="toc-link">Related Concepts</a></nav></div>
+      <div class="sidebar__section"><div class="sidebar__label">Concepts</div><a href="/concepts/prefix-sum.html" class="sidebar__link active">Prefix Sum</a><a href="/concepts/bfs.html" class="sidebar__link">BFS</a><a href="/concepts/dfs.html" class="sidebar__link">DFS</a><a href="/concepts/union-find.html" class="sidebar__link">Union Find</a><a href="/concepts/dijkstra.html" class="sidebar__link">Dijkstra</a><a href="/concepts/dynamic-programming.html" class="sidebar__link">Dynamic Programming</a></div>
+      <div class="sidebar__section"><div class="sidebar__label">Recently Viewed</div><div id="recently-viewed"></div></div>
+    </aside>
+
+    <main class="content">
+      <nav class="breadcrumbs"><a href="/">Home</a><span class="breadcrumbs__sep">›</span><a href="/concepts/">Concepts</a><span class="breadcrumbs__sep">›</span><span class="breadcrumbs__current">Prefix Sum</span></nav>
+
+      <div class="page-header">
+        <div class="page-header__badges"><span class="badge badge--easy">Easy</span><span class="badge badge--cat">Arrays</span></div>
+        <h1>Prefix Sum</h1>
+        <div class="page-header__meta"><span>⏱ 5 min revision</span><span>🎯 O(1) range queries</span><span>📌 Frequency: Very High</span></div>
+      </div>
+
+      <section class="section" id="overview">
+        <h2><span class="section-num">1</span> Concept Overview</h2>
+        <p>A prefix sum (cumulative sum) array lets you answer <strong>any subarray sum query in O(1)</strong> after O(n) preprocessing. Instead of summing elements from scratch for every query, you precompute a running total.</p>
+        <p style="margin-top:0.75rem;"><code>prefix[i]</code> = sum of all elements from index 0 to i-1. Then the sum of any subarray <code>arr[l..r]</code> = <code>prefix[r+1] - prefix[l]</code>.</p>
+        <div class="callout callout--info"><strong>Intuition</strong>Imagine measuring distances on a road. If you know the distance from city A to each city, you can compute the distance between any two cities instantly by subtraction — without redriving the route.</div>
+      </section>
+
+      <section class="section" id="why-asked">
+        <h2><span class="section-num">2</span> Why Interviewers Ask It</h2>
+        <p>Prefix sum is the simplest example of "precomputation for faster queries." It tests whether you default to the O(n) naive approach or recognize the O(1) opportunity. It's also a prerequisite for sliding window, DP, and 2D grid optimizations.</p>
+      </section>
+
+      <section class="section" id="recognition">
+        <h2><span class="section-num">3</span> Pattern Recognition</h2>
+        <div class="callout callout--success"><strong>Use Prefix Sum when you see</strong>"Sum of subarray [l..r]" · "Range sum queries" · "Number of subarrays with sum k" · "Subarray equal to target" · "Running total" · Multiple sum queries on the same array</div>
+        <p>Key tell: if you're summing the same subarray multiple times, or checking many different subarrays for a sum condition, prefix sum is likely the trick.</p>
+      </section>
+
+      <section class="section" id="core-idea">
+        <h2><span class="section-num">4</span> Core Idea</h2>
+        <p>Build the prefix array once. For 1-indexed prefix (most common interview style):</p>
+        <ul style="margin: 0.5rem 0 0.5rem 1.25rem; color: var(--text-secondary); line-height: 2;">
+          <li><code>prefix[0] = 0</code></li>
+          <li><code>prefix[i] = prefix[i-1] + arr[i-1]</code></li>
+          <li>Sum of arr[l..r] = <code>prefix[r+1] - prefix[l]</code></li>
+        </ul>
+        <div class="callout callout--warning"><strong>Off-by-one matters</strong>There are two common conventions. Be consistent. The 1-indexed prefix (size n+1) is usually cleaner — prefix[0]=0 acts as a sentinel that eliminates special casing for subarrays starting at index 0.</div>
+      </section>
+
+      <section class="section" id="visualization">
+        <h2><span class="section-num">5</span> Visualization</h2>
+        <div class="viz-container">
+          <svg viewBox="0 0 680 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+            <!-- Array -->
+            <text x="20" y="50" font-size="12" fill="var(--text-muted)" font-weight="600">arr[]</text>
+            <g>
+              <rect x="80"  y="35" width="60" height="36" rx="6" fill="var(--bg-code)" stroke="var(--border)" stroke-width="1.5"/>
+              <text x="110" y="52" text-anchor="middle" font-size="10" fill="var(--text-muted)">arr[0]</text>
+              <text x="110" y="65" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text-primary)">3</text>
+
+              <rect x="148" y="35" width="60" height="36" rx="6" fill="var(--bg-code)" stroke="var(--border)" stroke-width="1.5"/>
+              <text x="178" y="52" text-anchor="middle" font-size="10" fill="var(--text-muted)">arr[1]</text>
+              <text x="178" y="65" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text-primary)">1</text>
+
+              <rect x="216" y="35" width="60" height="36" rx="6" fill="var(--bg-code)" stroke="var(--border)" stroke-width="1.5"/>
+              <text x="246" y="52" text-anchor="middle" font-size="10" fill="var(--text-muted)">arr[2]</text>
+              <text x="246" y="65" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text-primary)">4</text>
+
+              <rect x="284" y="35" width="60" height="36" rx="6" fill="var(--bg-code)" stroke="var(--border)" stroke-width="1.5"/>
+              <text x="314" y="52" text-anchor="middle" font-size="10" fill="var(--text-muted)">arr[3]</text>
+              <text x="314" y="65" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text-primary)">1</text>
+
+              <rect x="352" y="35" width="60" height="36" rx="6" fill="var(--bg-code)" stroke="var(--border)" stroke-width="1.5"/>
+              <text x="382" y="52" text-anchor="middle" font-size="10" fill="var(--text-muted)">arr[4]</text>
+              <text x="382" y="65" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text-primary)">5</text>
+            </g>
+
+            <!-- Prefix array -->
+            <text x="20" y="135" font-size="12" fill="var(--accent)" font-weight="600">prefix[]</text>
+            <g>
+              <rect x="80"  y="118" width="60" height="36" rx="6" fill="var(--accent-subtle)" stroke="var(--accent)" stroke-width="1.5"/>
+              <text x="110" y="135" text-anchor="middle" font-size="10" fill="var(--accent)">p[0]</text>
+              <text x="110" y="149" text-anchor="middle" font-size="14" font-weight="700" fill="var(--accent)">0</text>
+
+              <rect x="148" y="118" width="60" height="36" rx="6" fill="var(--accent-subtle)" stroke="var(--accent)" stroke-width="1.5"/>
+              <text x="178" y="135" text-anchor="middle" font-size="10" fill="var(--accent)">p[1]</text>
+              <text x="178" y="149" text-anchor="middle" font-size="14" font-weight="700" fill="var(--accent)">3</text>
+
+              <rect x="216" y="118" width="60" height="36" rx="6" fill="var(--accent-subtle)" stroke="var(--accent)" stroke-width="1.5"/>
+              <text x="246" y="135" text-anchor="middle" font-size="10" fill="var(--accent)">p[2]</text>
+              <text x="246" y="149" text-anchor="middle" font-size="14" font-weight="700" fill="var(--accent)">4</text>
+
+              <rect x="284" y="118" width="60" height="36" rx="6" fill="var(--accent-subtle)" stroke="var(--accent)" stroke-width="1.5"/>
+              <text x="314" y="135" text-anchor="middle" font-size="10" fill="var(--accent)">p[3]</text>
+              <text x="314" y="149" text-anchor="middle" font-size="14" font-weight="700" fill="var(--accent)">8</text>
+
+              <rect x="352" y="118" width="60" height="36" rx="6" fill="var(--accent-subtle)" stroke="var(--accent)" stroke-width="1.5"/>
+              <text x="382" y="135" text-anchor="middle" font-size="10" fill="var(--accent)">p[4]</text>
+              <text x="382" y="149" text-anchor="middle" font-size="14" font-weight="700" fill="var(--accent)">9</text>
+
+              <rect x="420" y="118" width="60" height="36" rx="6" fill="rgba(16,185,129,.12)" stroke="var(--success)" stroke-width="2"/>
+              <text x="450" y="135" text-anchor="middle" font-size="10" fill="var(--success)">p[5]</text>
+              <text x="450" y="149" text-anchor="middle" font-size="14" font-weight="700" fill="var(--success)">14</text>
+            </g>
+
+            <!-- Query example -->
+            <text x="20" y="200" font-size="12" fill="var(--text-muted)" font-weight="600">Query: sum of arr[1..3]</text>
+            <!-- Highlight arr[1..3] -->
+            <rect x="148" y="33" width="198" height="40" rx="6" fill="none" stroke="var(--success)" stroke-width="2.5" stroke-dasharray="5 3"/>
+            <text x="20"  y="220" font-size="13" fill="var(--text-secondary)">= prefix[4] - prefix[1] = 9 - 3 = <tspan font-weight="700" fill="var(--success)">6</tspan></text>
+            <text x="20"  y="240" font-size="11" fill="var(--text-muted)">Verify: arr[1]+arr[2]+arr[3] = 1+4+1 = 6 ✓</text>
+
+            <!-- Formula box -->
+            <rect x="520" y="115" width="150" height="45" rx="8" fill="var(--bg-code)" stroke="var(--border)" stroke-width="1.5"/>
+            <text x="595" y="134" text-anchor="middle" font-size="11" fill="var(--text-muted)">sum(l, r)</text>
+            <text x="595" y="152" text-anchor="middle" font-size="12" font-weight="600" fill="var(--accent)">prefix[r+1] - prefix[l]</text>
+          </svg>
+        </div>
+      </section>
+
+      <section class="section" id="complexity">
+        <h2><span class="section-num">6</span> Complexity</h2>
+        <table class="complexity-table">
+          <thead><tr><th>Operation</th><th>Time</th><th>Space</th></tr></thead>
+          <tbody>
+            <tr><td>Build prefix array</td><td>O(n)</td><td>O(n)</td></tr>
+            <tr><td>Single range query</td><td>O(1)</td><td>O(1)</td></tr>
+            <tr><td>Q queries after build</td><td>O(n + Q)</td><td>O(n)</td></tr>
+            <tr><td>Brute force (no prefix)</td><td>O(n × Q)</td><td>O(1)</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="section" id="tricks">
+        <h2><span class="section-num">7</span> Common Tricks</h2>
+        <div class="tricks-grid">
+          <div class="trick-card"><div class="trick-card__icon">🗃️</div><h4>Prefix Sum + Hash Map</h4><p>Store prefix sums in a hash map to find subarrays with sum exactly k in O(n). Key insight: if prefix[j] - prefix[i] = k, then subarray [i,j] sums to k.</p></div>
+          <div class="trick-card"><div class="trick-card__icon">🔢</div><h4>2D Prefix Sum</h4><p>For grid queries: prefix[i][j] = sum of rectangle from (0,0) to (i,j). Query any sub-rectangle in O(1) using inclusion-exclusion.</p></div>
+          <div class="trick-card"><div class="trick-card__icon">🔄</div><h4>Difference Array</h4><p>For range update queries (add k to all elements in [l,r]), use a difference array. Single-point query after all updates in O(1).</p></div>
+          <div class="trick-card"><div class="trick-card__icon">⚡</div><h4>Modular Prefix Sum</h4><p>For "number of subarrays divisible by k": track prefix[i] % k. If two prefixes have the same remainder, the subarray between them is divisible by k.</p></div>
+        </div>
+      </section>
+
+      <section class="section" id="mistakes">
+        <h2><span class="section-num">8</span> Common Mistakes</h2>
+        <div class="callout callout--danger"><strong>Mistake 1 — Off-by-one indexing</strong>Sum of arr[l..r] = prefix[r+1] - prefix[l], NOT prefix[r] - prefix[l-1]. Draw it out first time.</div>
+        <div class="callout callout--danger"><strong>Mistake 2 — Forgetting the 0-sentinel</strong>prefix[0] = 0 allows subarrays starting at index 0 to work without special casing. Never skip it.</div>
+        <div class="callout callout--warning"><strong>Mistake 3 — Using prefix sum on mutable arrays</strong>Prefix sum is for static arrays. If the array changes, you'd need to rebuild the prefix array (O(n)) or use a Segment Tree / Binary Indexed Tree (O(log n) updates).</div>
+      </section>
+
+      <section class="section" id="python-code">
+        <h2><span class="section-num">9</span> Python 2 Template</h2>
+        <h3>Basic Prefix Sum</h3>
+        <div class="code-block">
+          <div class="code-block__header"><span class="code-block__lang">Python 2</span><button class="code-copy-btn">Copy</button></div>
+          <pre><code>def build_prefix(arr):
+    n = len(arr)
+    prefix = [0] * (n + 1)   # 1-indexed, prefix[0] = 0 sentinel
+    for i in xrange(n):
+        prefix[i + 1] = prefix[i] + arr[i]
+    return prefix
+
+def range_sum(prefix, l, r):
+    """Returns sum of arr[l..r] inclusive, 0-indexed."""
+    return prefix[r + 1] - prefix[l]
+
+# Example
+arr = [3, 1, 4, 1, 5]
+prefix = build_prefix(arr)
+print range_sum(prefix, 1, 3)   # 1+4+1 = 6
+print range_sum(prefix, 0, 4)   # 3+1+4+1+5 = 14</code></pre>
+        </div>
+
+        <h3>Subarray Sum Equals K (Prefix + Hash Map)</h3>
+        <div class="code-block">
+          <div class="code-block__header"><span class="code-block__lang">Python 2</span><button class="code-copy-btn">Copy</button></div>
+          <pre><code># LC 560 — Count subarrays summing to k
+def subarraySum(nums, k):
+    count  = 0
+    prefix = 0
+    seen   = {0: 1}   # prefix_sum → how many times seen
+
+    for n in nums:
+        prefix += n
+        # if (prefix - k) was seen before, subarray [that_index+1 .. here] sums to k
+        count += seen.get(prefix - k, 0)
+        seen[prefix] = seen.get(prefix, 0) + 1
+
+    return count</code></pre>
+        </div>
+      </section>
+
+      <section class="section" id="variations">
+        <h2><span class="section-num">10</span> Python 2 Variations</h2>
+        <h3>2D Prefix Sum</h3>
+        <div class="code-block">
+          <div class="code-block__header"><span class="code-block__lang">Python 2</span><button class="code-copy-btn">Copy</button></div>
+          <pre><code>def build_2d_prefix(matrix):
+    m, n = len(matrix), len(matrix[0])
+    p = [[0] * (n + 1) for _ in xrange(m + 1)]
+    for i in xrange(1, m + 1):
+        for j in xrange(1, n + 1):
+            p[i][j] = (matrix[i-1][j-1]
+                       + p[i-1][j] + p[i][j-1]
+                       - p[i-1][j-1])
+    return p
+
+def region_sum(p, r1, c1, r2, c2):
+    """Sum of rectangle (r1,c1) to (r2,c2) inclusive, 0-indexed."""
+    return (p[r2+1][c2+1] - p[r1][c2+1]
+            - p[r2+1][c1] + p[r1][c1])</code></pre>
+        </div>
+
+        <h3>Difference Array (range updates)</h3>
+        <div class="code-block">
+          <div class="code-block__header"><span class="code-block__lang">Python 2</span><button class="code-copy-btn">Copy</button></div>
+          <pre><code># Add k to all elements in arr[l..r] for many queries, then read
+n = 10
+diff = [0] * (n + 1)
+
+def range_add(l, r, k):
+    diff[l]     += k
+    diff[r + 1] -= k
+
+def build_result():
+    result = [0] * n
+    running = 0
+    for i in xrange(n):
+        running    += diff[i]
+        result[i]   = running
+    return result</code></pre>
+        </div>
+      </section>
+
+      <section class="section" id="leetcode">
+        <h2><span class="section-num">11</span> LeetCode Problems</h2>
+        <h3>Easy</h3>
+        <div class="problem-list">
+          <div class="problem-item"><div class="problem-item__num" style="background:rgba(16,185,129,.12);color:var(--diff-easy);">E</div><div class="problem-item__info"><div class="problem-item__name"><a href="https://leetcode.com/problems/running-sum-of-1d-array/" target="_blank">1480. Running Sum of 1d Array</a></div><div class="problem-item__why">Direct prefix sum construction</div></div><span class="badge badge--easy">Easy</span></div>
+          <div class="problem-item"><div class="problem-item__num" style="background:rgba(16,185,129,.12);color:var(--diff-easy);">E</div><div class="problem-item__info"><div class="problem-item__name"><a href="https://leetcode.com/problems/range-sum-query-immutable/" target="_blank">303. Range Sum Query - Immutable</a></div><div class="problem-item__why">Classic prefix sum for O(1) queries</div></div><span class="badge badge--easy">Easy</span></div>
+        </div>
+        <h3 style="margin-top:1rem;">Medium</h3>
+        <div class="problem-list">
+          <div class="problem-item"><div class="problem-item__num" style="background:rgba(245,158,11,.12);color:var(--diff-medium);">M</div><div class="problem-item__info"><div class="problem-item__name"><a href="https://leetcode.com/problems/subarray-sum-equals-k/" target="_blank">560. Subarray Sum Equals K</a></div><div class="problem-item__why">Prefix sum + hash map — count subarrays summing to k</div></div><span class="badge badge--medium">Medium</span></div>
+          <div class="problem-item"><div class="problem-item__num" style="background:rgba(245,158,11,.12);color:var(--diff-medium);">M</div><div class="problem-item__info"><div class="problem-item__name"><a href="https://leetcode.com/problems/product-of-array-except-self/" target="_blank">238. Product of Array Except Self</a></div><div class="problem-item__why">Prefix product × suffix product for each index</div></div><span class="badge badge--medium">Medium</span></div>
+          <div class="problem-item"><div class="problem-item__num" style="background:rgba(245,158,11,.12);color:var(--diff-medium);">M</div><div class="problem-item__info"><div class="problem-item__name"><a href="https://leetcode.com/problems/contiguous-array/" target="_blank">525. Contiguous Array</a></div><div class="problem-item__why">Replace 0 with -1, prefix sum + hash map for balanced arrays</div></div><span class="badge badge--medium">Medium</span></div>
+        </div>
+      </section>
+
+      <section class="section" id="walkthrough">
+        <h2><span class="section-num">12</span> Step-by-Step Walkthrough</h2>
+        <p style="margin-bottom:0.75rem;">Problem: <em>LC 560 — nums=[1,1,1], k=2. Count subarrays summing to 2.</em></p>
+        <div class="steps">
+          <div class="step"><div class="step__num">1</div><div class="step__content"><h4>Init</h4><p>prefix=0, seen={0:1}, count=0.</p></div></div>
+          <div class="step"><div class="step__num">2</div><div class="step__content"><h4>Process nums[0]=1</h4><p>prefix=1. Look for (1-2)=-1 in seen → 0 times. Add prefix=1 to seen. seen={0:1, 1:1}.</p></div></div>
+          <div class="step"><div class="step__num">3</div><div class="step__content"><h4>Process nums[1]=1</h4><p>prefix=2. Look for (2-2)=0 in seen → 1 time! count=1. Add prefix=2. seen={0:1,1:1,2:1}.</p></div></div>
+          <div class="step"><div class="step__num">4</div><div class="step__content"><h4>Process nums[2]=1</h4><p>prefix=3. Look for (3-2)=1 in seen → 1 time! count=2. Answer: 2 subarrays ([1,1] at pos 0-1 and 1-2).</p></div></div>
+        </div>
+      </section>
+
+      <section class="section" id="mental-model">
+        <h2><span class="section-num">13</span> Mental Model</h2>
+        <div class="callout callout--info"><strong>Think of prefix sum as an odometer</strong>Your car odometer tracks total distance traveled. To find distance between two cities, subtract the reading at city A from the reading at city B. You never re-drive the road — you just subtract. prefix[r+1] is odometer at r, prefix[l] is odometer at l.</div>
+      </section>
+
+      <section class="section" id="revision">
+        <h2><span class="section-num">14</span> Revision Notes</h2>
+        <div class="revision-box">
+          <h3>⚡ 1-Minute Review</h3>
+          <ul>
+            <li>prefix[0] = 0 (sentinel), prefix[i] = prefix[i-1] + arr[i-1]</li>
+            <li>sum(l, r) = prefix[r+1] - prefix[l] — O(1) query</li>
+            <li>Build O(n), query O(1). Total for Q queries: O(n + Q)</li>
+            <li>Prefix + hash map → count subarrays with sum k in O(n)</li>
+            <li>2D version uses inclusion-exclusion for rectangle queries</li>
+            <li>For range updates: use difference array instead</li>
+            <li>Static array only — for updates use BIT / Segment Tree</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section" id="related">
+        <h2><span class="section-num">15</span> Related Concepts</h2>
+        <div class="related-grid">
+          <a href="/concepts/dynamic-programming.html"  class="related-card">Dynamic Programming</a>
+          <a href="/problems/two-sum.html"              class="related-card">Two Sum</a>
+          <a href="/concepts/bfs.html"                  class="related-card">BFS</a>
+        </div>
+      </section>
+
+      <div class="next-topic-banner">
+        <div class="next-topic-banner__text"><h4>Recommended Next</h4><h3>BFS</h3><p>Level up to graph traversal — start with BFS before DFS.</p></div>
+        <a href="/concepts/bfs.html" class="btn btn--primary" data-nav="next">Study BFS →</a>
+      </div>
+
+      <nav class="page-nav">
+        <a href="/" class="page-nav__btn" data-nav="prev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg><div><div class="page-nav__btn__label">Back</div><div class="page-nav__btn__title">Dashboard</div></div></a>
+        <a href="/concepts/bfs.html" class="page-nav__btn page-nav__btn--next" data-nav="next"><div><div class="page-nav__btn__label">Next</div><div class="page-nav__btn__title">BFS</div></div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></a>
+      </nav>
+    </main>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script src="/assets/js/main.js"></script>
+</body>
+</html>

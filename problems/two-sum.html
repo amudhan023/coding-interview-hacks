@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Two Sum — Interview Hacks</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+</head>
+<body data-page-title="Two Sum">
+  <nav class="topnav">
+    <a href="/" class="topnav__logo" style="text-decoration:none;"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect width="20" height="20" rx="5" fill="var(--accent)"/><path d="M5 7l3 3-3 3M10 14h5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Interview<span>Hacks</span></span></a>
+    <div class="topnav__search"><svg class="topnav__search-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M11 11l3 3"/></svg><input type="text" id="search-input" placeholder="Search topics…" autocomplete="off" /><span class="topnav__kbd">/</span><div class="search-results" id="search-results"></div></div>
+    <div class="topnav__actions"><button class="btn-icon" id="theme-toggle" title="Toggle theme"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button></div>
+  </nav>
+
+  <div class="page-layout">
+    <aside class="sidebar">
+      <div class="sidebar__section"><div class="sidebar__label">On this page</div><nav class="toc"><a href="#summary" class="toc-link">Problem Summary</a><a href="#pattern" class="toc-link">Pattern</a><a href="#visualization" class="toc-link">Visualization</a><a href="#brute-force" class="toc-link">Brute Force</a><a href="#optimal" class="toc-link">Optimal Solution</a><a href="#python-code" class="toc-link">Python 2 Code</a><a href="#dry-run" class="toc-link">Dry Run</a><a href="#complexity" class="toc-link">Complexity</a><a href="#variations" class="toc-link">Variations</a><a href="#related" class="toc-link">Related Problems</a></nav></div>
+      <div class="sidebar__section"><div class="sidebar__label">Problems</div><a href="/problems/two-sum.html" class="sidebar__link active">Two Sum</a><a href="/problems/number-of-islands.html" class="sidebar__link">Number of Islands</a><a href="/problems/redundant-connection.html" class="sidebar__link">Redundant Connection</a></div>
+      <div class="sidebar__section"><div class="sidebar__label">Recently Viewed</div><div id="recently-viewed"></div></div>
+    </aside>
+
+    <main class="content">
+      <nav class="breadcrumbs"><a href="/">Home</a><span class="breadcrumbs__sep">›</span><a href="/problems/">Problems</a><span class="breadcrumbs__sep">›</span><span class="breadcrumbs__current">Two Sum</span></nav>
+
+      <div class="page-header">
+        <div class="page-header__badges"><span class="badge badge--easy">Easy</span><span class="badge badge--cat">Arrays</span><span class="badge badge--cat">Hash Map</span></div>
+        <h1>Two Sum <span style="color:var(--text-muted);font-weight:400;font-size:1.2rem;">LC #1</span></h1>
+        <div class="page-header__meta"><span>⏱ 5 min revision</span><span>🎯 Hash Map Complement</span><span>📌 Frequency: Extremely High</span></div>
+      </div>
+
+      <section class="section" id="summary">
+        <h2><span class="section-num">1</span> Problem Summary</h2>
+        <div class="callout callout--info"><strong>Problem</strong>Given an array of integers <code>nums</code> and an integer <code>target</code>, return the <em>indices</em> of the two numbers that add up to <code>target</code>. Exactly one solution exists, and you cannot use the same element twice.</div>
+        <p style="margin-top:0.75rem;"><strong>Example:</strong> nums = [2, 7, 11, 15], target = 9 → [0, 1] (because nums[0] + nums[1] = 2 + 7 = 9)</p>
+      </section>
+
+      <section class="section" id="pattern">
+        <h2><span class="section-num">2</span> Pattern</h2>
+        <div class="callout callout--success"><strong>Hash Map Complement</strong>For each number, you need its <em>complement</em> (target - num). Store numbers you've already seen in a hash map (value → index). For each new number, check if its complement is already in the map.</div>
+        <p>This pattern generalizes to: <em>"Find two elements satisfying a condition"</em> where you can precompute what you're looking for in O(1) per element.</p>
+      </section>
+
+      <section class="section" id="visualization">
+        <h2><span class="section-num">3</span> Visualization</h2>
+        <div class="viz-container">
+          <svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+            <!-- Array -->
+            <text x="20" y="35" font-size="12" fill="var(--text-muted)">nums = [2, 7, 11, 15], target = 9</text>
+
+            <!-- Boxes -->
+            <rect x="20"  y="50" width="60" height="40" rx="6" fill="var(--accent-subtle)"     stroke="var(--accent)"   stroke-width="2"/>
+            <text x="50"  y="67" text-anchor="middle" font-size="10" fill="var(--text-muted)">i=0</text>
+            <text x="50"  y="83" text-anchor="middle" font-size="16" font-weight="700" fill="var(--accent)">2</text>
+
+            <rect x="88"  y="50" width="60" height="40" rx="6" fill="rgba(16,185,129,.12)"      stroke="var(--success)"  stroke-width="2"/>
+            <text x="118" y="67" text-anchor="middle" font-size="10" fill="var(--text-muted)">i=1</text>
+            <text x="118" y="83" text-anchor="middle" font-size="16" font-weight="700" fill="var(--success)">7</text>
+
+            <rect x="156" y="50" width="60" height="40" rx="6" fill="var(--bg-code)"            stroke="var(--border)"   stroke-width="1.5"/>
+            <text x="186" y="67" text-anchor="middle" font-size="10" fill="var(--text-muted)">i=2</text>
+            <text x="186" y="83" text-anchor="middle" font-size="16" font-weight="700" fill="var(--text-primary)">11</text>
+
+            <rect x="224" y="50" width="60" height="40" rx="6" fill="var(--bg-code)"            stroke="var(--border)"   stroke-width="1.5"/>
+            <text x="254" y="67" text-anchor="middle" font-size="10" fill="var(--text-muted)">i=3</text>
+            <text x="254" y="83" text-anchor="middle" font-size="16" font-weight="700" fill="var(--text-primary)">15</text>
+
+            <!-- Step 1 -->
+            <text x="20"  y="120" font-size="12" fill="var(--text-secondary)">Step 1: Process 2 → complement = 9-2 = <tspan fill="var(--danger)">7</tspan>. Not in map. Store {2:0}.</text>
+            <text x="20"  y="140" font-size="12" fill="var(--text-secondary)">Step 2: Process 7 → complement = 9-7 = <tspan fill="var(--success)" font-weight="700">2</tspan>. Found in map at index 0!</text>
+            <text x="20"  y="162" font-size="14" font-weight="700" fill="var(--success)">→ Return [0, 1] ✓</text>
+
+            <!-- Arrow connecting 2 and 7 -->
+            <path d="M 50,50 Q 84,20 118,50" fill="none" stroke="var(--success)" stroke-width="2" marker-end="url(#arr2)"/>
+            <text x="84" y="18" text-anchor="middle" font-size="11" fill="var(--success)" font-weight="600">2 + 7 = 9</text>
+            <defs><marker id="arr2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="var(--success)"/></marker></defs>
+          </svg>
+        </div>
+      </section>
+
+      <section class="section" id="brute-force">
+        <h2><span class="section-num">4</span> Brute Force — O(n²)</h2>
+        <p style="margin-bottom:0.75rem;">Check every pair. Simple but too slow for large inputs.</p>
+        <div class="code-block">
+          <div class="code-block__header"><span class="code-block__lang">Python 2</span><button class="code-copy-btn">Copy</button></div>
+          <pre><code>class Solution(object):
+    def twoSum(self, nums, target):
+        n = len(nums)
+        for i in xrange(n):
+            for j in xrange(i + 1, n):
+                if nums[i] + nums[j] == target:
+                    return [i, j]</code></pre>
+        </div>
+        <div class="callout callout--danger"><strong>Why this fails</strong>O(n²) time — for n=100,000 that's 10^10 operations. Always mention this to the interviewer and say you can do better.</div>
+      </section>
+
+      <section class="section" id="optimal">
+        <h2><span class="section-num">5</span> Optimal Solution — O(n)</h2>
+        <p>One pass with a hash map. For each element, check if its complement (target - num) is already stored. If yes, return the pair.</p>
+        <div class="callout callout--success"><strong>Key insight</strong>Instead of looking forward ("is there a j &gt; i such that nums[j] = target - nums[i]?"), we look backward ("have I already seen target - nums[i]?"). Same answer, but O(1) per lookup.</div>
+      </section>
+
+      <section class="section" id="python-code">
+        <h2><span class="section-num">6</span> Python 2 Code</h2>
+        <div class="code-block">
+          <div class="code-block__header"><span class="code-block__lang">Python 2 — Optimal O(n)</span><button class="code-copy-btn">Copy</button></div>
+          <pre><code>class Solution(object):
+    def twoSum(self, nums, target):
+        seen = {}   # value → index
+
+        for i, num in enumerate(nums):
+            complement = target - num
+            if complement in seen:
+                return [seen[complement], i]
+            seen[num] = i
+
+        return []   # guaranteed to have a solution per problem statement</code></pre>
+        </div>
+      </section>
+
+      <section class="section" id="dry-run">
+        <h2><span class="section-num">7</span> Dry Run</h2>
+        <p style="margin-bottom:0.75rem;">Input: nums=[2,7,11,15], target=9</p>
+        <div class="steps">
+          <div class="step"><div class="step__num">1</div><div class="step__content"><h4>i=0, num=2</h4><p>complement = 9-2 = 7. seen={} → 7 not found. Add seen={2:0}.</p></div></div>
+          <div class="step"><div class="step__num">2</div><div class="step__content"><h4>i=1, num=7</h4><p>complement = 9-7 = 2. seen={2:0} → 2 found at index 0! Return [0, 1]. ✓</p></div></div>
+        </div>
+      </section>
+
+      <section class="section" id="complexity">
+        <h2><span class="section-num">8</span> Complexity Analysis</h2>
+        <table class="complexity-table">
+          <thead><tr><th>Solution</th><th>Time</th><th>Space</th></tr></thead>
+          <tbody>
+            <tr><td>Brute force (two loops)</td><td>O(n²)</td><td>O(1)</td></tr>
+            <tr><td>Sort + two pointers (if indices not needed)</td><td>O(n log n)</td><td>O(1)</td></tr>
+            <tr><td>Hash map (optimal, indices needed)</td><td>O(n)</td><td>O(n)</td></tr>
+          </tbody>
+        </table>
+        <div class="callout callout--info"><strong>Interview note</strong>If the problem asked for values (not indices), sort + two pointers would be O(n log n) time and O(1) space. Since it asks for indices, you can't sort — hash map is the way.</div>
+      </section>
+
+      <section class="section" id="variations">
+        <h2><span class="section-num">9</span> Variations</h2>
+        <div class="tricks-grid">
+          <div class="trick-card"><div class="trick-card__icon">🔢</div><h4>Two Sum II (sorted array)</h4><p>Use two pointers. Move left forward if sum too small, right backward if too large. O(n) time, O(1) space.</p></div>
+          <div class="trick-card"><div class="trick-card__icon">🔄</div><h4>Three Sum</h4><p>Fix one element, then use two pointers on the rest. O(n²) time. Watch for duplicates with pointer skipping.</p></div>
+          <div class="trick-card"><div class="trick-card__icon">🌐</div><h4>Two Sum in BST</h4><p>In-order traversal to get sorted array, then two pointers. Or use a hash set and BST in-order DFS.</p></div>
+          <div class="trick-card"><div class="trick-card__icon">✅</div><h4>Two Sum (count pairs, not indices)</h4><p>Use Counter. For each num, count how many times complement appears. Avoid double-counting by dividing by 2 for equal pairs.</p></div>
+        </div>
+
+        <h3 style="margin-top:1.25rem;">Two Pointers variant (sorted array, values only)</h3>
+        <div class="code-block">
+          <div class="code-block__header"><span class="code-block__lang">Python 2</span><button class="code-copy-btn">Copy</button></div>
+          <pre><code>class Solution(object):
+    def twoSum(self, numbers, target):   # LC 167 — sorted array
+        left, right = 0, len(numbers) - 1
+        while left < right:
+            s = numbers[left] + numbers[right]
+            if s == target:
+                return [left + 1, right + 1]   # 1-indexed
+            elif s < target:
+                left  += 1
+            else:
+                right -= 1</code></pre>
+        </div>
+      </section>
+
+      <section class="section" id="related">
+        <h2><span class="section-num">10</span> Related Problems</h2>
+        <div class="related-grid">
+          <a href="/concepts/prefix-sum.html"             class="related-card">Prefix Sum</a>
+          <a href="/problems/number-of-islands.html"      class="related-card">Number of Islands</a>
+          <a href="/problems/redundant-connection.html"   class="related-card">Redundant Connection</a>
+        </div>
+      </section>
+
+      <nav class="page-nav">
+        <a href="/" class="page-nav__btn" data-nav="prev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg><div><div class="page-nav__btn__label">Back</div><div class="page-nav__btn__title">Dashboard</div></div></a>
+        <a href="/problems/number-of-islands.html" class="page-nav__btn page-nav__btn--next" data-nav="next"><div><div class="page-nav__btn__label">Next</div><div class="page-nav__btn__title">Number of Islands</div></div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></a>
+      </nav>
+    </main>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script src="/assets/js/main.js"></script>
+</body>
+</html>

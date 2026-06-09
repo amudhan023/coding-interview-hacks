@@ -1,0 +1,92 @@
+[
+  {
+    "id": "union-find",
+    "title": "Union Find (Disjoint Set Union)",
+    "type": "concept",
+    "category": "Union Find",
+    "difficulty": "Medium",
+    "url": "/concepts/union-find.html",
+    "pattern": "Connected Components",
+    "tags": ["union find", "dsu", "disjoint set", "connected components", "kruskal", "cycle detection", "graphs"]
+  },
+  {
+    "id": "bfs",
+    "title": "Breadth-First Search (BFS)",
+    "type": "concept",
+    "category": "Graphs",
+    "difficulty": "Easy",
+    "url": "/concepts/bfs.html",
+    "pattern": "Level Order Traversal",
+    "tags": ["bfs", "breadth first search", "queue", "shortest path", "level order", "graphs", "trees"]
+  },
+  {
+    "id": "dfs",
+    "title": "Depth-First Search (DFS)",
+    "type": "concept",
+    "category": "Graphs",
+    "difficulty": "Easy",
+    "url": "/concepts/dfs.html",
+    "pattern": "Backtracking / Tree Traversal",
+    "tags": ["dfs", "depth first search", "recursion", "backtracking", "stack", "graphs", "trees"]
+  },
+  {
+    "id": "dijkstra",
+    "title": "Dijkstra's Shortest Path",
+    "type": "concept",
+    "category": "Graphs",
+    "difficulty": "Hard",
+    "url": "/concepts/dijkstra.html",
+    "pattern": "Greedy + Priority Queue",
+    "tags": ["dijkstra", "shortest path", "priority queue", "heap", "weighted graph", "greedy"]
+  },
+  {
+    "id": "dynamic-programming",
+    "title": "Dynamic Programming",
+    "type": "concept",
+    "category": "Dynamic Programming",
+    "difficulty": "Hard",
+    "url": "/concepts/dynamic-programming.html",
+    "pattern": "Memoization / Tabulation",
+    "tags": ["dp", "dynamic programming", "memoization", "tabulation", "subproblems", "overlapping", "optimal substructure"]
+  },
+  {
+    "id": "prefix-sum",
+    "title": "Prefix Sum",
+    "type": "concept",
+    "category": "Arrays",
+    "difficulty": "Easy",
+    "url": "/concepts/prefix-sum.html",
+    "pattern": "Range Query Precomputation",
+    "tags": ["prefix sum", "cumulative sum", "range query", "arrays", "subarrays"]
+  },
+  {
+    "id": "two-sum",
+    "title": "Two Sum",
+    "type": "problem",
+    "category": "Arrays",
+    "difficulty": "Easy",
+    "url": "/problems/two-sum.html",
+    "pattern": "Hash Map Complement",
+    "tags": ["two sum", "hash map", "array", "complement", "easy"]
+  },
+  {
+    "id": "number-of-islands",
+    "title": "Number of Islands",
+    "type": "problem",
+    "category": "Graphs",
+    "difficulty": "Medium",
+    "url": "/problems/number-of-islands.html",
+    "pattern": "BFS / DFS Grid Traversal",
+    "tags": ["number of islands", "grid", "bfs", "dfs", "union find", "connected components", "medium"]
+  },
+  {
+    "id": "redundant-connection",
+    "title": "Redundant Connection",
+    "type": "problem",
+    "category": "Union Find",
+    "difficulty": "Medium",
+    "url": "/problems/redundant-connection.html",
+    "pattern": "Union Find Cycle Detection",
+    "tags": ["redundant connection", "union find", "cycle detection", "graph", "medium"]
+  }
+]

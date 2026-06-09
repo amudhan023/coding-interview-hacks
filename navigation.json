@@ -1,0 +1,26 @@
+{
+  "concepts": [
+    { "id": "union-find",         "title": "Union Find",          "url": "/concepts/union-find.html" },
+    { "id": "bfs",                "title": "BFS",                 "url": "/concepts/bfs.html" },
+    { "id": "dfs",                "title": "DFS",                 "url": "/concepts/dfs.html" },
+    { "id": "dijkstra",           "title": "Dijkstra",            "url": "/concepts/dijkstra.html" },
+    { "id": "dynamic-programming","title": "Dynamic Programming", "url": "/concepts/dynamic-programming.html" },
+    { "id": "prefix-sum",         "title": "Prefix Sum",          "url": "/concepts/prefix-sum.html" }
+  ],
+  "problems": [
+    { "id": "two-sum",              "title": "Two Sum",              "url": "/problems/two-sum.html" },
+    { "id": "number-of-islands",    "title": "Number of Islands",    "url": "/problems/number-of-islands.html" },
+    { "id": "redundant-connection", "title": "Redundant Connection", "url": "/problems/redundant-connection.html" }
+  ],
+  "order": [
+    "/concepts/prefix-sum.html",
+    "/concepts/bfs.html",
+    "/concepts/dfs.html",
+    "/concepts/union-find.html",
+    "/concepts/dijkstra.html",
+    "/concepts/dynamic-programming.html",
+    "/problems/two-sum.html",
+    "/problems/number-of-islands.html",
+    "/problems/redundant-connection.html"
+  ]
+}

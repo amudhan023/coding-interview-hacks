@@ -5,11 +5,11 @@
   <title>Dynamic Programming — Interview Hacks</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/main.css" />
 </head>
-<body data-page-title="Dynamic Programming">
+<body data-root=".." data-page-title="Dynamic Programming">
   <nav class="topnav">
-    <a href="/" class="topnav__logo" style="text-decoration:none;"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect width="20" height="20" rx="5" fill="var(--accent)"/><path d="M5 7l3 3-3 3M10 14h5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Interview<span>Hacks</span></span></a>
+    <a href="../index.html" class="topnav__logo" style="text-decoration:none;"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect width="20" height="20" rx="5" fill="var(--accent)"/><path d="M5 7l3 3-3 3M10 14h5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Interview<span>Hacks</span></span></a>
     <div class="topnav__search"><svg class="topnav__search-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M11 11l3 3"/></svg><input type="text" id="search-input" placeholder="Search topics…" autocomplete="off" /><span class="topnav__kbd">/</span><div class="search-results" id="search-results"></div></div>
     <div class="topnav__actions"><button class="btn-icon" id="theme-toggle" title="Toggle theme"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button></div>
   </nav>
@@ -17,12 +17,12 @@
   <div class="page-layout">
     <aside class="sidebar">
       <div class="sidebar__section"><div class="sidebar__label">On this page</div><nav class="toc"><a href="#overview" class="toc-link">Overview</a><a href="#why-asked" class="toc-link">Why Interviewers Ask</a><a href="#recognition" class="toc-link">Pattern Recognition</a><a href="#core-idea" class="toc-link">Core Idea</a><a href="#visualization" class="toc-link">Visualization</a><a href="#complexity" class="toc-link">Complexity</a><a href="#tricks" class="toc-link">Tricks</a><a href="#mistakes" class="toc-link">Common Mistakes</a><a href="#python-code" class="toc-link">Python 2 Template</a><a href="#variations" class="toc-link">Variations</a><a href="#leetcode" class="toc-link">LeetCode Problems</a><a href="#walkthrough" class="toc-link">Walkthrough</a><a href="#mental-model" class="toc-link">Mental Model</a><a href="#revision" class="toc-link">Revision Notes</a><a href="#related" class="toc-link">Related Concepts</a></nav></div>
-      <div class="sidebar__section"><div class="sidebar__label">Concepts</div><a href="/concepts/prefix-sum.html" class="sidebar__link">Prefix Sum</a><a href="/concepts/bfs.html" class="sidebar__link">BFS</a><a href="/concepts/dfs.html" class="sidebar__link">DFS</a><a href="/concepts/union-find.html" class="sidebar__link">Union Find</a><a href="/concepts/dijkstra.html" class="sidebar__link">Dijkstra</a><a href="/concepts/dynamic-programming.html" class="sidebar__link active">Dynamic Programming</a></div>
+      <div class="sidebar__section"><div class="sidebar__label">Concepts</div><a href="prefix-sum.html" class="sidebar__link">Prefix Sum</a><a href="bfs.html" class="sidebar__link">BFS</a><a href="dfs.html" class="sidebar__link">DFS</a><a href="union-find.html" class="sidebar__link">Union Find</a><a href="dijkstra.html" class="sidebar__link">Dijkstra</a><a href="dynamic-programming.html" class="sidebar__link active">Dynamic Programming</a></div>
       <div class="sidebar__section"><div class="sidebar__label">Recently Viewed</div><div id="recently-viewed"></div></div>
     </aside>
 
     <main class="content">
-      <nav class="breadcrumbs"><a href="/">Home</a><span class="breadcrumbs__sep">›</span><a href="/concepts/">Concepts</a><span class="breadcrumbs__sep">›</span><span class="breadcrumbs__current">Dynamic Programming</span></nav>
+      <nav class="breadcrumbs"><a href="../index.html">Home</a><span class="breadcrumbs__sep">›</span><a href="./">Concepts</a><span class="breadcrumbs__sep">›</span><span class="breadcrumbs__current">Dynamic Programming</span></nav>
 
       <div class="page-header">
         <div class="page-header__badges"><span class="badge badge--hard">Hard</span><span class="badge badge--cat">Dynamic Programming</span></div>
@@ -333,24 +333,24 @@ def lis(nums):
       <section class="section" id="related">
         <h2><span class="section-num">15</span> Related Concepts</h2>
         <div class="related-grid">
-          <a href="/concepts/prefix-sum.html"  class="related-card">Prefix Sum</a>
-          <a href="/concepts/dfs.html"         class="related-card">DFS / Backtracking</a>
-          <a href="/concepts/dijkstra.html"    class="related-card">Dijkstra</a>
+          <a href="prefix-sum.html"  class="related-card">Prefix Sum</a>
+          <a href="dfs.html"         class="related-card">DFS / Backtracking</a>
+          <a href="dijkstra.html"    class="related-card">Dijkstra</a>
         </div>
       </section>
 
       <div class="next-topic-banner">
         <div class="next-topic-banner__text"><h4>Practice Problem</h4><h3>Two Sum</h3><p>Warm up with a simpler problem before tackling harder DP problems.</p></div>
-        <a href="/problems/two-sum.html" class="btn btn--primary" data-nav="next">Practice →</a>
+        <a href="../problems/two-sum.html" class="btn btn--primary" data-nav="next">Practice →</a>
       </div>
 
       <nav class="page-nav">
-        <a href="/concepts/dijkstra.html" class="page-nav__btn" data-nav="prev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg><div><div class="page-nav__btn__label">Previous</div><div class="page-nav__btn__title">Dijkstra</div></div></a>
-        <a href="/problems/two-sum.html" class="page-nav__btn page-nav__btn--next" data-nav="next"><div><div class="page-nav__btn__label">Next</div><div class="page-nav__btn__title">Two Sum</div></div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></a>
+        <a href="dijkstra.html" class="page-nav__btn" data-nav="prev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg><div><div class="page-nav__btn__label">Previous</div><div class="page-nav__btn__title">Dijkstra</div></div></a>
+        <a href="../problems/two-sum.html" class="page-nav__btn page-nav__btn--next" data-nav="next"><div><div class="page-nav__btn__label">Next</div><div class="page-nav__btn__title">Two Sum</div></div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></a>
       </nav>
     </main>
   </div>
   <div class="toast" id="toast"></div>
-  <script src="/assets/js/main.js"></script>
+  <script src="../assets/js/main.js"></script>
 </body>
 </html>

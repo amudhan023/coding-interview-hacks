@@ -38,7 +38,8 @@ const Search = (() => {
 
   async function loadIndex() {
     try {
-      const res = await fetch('/search-index.json');
+      const root = document.body.dataset.root || '.';
+      const res = await fetch(root + '/search-index.json');
       index = await res.json();
     } catch (e) {
       index = [];

@@ -7,13 +7,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/main.css" />
 </head>
-<body data-page-title="Union Find">
+<body data-root=".." data-page-title="Union Find">
 
   <!-- Top Nav -->
   <nav class="topnav">
-    <a href="/" class="topnav__logo" style="text-decoration:none;">
+    <a href="../index.html" class="topnav__logo" style="text-decoration:none;">
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect width="20" height="20" rx="5" fill="var(--accent)"/><path d="M5 7l3 3-3 3M10 14h5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
       <span>Interview<span>Hacks</span></span>
     </a>
@@ -55,12 +55,12 @@
       </div>
       <div class="sidebar__section">
         <div class="sidebar__label">Concepts</div>
-        <a href="/concepts/prefix-sum.html"         class="sidebar__link">Prefix Sum</a>
-        <a href="/concepts/bfs.html"                class="sidebar__link">BFS</a>
-        <a href="/concepts/dfs.html"                class="sidebar__link">DFS</a>
-        <a href="/concepts/union-find.html"         class="sidebar__link active">Union Find</a>
-        <a href="/concepts/dijkstra.html"           class="sidebar__link">Dijkstra</a>
-        <a href="/concepts/dynamic-programming.html" class="sidebar__link">Dynamic Programming</a>
+        <a href="prefix-sum.html"         class="sidebar__link">Prefix Sum</a>
+        <a href="bfs.html"                class="sidebar__link">BFS</a>
+        <a href="dfs.html"                class="sidebar__link">DFS</a>
+        <a href="union-find.html"         class="sidebar__link active">Union Find</a>
+        <a href="dijkstra.html"           class="sidebar__link">Dijkstra</a>
+        <a href="dynamic-programming.html" class="sidebar__link">Dynamic Programming</a>
       </div>
       <div class="sidebar__section">
         <div class="sidebar__label">Recently Viewed</div>
@@ -72,8 +72,8 @@
     <main class="content">
       <!-- Breadcrumbs -->
       <nav class="breadcrumbs">
-        <a href="/">Home</a><span class="breadcrumbs__sep">›</span>
-        <a href="/concepts/">Concepts</a><span class="breadcrumbs__sep">›</span>
+        <a href="../index.html">Home</a><span class="breadcrumbs__sep">›</span>
+        <a href="./">Concepts</a><span class="breadcrumbs__sep">›</span>
         <span class="breadcrumbs__current">Union Find</span>
       </nav>
 
@@ -619,11 +619,11 @@ def union_enemies(x, y):
       <section class="section" id="related">
         <h2><span class="section-num">15</span> Related Concepts</h2>
         <div class="related-grid">
-          <a href="/concepts/bfs.html"                 class="related-card">BFS</a>
-          <a href="/concepts/dfs.html"                 class="related-card">DFS</a>
-          <a href="/concepts/dijkstra.html"            class="related-card">Dijkstra</a>
-          <a href="/problems/number-of-islands.html"   class="related-card">Number of Islands</a>
-          <a href="/problems/redundant-connection.html" class="related-card">Redundant Connection</a>
+          <a href="bfs.html"                 class="related-card">BFS</a>
+          <a href="dfs.html"                 class="related-card">DFS</a>
+          <a href="dijkstra.html"            class="related-card">Dijkstra</a>
+          <a href="../problems/number-of-islands.html"   class="related-card">Number of Islands</a>
+          <a href="../problems/redundant-connection.html" class="related-card">Redundant Connection</a>
         </div>
       </section>
 
@@ -634,16 +634,16 @@ def union_enemies(x, y):
           <h3>Dijkstra's Algorithm</h3>
           <p>Build on graph traversal — now handle weighted edges with a priority queue.</p>
         </div>
-        <a href="/concepts/dijkstra.html" class="btn btn--primary" data-nav="next">Study Dijkstra →</a>
+        <a href="dijkstra.html" class="btn btn--primary" data-nav="next">Study Dijkstra →</a>
       </div>
 
       <!-- Page Navigation -->
       <nav class="page-nav">
-        <a href="/concepts/dfs.html" class="page-nav__btn" data-nav="prev">
+        <a href="dfs.html" class="page-nav__btn" data-nav="prev">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
           <div><div class="page-nav__btn__label">Previous</div><div class="page-nav__btn__title">DFS</div></div>
         </a>
-        <a href="/concepts/dijkstra.html" class="page-nav__btn page-nav__btn--next" data-nav="next">
+        <a href="dijkstra.html" class="page-nav__btn page-nav__btn--next" data-nav="next">
           <div><div class="page-nav__btn__label">Next</div><div class="page-nav__btn__title">Dijkstra</div></div>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
         </a>
@@ -653,6 +653,6 @@ def union_enemies(x, y):
   </div>
 
   <div class="toast" id="toast"></div>
-  <script src="/assets/js/main.js"></script>
+  <script src="../assets/js/main.js"></script>
 </body>
 </html>

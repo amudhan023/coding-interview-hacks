@@ -1,0 +1,16 @@
+{
+  "name": "coding-interview-hacks",
+  "version": "1.0.0",
+  "description": "Visual coding interview knowledge base with LeetCode Top 150 tracker",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "engines": {
+    "node": ">=16"
+  }
+}

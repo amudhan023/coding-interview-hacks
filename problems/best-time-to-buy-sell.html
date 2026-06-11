@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Best Time to Buy and Sell Stock (LC 121) — Interview Hacks</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/main.css" />
+</head>
+<body data-root=".." data-page-title="Best Time to Buy and Sell Stock">
+  <nav class="topnav">
+    <a href="../index.html" class="topnav__logo" style="text-decoration:none;"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect width="20" height="20" rx="5" fill="var(--accent)"/><path d="M5 7l3 3-3 3M10 14h5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Interview<span>Hacks</span></span></a>
+    <div class="topnav__search"><svg class="topnav__search-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M11 11l3 3"/></svg><input type="text" id="search-input" placeholder="Search topics…" autocomplete="off" /><span class="topnav__kbd">/</span><div class="search-results" id="search-results"></div></div>
+    <div class="topnav__actions"><button class="btn-icon" id="theme-toggle" title="Toggle theme"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button></div>
+  </nav>
+  <div class="page-layout">
+    <aside class="sidebar">
+      <div class="sidebar__section"><div class="sidebar__label">On this page</div><nav class="toc">
+        <a href="#summary"    class="toc-link">Problem</a>
+        <a href="#insight"    class="toc-link">Key Insight</a>
+        <a href="#viz"        class="toc-link">Visualization</a>
+        <a href="#code"       class="toc-link">Code</a>
+        <a href="#complexity" class="toc-link">Complexity</a>
+      </nav></div>
+      <div class="sidebar__section"><div class="sidebar__label">Recently Viewed</div><div id="recently-viewed"></div></div>
+    </aside>
+    <main class="content">
+      <nav class="breadcrumbs"><a href="../index.html">Home</a><span class="breadcrumbs__sep">›</span><a href="./">Problems</a><span class="breadcrumbs__sep">›</span><span class="breadcrumbs__current">Best Time to Buy/Sell Stock</span></nav>
+      <div class="page-header">
+        <div class="page-header__badges"><span class="badge badge--easy">Easy</span><span class="badge badge--cat">Array</span><span class="badge badge--cat">Greedy</span></div>
+        <h1>Best Time to Buy and Sell Stock <span style="color:var(--text-muted);font-weight:400;font-size:1.1rem;">LC #121</span></h1>
+        <div class="page-header__meta"><span>⏱ 5 min</span><span>🎯 Track minimum so far</span><span>📌 Frequency: Very High</span></div>
+      </div>
+
+      <section class="section" id="summary">
+        <h2><span class="section-num">1</span> Problem</h2>
+        <div class="callout callout--info"><strong>Problem</strong>Given an array <code>prices</code> where prices[i] is the stock price on day i, find the maximum profit from one buy and one sell (buy before sell). Return 0 if no profit possible.</div>
+        <p style="margin-top:0.5rem;"><strong>Example:</strong> [7,1,5,3,6,4] → 5 (buy at 1, sell at 6)</p>
+      </section>
+
+      <section class="section" id="insight">
+        <h2><span class="section-num">2</span> Key Insight</h2>
+        <div class="callout callout--success"><strong>Track min_price seen so far</strong>The best sell day is always the day that gives max(price - min_price_before_today). Scan once: maintain the running minimum. At each price, check if (price - min_so_far) beats the current best profit.</div>
+        <p style="margin-top:0.75rem;">This is greedy: for any sell day i, the best buy day is always the minimum price in days 0..i-1. We never need to revisit.</p>
+      </section>
+
+      <section class="section" id="viz">
+        <h2><span class="section-num">3</span> Price Chart Visualization</h2>
+        <div class="viz-container">
+          <svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;" id="stock-svg">
+            <!-- Will be drawn by JS -->
+          </svg>
+        </div>
+        <p style="font-size:0.82rem;color:var(--text-muted);margin-top:0.5rem;">The green bracket shows the best buy-sell window. The red dot tracks the running minimum.</p>
+      </section>
+
+      <section class="section" id="code">
+        <h2><span class="section-num">4</span> Python 2 Code</h2>
+        <div class="code-block">
+          <div class="code-block__header"><span class="code-block__lang">Python 2 — O(n) time, O(1) space</span><button class="code-copy-btn">Copy</button></div>
+          <pre><code>class Solution(object):
+    def maxProfit(self, prices):
+        min_price  = float('inf')
+        max_profit = 0
+
+        for price in prices:
+            if price < min_price:
+                min_price = price         # found a cheaper buy day
+            elif price - min_price > max_profit:
+                max_profit = price - min_price  # new max profit
+
+        return max_profit</code></pre>
+        </div>
+
+        <h3 style="margin-top:1rem;">Variant — Buy and Sell Stock II (unlimited transactions)</h3>
+        <div class="callout callout--info"><strong>Pattern change</strong>When you can do unlimited transactions (LC 122), take every upward move: <code>profit += max(0, prices[i] - prices[i-1])</code>. This is the "sum all positive differences" greedy.</div>
+      </section>
+
+      <section class="section" id="complexity">
+        <h2><span class="section-num">5</span> Complexity</h2>
+        <table class="complexity-table">
+          <thead><tr><th>Approach</th><th>Time</th><th>Space</th></tr></thead>
+          <tbody>
+            <tr><td>Brute force (all pairs)</td><td>O(n²)</td><td>O(1)</td></tr>
+            <tr><td>Track min_so_far</td><td>O(n)</td><td>O(1)</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <div class="revision-box">
+        <h3>⚡ 1-Minute Review</h3>
+        <ul>
+          <li>One pass, two variables: <code>min_price</code> and <code>max_profit</code></li>
+          <li>For each price: update min_price if cheaper, else update max_profit</li>
+          <li>Never need to "go back" — greedy minimum is always correct</li>
+          <li>LC 122 (unlimited trades): sum all positive adjacent differences</li>
+          <li>LC 123/188 (k trades): DP state machine with k states</li>
+        </ul>
+      </div>
+      <nav class="page-nav">
+        <a href="majority-element.html" class="page-nav__btn" data-nav="prev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg><div><div class="page-nav__btn__label">Prev</div><div class="page-nav__btn__title">Majority Element</div></div></a>
+        <a href="jump-game.html" class="page-nav__btn page-nav__btn--next" data-nav="next"><div><div class="page-nav__btn__label">Next</div><div class="page-nav__btn__title">Jump Game</div></div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></a>
+      </nav>
+    </main>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script src="../assets/js/main.js"></script>
+  <script>
+  (function() {
+    const prices = [7,1,5,3,6,4];
+    const svg = document.getElementById('stock-svg');
+    const W=680, H=260, PX=40, PY=20, PW=W-80, PH=H-80;
+    const maxP = Math.max(...prices), minP = Math.min(...prices);
+    const xS = PW/(prices.length-1), yS = PH/(maxP-minP);
+
+    function px(i){ return PX+i*xS; }
+    function py(v){ return PY+PH-(v-minP)*yS; }
+
+    let html = '';
+    // Grid lines
+    for (let v=minP; v<=maxP; v++) {
+      const y = py(v);
+      html += `<line x1="${PX}" y1="${y}" x2="${PX+PW}" y2="${y}" stroke="var(--border)" stroke-width="1" stroke-dasharray="3 3"/>`;
+      html += `<text x="${PX-5}" y="${y+4}" font-size="10" fill="var(--text-muted)" text-anchor="end">${v}</text>`;
+    }
+    // Price line
+    let d = `M${px(0)},${py(prices[0])}`;
+    for (let i=1;i<prices.length;i++) d += ` L${px(i)},${py(prices[i])}`;
+    html += `<path d="${d}" stroke="var(--accent-2)" stroke-width="2.5" fill="none"/>`;
+
+    // Shaded profit area (buy at idx 1, sell at idx 4)
+    const bx=px(1), sx=px(4), by=py(1), sy=py(6);
+    html += `<rect x="${bx}" y="${Math.min(by,sy)}" width="${sx-bx}" height="${Math.abs(by-sy)}" fill="rgba(16,185,129,.1)" stroke="none"/>`;
+    html += `<line x1="${bx}" y1="${py(minP)+25}" x2="${sx}" y2="${py(minP)+25}" stroke="var(--success)" stroke-width="2" marker-end="url(#arr-g)"/>`;
+    html += `<text x="${(bx+sx)/2}" y="${py(minP)+42}" text-anchor="middle" font-size="12" fill="var(--success)" font-weight="700">Max profit = 6-1 = 5</text>`;
+
+    // Min dot (running min at day 1)
+    html += `<circle cx="${px(1)}" cy="${py(1)}" r="8" fill="var(--danger)" opacity="0.9"/>`;
+    html += `<text x="${px(1)+2}" y="${py(1)-12}" font-size="10" fill="var(--danger)" text-anchor="middle">min=1</text>`;
+
+    // Price dots and labels
+    prices.forEach((v,i) => {
+      html += `<circle cx="${px(i)}" cy="${py(v)}" r="5" fill="var(--accent-2)" stroke="var(--bg-card)" stroke-width="2"/>`;
+      html += `<text x="${px(i)}" y="${py(v)-12}" text-anchor="middle" font-size="11" fill="var(--text-secondary)">${v}</text>`;
+      html += `<text x="${px(i)}" y="${PY+PH+20}" text-anchor="middle" font-size="10" fill="var(--text-muted)">Day ${i}</text>`;
+    });
+
+    // Arrow defs
+    html = `<defs><marker id="arr-g" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="var(--success)"/></marker></defs>` + html;
+
+    // Buy/sell markers
+    html += `<text x="${px(1)}" y="${py(1)+22}" text-anchor="middle" font-size="10" fill="var(--success)" font-weight="600">BUY</text>`;
+    html += `<text x="${px(4)}" y="${py(6)+22}" text-anchor="middle" font-size="10" fill="var(--success)" font-weight="600">SELL</text>`;
+
+    svg.innerHTML = html;
+  })();
+  </script>
+</body>
+</html>

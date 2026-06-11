@@ -88,5 +88,25 @@
     "url": "/problems/redundant-connection.html",
     "pattern": "Union Find Cycle Detection",
     "tags": ["redundant connection", "union find", "cycle detection", "graph", "medium"]
+  },
+  {
+    "id": "patterns",
+    "title": "Hidden Patterns — Top 150",
+    "type": "concept",
+    "category": "Analysis",
+    "difficulty": "All",
+    "url": "/concepts/patterns.html",
+    "pattern": "20 Ranked Patterns",
+    "tags": ["patterns", "hidden patterns", "top 150", "interview patterns", "two pointers", "sliding window", "hash map", "tree recursion", "bfs", "dfs", "backtracking", "dp state machine", "monotonic stack", "binary search on answer", "prefix sum", "sentinel dummy node", "fast slow pointer", "union find", "topological sort", "two heaps", "interval merge", "greedy", "trie"]
+  },
+  {
+    "id": "leetcode-150",
+    "title": "LeetCode Top Interview 150",
+    "type": "concept",
+    "category": "Problems",
+    "difficulty": "All",
+    "url": "/#lc150-container",
+    "pattern": "Full Problem List",
+    "tags": ["leetcode", "top 150", "interview 150", "problem list", "array", "linked list", "binary tree", "graphs", "dp", "backtracking", "heap", "binary search", "trie", "greedy"]
   }
 ]

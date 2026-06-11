@@ -921,3 +921,163 @@ p code, li code {
   outline-offset: 2px;
   border-radius: var(--radius-sm);
 }
+
+/* ════════════════════════════════════════════════════════════
+   LC150 ROW ENHANCEMENTS
+   ════════════════════════════════════════════════════════════ */
+
+/* ── Enhanced list row ─────────────────────────────────────── */
+.lc150-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.75rem 0.3rem 1rem;
+  transition: background var(--transition);
+}
+
+.lc150-list li:hover { background: var(--bg-primary); }
+
+/* LC link (left, fills remaining space) */
+.lc150-list .lc150-title-link {
+  flex: 1;
+  min-width: 0;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.82rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color var(--transition);
+}
+.lc150-list .lc150-title-link:hover { color: var(--accent); }
+
+/* Details button */
+.lc150-detail-btn {
+  flex-shrink: 0;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--bg-code);
+  color: var(--text-muted);
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  transition: all var(--transition);
+  white-space: nowrap;
+}
+.lc150-detail-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-subtle);
+}
+
+/* Checkbox wrapper */
+.lc150-check-wrap {
+  flex-shrink: 0;
+  position: relative;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.lc150-chk {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  cursor: pointer;
+}
+
+.lc150-checkmark {
+  position: absolute;
+  top: 0; left: 0;
+  width: 18px; height: 18px;
+  border-radius: 4px;
+  border: 1.5px solid var(--border);
+  background: var(--bg-code);
+  transition: all var(--transition);
+}
+
+.lc150-check-wrap:hover .lc150-checkmark {
+  border-color: var(--success);
+}
+
+.lc150-chk:checked ~ .lc150-checkmark {
+  background: var(--success);
+  border-color: var(--success);
+}
+
+.lc150-chk:checked ~ .lc150-checkmark::after {
+  content: '';
+  position: absolute;
+  left: 5px; top: 2px;
+  width: 5px; height: 9px;
+  border: 2px solid white;
+  border-left: none;
+  border-top: none;
+  transform: rotate(45deg);
+}
+
+/* ── Solved row visual treatment ───────────────────────────── */
+.lc150-row--solved .lc150-title-link {
+  color: var(--text-muted);
+  text-decoration: line-through;
+  text-decoration-color: var(--success);
+  text-decoration-thickness: 1.5px;
+}
+
+.lc150-row--solved { background: rgba(16,185,129,.03) !important; }
+.lc150-row--solved:hover { background: rgba(16,185,129,.06) !important; }
+
+.lc150-row--solved .lc150-detail-btn {
+  opacity: 0.6;
+}
+
+/* ── Category count with progress ──────────────────────────── */
+.lc150-cat__count--progress {
+  background: rgba(16,185,129,.15) !important;
+  color: var(--success) !important;
+  border-color: var(--success) !important;
+}
+
+/* ── Progress bar ───────────────────────────────────────────── */
+.lc150-progress-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0 0.75rem;
+  margin: 0 1.5rem;
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.lc150-progress-track {
+  flex: 1;
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.lc150-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--success), var(--accent-2));
+  border-radius: 3px;
+  transition: width 0.4s ease;
+  width: 0%;
+}
+
+.lc150-progress-label {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+@media (max-width: 480px) {
+  .lc150-detail-btn { display: none; }
+  .lc150-progress-wrap { margin: 0 1rem; }
+}

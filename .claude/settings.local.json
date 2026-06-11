@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git rm *)",
+      "Bash(git commit -m ' *)",
+      "Bash(rm /Users/amudhan/Desktop/project/coding-interview-hacks/.git/index.lock)",
+      "Bash(echo \".DS_Store\")",
+      "Bash(git add *)",
+      "Bash(git push *)",
+      "Bash(sed -i '' 's|href=\"/assets/css/main.css\"|href=\"assets/css/main.css\"|g; *)",
+      "Bash(sed -i '' 's|<body data-page-title=\"Dashboard\">|<body data-page-title=\"Dashboard\" data-root=\".\">|' index.html)",
+      "Bash(git commit *)",
+      "Skill(run)",
+      "Bash(node server.js)",
+      "Bash(curl -s http://localhost:3000)",
+      "Bash(npm install *)"
+    ]
+  }
+}

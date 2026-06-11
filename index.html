@@ -250,6 +250,22 @@
       </div>
     </a>
 
+    <a href="concepts/patterns.html" class="topic-card" data-category="" style="text-decoration:none; color:inherit; border-color:var(--warning);">
+      <div class="topic-card__header">
+        <div class="topic-card__title">Hidden Patterns — Top 150</div>
+        <div class="topic-card__badges">
+          <span class="badge" style="background:rgba(245,158,11,.12);color:var(--warning);">NEW</span>
+          <span class="badge badge--cat">Analysis</span>
+        </div>
+      </div>
+      <div class="topic-card__pattern">⚡ 20 Ranked Patterns + Pattern Map</div>
+      <div class="topic-card__takeaway">The reusable thinking instincts that solve the LeetCode Top 150. Ranked by interview frequency. Includes triggers, examples, study order.</div>
+      <div class="topic-card__footer">
+        <span class="topic-card__time">⏱ 15 min</span>
+        <span>All 17 categories</span>
+      </div>
+    </a>
+
     <a href="concepts/dynamic-programming.html" class="topic-card" data-category="dynamic programming" style="text-decoration:none; color:inherit;">
       <div class="topic-card__header">
         <div class="topic-card__title">Dynamic Programming</div>
@@ -326,6 +342,538 @@
 
   </div>
 
+  <!-- ═══════════════════════════════════════════════════════
+       LEETCODE TOP INTERVIEW 150
+  ═══════════════════════════════════════════════════════ -->
+  <div class="lc150-wrapper">
+
+    <!-- Section header -->
+    <div class="section-header" style="margin-bottom:1rem; padding-top:1rem;">
+      <h2>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="vertical-align:-3px;margin-right:6px;"><rect width="24" height="24" rx="6" fill="var(--warning)"/><text x="12" y="16" text-anchor="middle" font-size="11" font-weight="800" fill="white">LC</text></svg>
+        LeetCode Top Interview 150
+      </h2>
+      <div style="display:flex;gap:0.5rem;align-items:center;">
+        <span class="badge badge--cat" style="font-size:0.75rem;">150 problems</span>
+        <button class="btn" id="lc150-expand-all" style="font-size:0.75rem;padding:0.25rem 0.75rem;" onclick="LC150Toggle.toggleAll()">Expand All</button>
+        <a href="concepts/patterns.html" class="btn btn--primary" style="font-size:0.75rem;padding:0.25rem 0.75rem;">Pattern Analysis →</a>
+      </div>
+    </div>
+
+    <!-- Stats strip -->
+    <div class="lc150-stats">
+      <span class="lc150-stat"><span class="lc150-dot" style="background:var(--diff-easy)"></span>Easy: 41</span>
+      <span class="lc150-stat"><span class="lc150-dot" style="background:var(--diff-medium)"></span>Medium: 95</span>
+      <span class="lc150-stat"><span class="lc150-dot" style="background:var(--diff-hard)"></span>Hard: 14</span>
+      <span class="lc150-stat" style="margin-left:auto;color:var(--text-muted);">17 categories</span>
+    </div>
+
+    <!-- Category accordions -->
+    <div class="lc150-grid" id="lc150-container">
+
+      <!-- Array / String -->
+      <details class="lc150-cat" open>
+        <summary class="lc150-cat__head">
+          <span class="lc150-cat__icon">📦</span>
+          <span class="lc150-cat__name">Array / String</span>
+          <span class="lc150-cat__count">24</span>
+          <span class="lc150-cat__arrow">›</span>
+        </summary>
+        <ol class="lc150-list">
+          <li><a href="https://leetcode.com/problems/merge-sorted-array/" target="_blank">Merge Sorted Array</a><span class="badge badge--easy">E</span></li>
+          <li><a href="https://leetcode.com/problems/remove-element/" target="_blank">Remove Element</a><span class="badge badge--easy">E</span></li>
+          <li><a href="https://leetcode.com/problems/remove-duplicates-from-sorted-array/" target="_blank">Remove Duplicates from Sorted Array</a><span class="badge badge--easy">E</span></li>
+          <li><a href="https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii/" target="_blank">Remove Duplicates from Sorted Array II</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/majority-element/" target="_blank">Majority Element</a><span class="badge badge--easy">E</span></li>
+          <li><a href="https://leetcode.com/problems/rotate-array/" target="_blank">Rotate Array</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock/" target="_blank">Best Time to Buy and Sell Stock</a><span class="badge badge--easy">E</span></li>
+          <li><a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/" target="_blank">Best Time to Buy and Sell Stock II</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/jump-game/" target="_blank">Jump Game</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/jump-game-ii/" target="_blank">Jump Game II</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/h-index/" target="_blank">H-Index</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/insert-delete-getrandom-o1/" target="_blank">Insert Delete GetRandom O(1)</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/product-of-array-except-self/" target="_blank">Product of Array Except Self</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/gas-station/" target="_blank">Gas Station</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/candy/" target="_blank">Candy</a><span class="badge badge--hard">H</span></li>
+          <li><a href="https://leetcode.com/problems/trapping-rain-water/" target="_blank">Trapping Rain Water</a><span class="badge badge--hard">H</span></li>
+          <li><a href="https://leetcode.com/problems/roman-to-integer/" target="_blank">Roman to Integer</a><span class="badge badge--easy">E</span></li>
+          <li><a href="https://leetcode.com/problems/integer-to-roman/" target="_blank">Integer to Roman</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/length-of-last-word/" target="_blank">Length of Last Word</a><span class="badge badge--easy">E</span></li>
+          <li><a href="https://leetcode.com/problems/longest-common-prefix/" target="_blank">Longest Common Prefix</a><span class="badge badge--easy">E</span></li>
+          <li><a href="https://leetcode.com/problems/reverse-words-in-a-string/" target="_blank">Reverse Words in a String</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/zigzag-conversion/" target="_blank">Zigzag Conversion</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/" target="_blank">Find the Index of the First Occurrence in a String</a><span class="badge badge--easy">E</span></li>
+          <li><a href="https://leetcode.com/problems/text-justification/" target="_blank">Text Justification</a><span class="badge badge--hard">H</span></li>
+        </ol>
+      </details>
+
+      <!-- Two Pointers -->
+      <details class="lc150-cat">
+        <summary class="lc150-cat__head">
+          <span class="lc150-cat__icon">👉</span>
+          <span class="lc150-cat__name">Two Pointers</span>
+          <span class="lc150-cat__count">5</span>
+          <span class="lc150-cat__arrow">›</span>
+        </summary>
+        <ol class="lc150-list">
+          <li><a href="https://leetcode.com/problems/valid-palindrome/" target="_blank">Valid Palindrome</a><span class="badge badge--easy">E</span></li>
+          <li><a href="https://leetcode.com/problems/is-subsequence/" target="_blank">Is Subsequence</a><span class="badge badge--easy">E</span></li>
+          <li><a href="https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/" target="_blank">Two Sum II — Input Array Is Sorted</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/container-with-most-water/" target="_blank">Container With Most Water</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/3sum/" target="_blank">3Sum</a><span class="badge badge--medium">M</span></li>
+        </ol>
+      </details>
+
+      <!-- Sliding Window -->
+      <details class="lc150-cat">
+        <summary class="lc150-cat__head">
+          <span class="lc150-cat__icon">🪟</span>
+          <span class="lc150-cat__name">Sliding Window</span>
+          <span class="lc150-cat__count">4</span>
+          <span class="lc150-cat__arrow">›</span>
+        </summary>
+        <ol class="lc150-list">
+          <li><a href="https://leetcode.com/problems/minimum-size-subarray-sum/" target="_blank">Minimum Size Subarray Sum</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/longest-substring-without-repeating-characters/" target="_blank">Longest Substring Without Repeating Characters</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/substring-with-concatenation-of-all-words/" target="_blank">Substring with Concatenation of All Words</a><span class="badge badge--hard">H</span></li>
+          <li><a href="https://leetcode.com/problems/minimum-window-substring/" target="_blank">Minimum Window Substring</a><span class="badge badge--hard">H</span></li>
+        </ol>
+      </details>
+
+      <!-- Matrix -->
+      <details class="lc150-cat">
+        <summary class="lc150-cat__head">
+          <span class="lc150-cat__icon">🔢</span>
+          <span class="lc150-cat__name">Matrix</span>
+          <span class="lc150-cat__count">5</span>
+          <span class="lc150-cat__arrow">›</span>
+        </summary>
+        <ol class="lc150-list">
+          <li><a href="https://leetcode.com/problems/valid-sudoku/" target="_blank">Valid Sudoku</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/spiral-matrix/" target="_blank">Spiral Matrix</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/rotate-image/" target="_blank">Rotate Image</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/set-matrix-zeroes/" target="_blank">Set Matrix Zeroes</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/game-of-life/" target="_blank">Game of Life</a><span class="badge badge--medium">M</span></li>
+        </ol>
+      </details>
+
+      <!-- Hashmap -->
+      <details class="lc150-cat">
+        <summary class="lc150-cat__head">
+          <span class="lc150-cat__icon">🗃️</span>
+          <span class="lc150-cat__name">Hashmap</span>
+          <span class="lc150-cat__count">9</span>
+          <span class="lc150-cat__arrow">›</span>
+        </summary>
+        <ol class="lc150-list">
+          <li><a href="https://leetcode.com/problems/ransom-note/" target="_blank">Ransom Note</a><span class="badge badge--easy">E</span></li>
+          <li><a href="https://leetcode.com/problems/isomorphic-strings/" target="_blank">Isomorphic Strings</a><span class="badge badge--easy">E</span></li>
+          <li><a href="https://leetcode.com/problems/word-pattern/" target="_blank">Word Pattern</a><span class="badge badge--easy">E</span></li>
+          <li><a href="https://leetcode.com/problems/valid-anagram/" target="_blank">Valid Anagram</a><span class="badge badge--easy">E</span></li>
+          <li><a href="https://leetcode.com/problems/group-anagrams/" target="_blank">Group Anagrams</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/two-sum/" target="_blank">Two Sum</a><span class="badge badge--easy">E</span></li>
+          <li><a href="https://leetcode.com/problems/happy-number/" target="_blank">Happy Number</a><span class="badge badge--easy">E</span></li>
+          <li><a href="https://leetcode.com/problems/contains-duplicate-ii/" target="_blank">Contains Duplicate II</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/longest-consecutive-sequence/" target="_blank">Longest Consecutive Sequence</a><span class="badge badge--medium">M</span></li>
+        </ol>
+      </details>
+
+      <!-- Intervals -->
+      <details class="lc150-cat">
+        <summary class="lc150-cat__head">
+          <span class="lc150-cat__icon">📏</span>
+          <span class="lc150-cat__name">Intervals</span>
+          <span class="lc150-cat__count">4</span>
+          <span class="lc150-cat__arrow">›</span>
+        </summary>
+        <ol class="lc150-list">
+          <li><a href="https://leetcode.com/problems/summary-ranges/" target="_blank">Summary Ranges</a><span class="badge badge--easy">E</span></li>
+          <li><a href="https://leetcode.com/problems/merge-intervals/" target="_blank">Merge Intervals</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/insert-interval/" target="_blank">Insert Interval</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/" target="_blank">Minimum Number of Arrows to Burst Balloons</a><span class="badge badge--medium">M</span></li>
+        </ol>
+      </details>
+
+      <!-- Stack -->
+      <details class="lc150-cat">
+        <summary class="lc150-cat__head">
+          <span class="lc150-cat__icon">📚</span>
+          <span class="lc150-cat__name">Stack</span>
+          <span class="lc150-cat__count">5</span>
+          <span class="lc150-cat__arrow">›</span>
+        </summary>
+        <ol class="lc150-list">
+          <li><a href="https://leetcode.com/problems/valid-parentheses/" target="_blank">Valid Parentheses</a><span class="badge badge--easy">E</span></li>
+          <li><a href="https://leetcode.com/problems/simplify-path/" target="_blank">Simplify Path</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/min-stack/" target="_blank">Min Stack</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/evaluate-reverse-polish-notation/" target="_blank">Evaluate Reverse Polish Notation</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/basic-calculator/" target="_blank">Basic Calculator</a><span class="badge badge--hard">H</span></li>
+        </ol>
+      </details>
+
+      <!-- Linked List -->
+      <details class="lc150-cat">
+        <summary class="lc150-cat__head">
+          <span class="lc150-cat__icon">🔗</span>
+          <span class="lc150-cat__name">Linked List</span>
+          <span class="lc150-cat__count">12</span>
+          <span class="lc150-cat__arrow">›</span>
+        </summary>
+        <ol class="lc150-list">
+          <li><a href="https://leetcode.com/problems/linked-list-cycle/" target="_blank">Linked List Cycle</a><span class="badge badge--easy">E</span></li>
+          <li><a href="https://leetcode.com/problems/add-two-numbers/" target="_blank">Add Two Numbers</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/merge-two-sorted-lists/" target="_blank">Merge Two Sorted Lists</a><span class="badge badge--easy">E</span></li>
+          <li><a href="https://leetcode.com/problems/copy-list-with-random-pointer/" target="_blank">Copy List with Random Pointer</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/reverse-linked-list-ii/" target="_blank">Reverse Linked List II</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/reverse-nodes-in-k-group/" target="_blank">Reverse Nodes in k-Group</a><span class="badge badge--hard">H</span></li>
+          <li><a href="https://leetcode.com/problems/remove-nth-node-from-end-of-list/" target="_blank">Remove Nth Node From End of List</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/" target="_blank">Remove Duplicates from Sorted List II</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/rotate-list/" target="_blank">Rotate List</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/partition-list/" target="_blank">Partition List</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/lru-cache/" target="_blank">LRU Cache</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/merge-k-sorted-lists/" target="_blank">Merge K Sorted Lists</a><span class="badge badge--hard">H</span></li>
+        </ol>
+      </details>
+
+      <!-- Binary Tree -->
+      <details class="lc150-cat">
+        <summary class="lc150-cat__head">
+          <span class="lc150-cat__icon">🌲</span>
+          <span class="lc150-cat__name">Binary Tree</span>
+          <span class="lc150-cat__count">18</span>
+          <span class="lc150-cat__arrow">›</span>
+        </summary>
+        <ol class="lc150-list">
+          <li><a href="https://leetcode.com/problems/maximum-depth-of-binary-tree/" target="_blank">Maximum Depth of Binary Tree</a><span class="badge badge--easy">E</span></li>
+          <li><a href="https://leetcode.com/problems/same-tree/" target="_blank">Same Tree</a><span class="badge badge--easy">E</span></li>
+          <li><a href="https://leetcode.com/problems/invert-binary-tree/" target="_blank">Invert Binary Tree</a><span class="badge badge--easy">E</span></li>
+          <li><a href="https://leetcode.com/problems/symmetric-tree/" target="_blank">Symmetric Tree</a><span class="badge badge--easy">E</span></li>
+          <li><a href="https://leetcode.com/problems/subtree-of-another-tree/" target="_blank">Subtree of Another Tree</a><span class="badge badge--easy">E</span></li>
+          <li><a href="https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/" target="_blank">Construct Binary Tree from Preorder and Inorder</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/binary-tree-level-order-traversal/" target="_blank">Binary Tree Level Order Traversal</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/" target="_blank">Binary Tree Zigzag Level Order Traversal</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/maximum-binary-tree/" target="_blank">Maximum Binary Tree</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/diameter-of-binary-tree/" target="_blank">Diameter of Binary Tree</a><span class="badge badge--easy">E</span></li>
+          <li><a href="https://leetcode.com/problems/balanced-binary-tree/" target="_blank">Balanced Binary Tree</a><span class="badge badge--easy">E</span></li>
+          <li><a href="https://leetcode.com/problems/binary-tree-right-side-view/" target="_blank">Binary Tree Right Side View</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/count-good-nodes-in-binary-tree/" target="_blank">Count Good Nodes in Binary Tree</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/validate-binary-search-tree/" target="_blank">Validate Binary Search Tree</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/kth-smallest-element-in-a-bst/" target="_blank">Kth Smallest Element in a BST</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/" target="_blank">Lowest Common Ancestor of a Binary Tree</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/binary-tree-maximum-path-sum/" target="_blank">Binary Tree Maximum Path Sum</a><span class="badge badge--hard">H</span></li>
+          <li><a href="https://leetcode.com/problems/binary-tree-cameras/" target="_blank">Binary Tree Cameras</a><span class="badge badge--hard">H</span></li>
+        </ol>
+      </details>
+
+      <!-- Graphs -->
+      <details class="lc150-cat">
+        <summary class="lc150-cat__head">
+          <span class="lc150-cat__icon">🕸️</span>
+          <span class="lc150-cat__name">Graphs</span>
+          <span class="lc150-cat__count">11</span>
+          <span class="lc150-cat__arrow">›</span>
+        </summary>
+        <ol class="lc150-list">
+          <li><a href="https://leetcode.com/problems/number-of-islands/" target="_blank">Number of Islands</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/clone-graph/" target="_blank">Clone Graph</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/pacific-atlantic-water-flow/" target="_blank">Pacific Atlantic Water Flow</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/surrounded-regions/" target="_blank">Surrounded Regions</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/course-schedule/" target="_blank">Course Schedule</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/course-schedule-ii/" target="_blank">Course Schedule II</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/redundant-connection/" target="_blank">Redundant Connection</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/graph-valid-tree/" target="_blank">Graph Valid Tree</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/" target="_blank">Number of Connected Components</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/rotting-oranges/" target="_blank">Rotting Oranges</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/word-ladder/" target="_blank">Word Ladder</a><span class="badge badge--hard">H</span></li>
+        </ol>
+      </details>
+
+      <!-- Heap -->
+      <details class="lc150-cat">
+        <summary class="lc150-cat__head">
+          <span class="lc150-cat__icon">⛰️</span>
+          <span class="lc150-cat__name">Heap / Priority Queue</span>
+          <span class="lc150-cat__count">5</span>
+          <span class="lc150-cat__arrow">›</span>
+        </summary>
+        <ol class="lc150-list">
+          <li><a href="https://leetcode.com/problems/kth-largest-element-in-an-array/" target="_blank">Kth Largest Element in an Array</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/last-stone-weight/" target="_blank">Last Stone Weight</a><span class="badge badge--easy">E</span></li>
+          <li><a href="https://leetcode.com/problems/k-closest-points-to-origin/" target="_blank">K Closest Points to Origin</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/find-median-from-data-stream/" target="_blank">Find Median from Data Stream</a><span class="badge badge--hard">H</span></li>
+          <li><a href="https://leetcode.com/problems/top-k-frequent-elements/" target="_blank">Top K Frequent Elements</a><span class="badge badge--medium">M</span></li>
+        </ol>
+      </details>
+
+      <!-- Binary Search -->
+      <details class="lc150-cat">
+        <summary class="lc150-cat__head">
+          <span class="lc150-cat__icon">🔍</span>
+          <span class="lc150-cat__name">Binary Search</span>
+          <span class="lc150-cat__count">6</span>
+          <span class="lc150-cat__arrow">›</span>
+        </summary>
+        <ol class="lc150-list">
+          <li><a href="https://leetcode.com/problems/binary-search/" target="_blank">Binary Search</a><span class="badge badge--easy">E</span></li>
+          <li><a href="https://leetcode.com/problems/search-a-2d-matrix/" target="_blank">Search a 2D Matrix</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/koko-eating-bananas/" target="_blank">Koko Eating Bananas</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/" target="_blank">Find Minimum in Rotated Sorted Array</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/search-in-rotated-sorted-array/" target="_blank">Search in Rotated Sorted Array</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/find-peak-element/" target="_blank">Find Peak Element</a><span class="badge badge--medium">M</span></li>
+        </ol>
+      </details>
+
+      <!-- Backtracking -->
+      <details class="lc150-cat">
+        <summary class="lc150-cat__head">
+          <span class="lc150-cat__icon">↩️</span>
+          <span class="lc150-cat__name">Backtracking</span>
+          <span class="lc150-cat__count">7</span>
+          <span class="lc150-cat__arrow">›</span>
+        </summary>
+        <ol class="lc150-list">
+          <li><a href="https://leetcode.com/problems/word-search/" target="_blank">Word Search</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/permutations/" target="_blank">Permutations</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/subsets/" target="_blank">Subsets</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/combination-sum/" target="_blank">Combination Sum</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/generate-parentheses/" target="_blank">Generate Parentheses</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/letter-combinations-of-a-phone-number/" target="_blank">Letter Combinations of a Phone Number</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/palindrome-partitioning/" target="_blank">Palindrome Partitioning</a><span class="badge badge--medium">M</span></li>
+        </ol>
+      </details>
+
+      <!-- Tries -->
+      <details class="lc150-cat">
+        <summary class="lc150-cat__head">
+          <span class="lc150-cat__icon">🌳</span>
+          <span class="lc150-cat__name">Tries</span>
+          <span class="lc150-cat__count">3</span>
+          <span class="lc150-cat__arrow">›</span>
+        </summary>
+        <ol class="lc150-list">
+          <li><a href="https://leetcode.com/problems/implement-trie-prefix-tree/" target="_blank">Implement Trie (Prefix Tree)</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/design-add-and-search-words-data-structure/" target="_blank">Design Add and Search Words Data Structure</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/word-search-ii/" target="_blank">Word Search II</a><span class="badge badge--hard">H</span></li>
+        </ol>
+      </details>
+
+      <!-- Dynamic Programming -->
+      <details class="lc150-cat">
+        <summary class="lc150-cat__head">
+          <span class="lc150-cat__icon">🧮</span>
+          <span class="lc150-cat__name">Dynamic Programming</span>
+          <span class="lc150-cat__count">22</span>
+          <span class="lc150-cat__arrow">›</span>
+        </summary>
+        <ol class="lc150-list">
+          <li><a href="https://leetcode.com/problems/climbing-stairs/" target="_blank">Climbing Stairs</a><span class="badge badge--easy">E</span></li>
+          <li><a href="https://leetcode.com/problems/coin-change/" target="_blank">Coin Change</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/longest-increasing-subsequence/" target="_blank">Longest Increasing Subsequence</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/partition-equal-subset-sum/" target="_blank">Partition Equal Subset Sum</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/longest-common-subsequence/" target="_blank">Longest Common Subsequence</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/word-break/" target="_blank">Word Break</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/combination-sum-iv/" target="_blank">Combination Sum IV</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/house-robber/" target="_blank">House Robber</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/house-robber-ii/" target="_blank">House Robber II</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/decode-ways/" target="_blank">Decode Ways</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/unique-paths/" target="_blank">Unique Paths</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/maximum-product-subarray/" target="_blank">Maximum Product Subarray</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/minimum-path-sum/" target="_blank">Minimum Path Sum</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/longest-palindromic-substring/" target="_blank">Longest Palindromic Substring</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/palindromic-substrings/" target="_blank">Palindromic Substrings</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/interleaving-string/" target="_blank">Interleaving String</a><span class="badge badge--hard">H</span></li>
+          <li><a href="https://leetcode.com/problems/edit-distance/" target="_blank">Edit Distance</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/" target="_blank">Best Time to Buy and Sell Stock with Cooldown</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/coin-change-ii/" target="_blank">Coin Change II</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/target-sum/" target="_blank">Target Sum</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/burst-balloons/" target="_blank">Burst Balloons</a><span class="badge badge--hard">H</span></li>
+          <li><a href="https://leetcode.com/problems/regular-expression-matching/" target="_blank">Regular Expression Matching</a><span class="badge badge--hard">H</span></li>
+        </ol>
+      </details>
+
+      <!-- Greedy -->
+      <details class="lc150-cat">
+        <summary class="lc150-cat__head">
+          <span class="lc150-cat__icon">⚡</span>
+          <span class="lc150-cat__name">Greedy</span>
+          <span class="lc150-cat__count">4</span>
+          <span class="lc150-cat__arrow">›</span>
+        </summary>
+        <ol class="lc150-list">
+          <li><a href="https://leetcode.com/problems/maximum-subarray/" target="_blank">Maximum Subarray</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/partition-labels/" target="_blank">Partition Labels</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/task-scheduler/" target="_blank">Task Scheduler</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/merge-triplets-to-form-target-triplet/" target="_blank">Merge Triplets to Form Target Triplet</a><span class="badge badge--medium">M</span></li>
+        </ol>
+      </details>
+
+      <!-- Math / Geometry -->
+      <details class="lc150-cat">
+        <summary class="lc150-cat__head">
+          <span class="lc150-cat__icon">📐</span>
+          <span class="lc150-cat__name">Math / Geometry</span>
+          <span class="lc150-cat__count">6</span>
+          <span class="lc150-cat__arrow">›</span>
+        </summary>
+        <ol class="lc150-list">
+          <li><a href="https://leetcode.com/problems/powx-n/" target="_blank">Pow(x, n)</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/multiply-strings/" target="_blank">Multiply Strings</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/detect-squares/" target="_blank">Detect Squares</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/max-points-on-a-line/" target="_blank">Max Points on a Line</a><span class="badge badge--hard">H</span></li>
+          <li><a href="https://leetcode.com/problems/rectangle-area/" target="_blank">Rectangle Area</a><span class="badge badge--medium">M</span></li>
+          <li><a href="https://leetcode.com/problems/maximal-square/" target="_blank">Maximal Square</a><span class="badge badge--medium">M</span></li>
+        </ol>
+      </details>
+
+    </div><!-- /lc150-grid -->
+  </div><!-- /lc150-wrapper -->
+
+  <style>
+  /* ── LeetCode 150 Styles ─────────────────────────────────── */
+  .lc150-wrapper {
+    max-width: 1100px;
+    margin: 1rem auto 1rem;
+    padding: 0 1.5rem;
+  }
+  .lc150-stats {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+  }
+  .lc150-stat { display: flex; align-items: center; gap: 0.35rem; }
+  .lc150-dot  { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+  .lc150-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 0.75rem;
+  }
+
+  .lc150-cat {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: border-color var(--transition);
+  }
+  .lc150-cat[open]  { border-color: var(--accent); }
+  .lc150-cat:hover  { border-color: var(--accent); }
+
+  .lc150-cat__head {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    user-select: none;
+    list-style: none;
+    background: var(--bg-card);
+    transition: background var(--transition);
+  }
+  .lc150-cat__head::-webkit-details-marker { display: none; }
+  .lc150-cat[open] .lc150-cat__head { background: var(--accent-subtle); }
+  .lc150-cat__head:hover { background: var(--accent-subtle); }
+
+  .lc150-cat__icon { font-size: 1rem; flex-shrink: 0; }
+  .lc150-cat__name { font-weight: 600; font-size: 0.9rem; flex: 1; }
+  .lc150-cat__count {
+    background: var(--bg-code);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-full);
+    padding: 1px 8px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+  }
+  .lc150-cat[open] .lc150-cat__count { background: var(--accent); border-color: var(--accent); color: white; }
+  .lc150-cat__arrow {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    transition: transform var(--transition);
+    line-height: 1;
+  }
+  .lc150-cat[open] .lc150-cat__arrow { transform: rotate(90deg); }
+
+  .lc150-list {
+    list-style: none;
+    padding: 0.25rem 0 0.5rem;
+    margin: 0;
+    border-top: 1px solid var(--border);
+    max-height: 400px;
+    overflow-y: auto;
+  }
+
+  .lc150-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.3rem 1rem 0.3rem 1.25rem;
+    font-size: 0.82rem;
+    counter-increment: lc-item;
+    transition: background var(--transition);
+  }
+  .lc150-list li:hover { background: var(--bg-primary); }
+  .lc150-list li::before {
+    content: counter(lc-item);
+    min-width: 18px;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .lc150-list { counter-reset: lc-item; }
+
+  .lc150-list a {
+    flex: 1;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color var(--transition);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .lc150-list a:hover { color: var(--accent); }
+  .lc-ext-link {
+    flex-shrink: 0;
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    padding: 1px 5px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    text-decoration: none;
+    transition: all var(--transition);
+    font-family: var(--font-mono);
+  }
+  .lc-ext-link:hover { color: var(--warning); border-color: var(--warning); }
+
+  .lc150-list .badge { flex-shrink: 0; font-size: 0.65rem; padding: 1px 5px; }
+
+  @media (max-width: 768px) {
+    .lc150-grid { grid-template-columns: 1fr; }
+    .lc150-wrapper { padding: 0 1rem; }
+  }
+  </style>
+
+  <script>
+  /* Expand/collapse all — renamed to avoid collision with lc150-enhanced.js */
+  const LC150Toggle = (() => {
+    function toggleAll() {
+      const cats = document.querySelectorAll('.lc150-cat');
+      const btn   = document.getElementById('lc150-expand-all');
+      const anyOpen = [...cats].some(c => c.open);
+      cats.forEach(c => c.open = !anyOpen);
+      btn.textContent = anyOpen ? 'Expand All' : 'Collapse All';
+    }
+    return { toggleAll };
+  })();
+  </script>
+
   <!-- Keyboard Shortcuts hint -->
   <div style="text-align:center; padding: 1rem 1.5rem 3rem; color: var(--text-muted); font-size: 0.8rem;">
     <kbd style="background:var(--bg-card);border:1px solid var(--border);border-radius:4px;padding:2px 6px;font-family:var(--font-mono);">←</kbd>
@@ -337,5 +885,6 @@
 
   <div class="toast" id="toast"></div>
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/lc150-enhanced.js"></script>
 </body>
 </html>

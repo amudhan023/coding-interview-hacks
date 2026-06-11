@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Merge Sorted Array (LC 88) — Interview Hacks</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/main.css" />
+</head>
+<body data-root=".." data-page-title="Merge Sorted Array">
+  <nav class="topnav">
+    <a href="../index.html" class="topnav__logo" style="text-decoration:none;"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect width="20" height="20" rx="5" fill="var(--accent)"/><path d="M5 7l3 3-3 3M10 14h5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Interview<span>Hacks</span></span></a>
+    <div class="topnav__search"><svg class="topnav__search-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M11 11l3 3"/></svg><input type="text" id="search-input" placeholder="Search topics…" autocomplete="off" /><span class="topnav__kbd">/</span><div class="search-results" id="search-results"></div></div>
+    <div class="topnav__actions"><button class="btn-icon" id="theme-toggle" title="Toggle theme"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button></div>
+  </nav>
+  <div class="page-layout">
+    <aside class="sidebar">
+      <div class="sidebar__section"><div class="sidebar__label">On this page</div><nav class="toc">
+        <a href="#summary"    class="toc-link">Problem Summary</a>
+        <a href="#insight"    class="toc-link">Key Insight</a>
+        <a href="#viz"        class="toc-link">Visualization</a>
+        <a href="#code"       class="toc-link">Python 2 Code</a>
+        <a href="#complexity" class="toc-link">Complexity</a>
+        <a href="#mistakes"   class="toc-link">Mistakes</a>
+      </nav></div>
+      <div class="sidebar__section"><div class="sidebar__label">Recently Viewed</div><div id="recently-viewed"></div></div>
+    </aside>
+    <main class="content">
+      <nav class="breadcrumbs"><a href="../index.html">Home</a><span class="breadcrumbs__sep">›</span><a href="./">Problems</a><span class="breadcrumbs__sep">›</span><span class="breadcrumbs__current">Merge Sorted Array</span></nav>
+      <div class="page-header">
+        <div class="page-header__badges"><span class="badge badge--easy">Easy</span><span class="badge badge--cat">Array</span><span class="badge badge--cat">Two Pointers</span></div>
+        <h1>Merge Sorted Array <span style="color:var(--text-muted);font-weight:400;font-size:1.1rem;">LC #88</span></h1>
+        <div class="page-header__meta"><span>⏱ 5 min</span><span>🎯 Merge from the RIGHT</span><span>📌 Frequency: High</span></div>
+      </div>
+
+      <section class="section" id="summary">
+        <h2><span class="section-num">1</span> Problem Summary</h2>
+        <div class="callout callout--info"><strong>Problem</strong>You have two sorted arrays <code>nums1</code> (size m+n, first m elements are valid) and <code>nums2</code> (size n). Merge nums2 into nums1 in-place so the result is sorted.</div>
+        <p style="margin-top:0.75rem;"><strong>Example:</strong> nums1=[1,2,3,0,0,0] m=3, nums2=[2,5,6] n=3 → [1,2,2,3,5,6]</p>
+      </section>
+
+      <section class="section" id="insight">
+        <h2><span class="section-num">2</span> Key Insight — Merge from the RIGHT</h2>
+        <div class="callout callout--success"><strong>The trick</strong>If you merge left-to-right, you overwrite elements in nums1 you still need. Merge right-to-left instead — the empty trailing space in nums1 is the perfect buffer. Start three pointers: p1=m-1, p2=n-1, p=m+n-1 (write position). Always place the larger of nums1[p1] and nums2[p2] at position p.</div>
+        <div class="tricks-grid" style="margin-top:0.75rem;">
+          <div class="trick-card"><div class="trick-card__icon">❌</div><h4>Left-to-right (wrong)</h4><p>Overwrites nums1[0] before you've used it → loses data. Requires extra array.</p></div>
+          <div class="trick-card"><div class="trick-card__icon">✅</div><h4>Right-to-left (correct)</h4><p>Writes into the empty trailing space. Never overwrites unread data. O(1) extra space.</p></div>
+        </div>
+      </section>
+
+      <section class="section" id="viz">
+        <h2><span class="section-num">3</span> Step-by-Step Visualization</h2>
+        <p style="margin-bottom:0.75rem;">nums1=[1,2,3,_,_,_] m=3, nums2=[2,5,6] n=3. Watch the three pointers converge.</p>
+        <div class="viz-container" style="overflow-x:auto;">
+          <svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg" style="width:100%;min-width:500px;">
+            <!-- Step labels -->
+            <text x="350" y="22" text-anchor="middle" font-size="12" fill="var(--accent)" font-weight="600" id="step-lbl">Step 1: Compare nums1[2]=3 vs nums2[2]=6 → place 6</text>
+
+            <!-- nums1 array -->
+            <text x="20" y="60" font-size="11" fill="var(--text-muted)">nums1</text>
+            <g id="n1-boxes"></g>
+            <!-- nums2 array -->
+            <text x="20" y="145" font-size="11" fill="var(--text-muted)">nums2</text>
+            <g id="n2-boxes"></g>
+            <!-- Write pointer label -->
+            <text id="p-lbl" x="0" y="0" font-size="10" fill="var(--danger)" text-anchor="middle" opacity="0">↑write</text>
+            <text id="p1-lbl" x="0" y="0" font-size="10" fill="var(--accent)" text-anchor="middle" opacity="0">↑p1</text>
+            <text id="p2-lbl" x="0" y="0" font-size="10" fill="var(--success)" text-anchor="middle" opacity="0">↑p2</text>
+
+            <!-- Result at bottom -->
+            <text x="20" y="235" font-size="11" fill="var(--text-muted)">Result after step:</text>
+            <g id="result-boxes"></g>
+            <text id="state-lbl" x="350" y="288" text-anchor="middle" font-size="11" fill="var(--text-secondary)"></text>
+          </svg>
+        </div>
+
+        <div style="display:flex;gap:0.6rem;flex-wrap:wrap;margin-top:0.75rem;">
+          <button class="btn btn--primary" id="step-prev" onclick="MergeSA.prev()">◀ Prev</button>
+          <button class="btn btn--primary" id="step-next" onclick="MergeSA.next()">Next ▶</button>
+          <button class="btn" onclick="MergeSA.reset()">↺ Reset</button>
+          <span style="font-size:0.8rem;color:var(--text-muted);line-height:34px;" id="step-num">1 / 5</span>
+        </div>
+      </section>
+
+      <section class="section" id="code">
+        <h2><span class="section-num">4</span> Python 2 Code</h2>
+        <div class="code-block">
+          <div class="code-block__header"><span class="code-block__lang">Python 2 — O(m+n) time, O(1) space</span><button class="code-copy-btn">Copy</button></div>
+          <pre><code>class Solution(object):
+    def merge(self, nums1, m, nums2, n):
+        p1 = m - 1      # pointer in nums1's valid part
+        p2 = n - 1      # pointer in nums2
+        p  = m + n - 1  # write position (from the back)
+
+        while p1 >= 0 and p2 >= 0:
+            if nums1[p1] > nums2[p2]:
+                nums1[p] = nums1[p1]
+                p1 -= 1
+            else:
+                nums1[p] = nums2[p2]
+                p2 -= 1
+            p -= 1
+
+        # Copy any remaining elements from nums2
+        # (If p2 < 0, remaining nums1 elements are already in place)
+        while p2 >= 0:
+            nums1[p] = nums2[p2]
+            p2 -= 1; p -= 1</code></pre>
+        </div>
+      </section>
+
+      <section class="section" id="complexity">
+        <h2><span class="section-num">5</span> Complexity</h2>
+        <table class="complexity-table">
+          <thead><tr><th>Approach</th><th>Time</th><th>Space</th></tr></thead>
+          <tbody>
+            <tr><td>Naive (sort after copy)</td><td>O((m+n) log(m+n))</td><td>O(1)</td></tr>
+            <tr><td>Right-to-left two pointers</td><td>O(m+n)</td><td>O(1)</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="section" id="mistakes">
+        <h2><span class="section-num">6</span> Common Mistakes</h2>
+        <div class="callout callout--danger"><strong>Forgetting the leftover nums2 copy</strong>When p1 runs out first, remaining nums2 elements need to be copied. But if p2 runs out first, nums1's remaining elements are already in the right place — no action needed.</div>
+        <div class="callout callout--warning"><strong>Wrong starting positions</strong>p1 starts at m-1 (last real element), NOT at m (which is 0). p starts at m+n-1.</div>
+      </section>
+
+      <div class="revision-box">
+        <h3>⚡ 1-Minute Review</h3>
+        <ul>
+          <li>Merge from the right to avoid overwriting unread nums1 data</li>
+          <li>Three pointers: p1=m-1, p2=n-1, p=m+n-1</li>
+          <li>Place the larger value at position p, decrement its pointer and p</li>
+          <li>After main loop, copy remaining nums2 (if any)</li>
+          <li>O(m+n) time, O(1) space</li>
+        </ul>
+      </div>
+
+      <nav class="page-nav">
+        <a href="../index.html" class="page-nav__btn" data-nav="prev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg><div><div class="page-nav__btn__label">Back</div><div class="page-nav__btn__title">Dashboard</div></div></a>
+        <a href="remove-element.html" class="page-nav__btn page-nav__btn--next" data-nav="next"><div><div class="page-nav__btn__label">Next</div><div class="page-nav__btn__title">Remove Element</div></div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></a>
+      </nav>
+    </main>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script src="../assets/js/main.js"></script>
+  <script>
+  (function() {
+    const N1 = [1,2,3,0,0,0], N2 = [2,5,6];
+    const STEPS = [
+      { p1:2, p2:2, p:5, place:{pos:5,val:6}, res:[1,2,3,0,0,6], lbl:'p1=2(val 3), p2=2(val 6): 6>3 → place nums2[2]=6 at pos 5', state:'p1=2 p2=2 p=5' },
+      { p1:2, p2:1, p:4, place:{pos:4,val:5}, res:[1,2,3,0,5,6], lbl:'p1=2(val 3), p2=1(val 5): 5>3 → place nums2[1]=5 at pos 4', state:'p1=2 p2=1 p=4' },
+      { p1:2, p2:0, p:3, place:{pos:3,val:3}, res:[1,2,3,3,5,6], lbl:'p1=2(val 3), p2=0(val 2): 3≥2 → place nums1[2]=3 at pos 3', state:'p1=2 p2=0 p=3' },
+      { p1:1, p2:0, p:2, place:{pos:2,val:2}, res:[1,2,2,3,5,6], lbl:'p1=1(val 2), p2=0(val 2): equal → place nums2[0]=2 at pos 2', state:'p1=1 p2=0 p=2' },
+      { p1:1, p2:-1, p:1, place:null, res:[1,2,2,3,5,6], lbl:'p2 exhausted. nums1\'s remaining [1,2] already in place!', state:'Done ✓ Result: [1,2,2,3,5,6]' }
+    ];
+    let cur = 0;
+    const BW=70, BH=36, GAP=4, SX=70, N1Y=45, N2Y=130, RY=248;
+
+    function drawArray(gId, arr, hl, y) {
+      const g = document.getElementById(gId); if (!g) return;
+      const colors = {0:'var(--accent)',1:'var(--success)',2:'var(--warning)',3:'var(--danger)'};
+      g.innerHTML = arr.map((v,i) => {
+        const x = SX + i*(BW+GAP);
+        const c = hl && hl[i] ? hl[i] : 'var(--border)';
+        const fill = hl && hl[i] ? hl[i]+'18' : 'var(--bg-code)';
+        return `<rect x="${x}" y="${y}" width="${BW}" height="${BH}" rx="6" fill="${fill}" stroke="${c}" stroke-width="2"/>
+          <text x="${x+BW/2}" y="${y+BH/2+5}" text-anchor="middle" font-size="15" font-weight="700" fill="${v===0?'var(--text-muted)':'var(--text-primary)'}">${v===0?'_':v}</text>
+          <text x="${x+BW/2}" y="${y+BH+13}" text-anchor="middle" font-size="9" fill="var(--text-muted)">${i}</text>`;
+      }).join('');
+    }
+
+    function render() {
+      const s = STEPS[cur];
+      // nums1
+      const hl1 = {}; if (s.p1>=0) hl1[s.p1]='var(--accent)'; if (s.p>=0) hl1[s.p]='var(--danger)';
+      drawArray('n1-boxes', s.p1>=0?[1,2,3,0,0,0]:[1,2,3,0,0,0], hl1, N1Y);
+      // nums2
+      const hl2 = {}; if (s.p2>=0) hl2[s.p2]='var(--success)';
+      drawArray('n2-boxes', N2, hl2, N2Y);
+      // result
+      drawArray('result-boxes', s.res, {}, RY);
+      // step label
+      document.getElementById('step-lbl').textContent = s.lbl;
+      document.getElementById('state-lbl').textContent = s.state;
+      document.getElementById('step-num').textContent = (cur+1)+' / '+STEPS.length;
+    }
+
+    const MergeSA = { prev(){ cur=Math.max(0,cur-1); render(); }, next(){ cur=Math.min(STEPS.length-1,cur+1); render(); }, reset(){ cur=0; render(); } };
+    window.MergeSA = MergeSA;
+    render();
+  })();
+  </script>
+</body>
+</html>

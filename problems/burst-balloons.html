@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Burst Balloons (LC 312) — Interview Hacks</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <style>
+    /* ── Animation Container ───────────────────────────── */
+    .anim-wrapper {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin: 1rem 0;
+    }
+    .anim-info {
+      padding: 1rem 1.25rem 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .anim-step-title {
+      font-size: 1rem; font-weight: 700;
+      color: var(--text-primary); margin-bottom: 0.3rem;
+    }
+    .anim-step-desc {
+      font-size: 0.85rem; color: var(--text-secondary);
+      line-height: 1.6; min-height: 50px;
+    }
+    .anim-canvas-wrap {
+      padding: 0.5rem 0;
+      background: var(--bg-primary);
+    }
+    #anim-svg {
+      width: 100%; height: auto; display: block;
+    }
+
+    /* ── DP Table + Computation Panel ─────────────────── */
+    .dp-panels {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      padding: 1rem 1.25rem;
+      border-top: 1px solid var(--border);
+    }
+    @media (max-width: 600px) { .dp-panels { grid-template-columns: 1fr; } }
+
+    .dp-table-wrap h4, .dp-compute-wrap h4 {
+      font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em;
+      color: var(--text-muted); margin-bottom: 0.6rem; font-weight: 600;
+    }
+    .dp-grid {
+      display: grid;
+      grid-template-columns: 28px repeat(4, 1fr);
+      gap: 3px;
+    }
+    .dp-cell {
+      border-radius: 5px;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-align: center;
+      padding: 5px 3px;
+      transition: all 0.35s ease;
+    }
+    .dp-cell-header {
+      background: var(--bg-code);
+      color: var(--text-muted);
+      font-size: 0.7rem;
+    }
+    .dp-cell-row-label {
+      background: var(--bg-code);
+      color: var(--text-muted);
+      font-size: 0.7rem;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .dp-cell-empty  { background: var(--bg-primary); color: var(--border); }
+    .dp-cell-invalid{ background: transparent; color: transparent; }
+    .dp-cell-filled { background: rgba(16,185,129,.12); color: var(--success); border: 1px solid var(--success); }
+    .dp-cell-current{ background: rgba(245,158,11,.2); color: var(--warning); border: 2px solid var(--warning);
+                      box-shadow: 0 0 8px rgba(245,158,11,.4); animation: pulse-cell 0.8s ease-in-out infinite alternate; }
+    .dp-cell-dep    { background: rgba(99,102,241,.12); color: var(--accent); border: 1px solid var(--accent); }
+    .dp-cell-answer { background: rgba(239,68,68,.15); color: var(--danger); border: 2px solid var(--danger);
+                      box-shadow: 0 0 12px rgba(239,68,68,.4); }
+    @keyframes pulse-cell { from { transform: scale(1); } to { transform: scale(1.08); } }
+
+    .dp-compute-wrap {
+      font-size: 0.82rem;
+    }
+    .dp-compute-box {
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 0.75rem;
+      min-height: 90px;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      line-height: 1.8;
+      color: var(--text-secondary);
+    }
+    .dp-compute-box .win { color: var(--success); font-weight: 700; }
+    .dp-compute-box .k  { color: var(--warning); }
+    .dp-compute-box .val{ color: var(--accent-2); }
+    .dp-compute-box .ans{ color: var(--danger); font-weight: 800; font-size: 0.85rem; }
+
+    /* ── Controls ──────────────────────────────────────── */
+    .anim-controls {
+      display: flex; align-items: center; gap: 0.6rem;
+      padding: 0.75rem 1.25rem;
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .ctrl-btn {
+      width: 34px; height: 34px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-secondary);
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem;
+      transition: all var(--transition);
+    }
+    .ctrl-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .ctrl-btn.active { background: var(--accent); border-color: var(--accent); color: white; }
+    .ctrl-step-info {
+      font-size: 0.78rem; color: var(--text-muted);
+      font-family: var(--font-mono); margin-left: 0.25rem;
+    }
+    .ctrl-progress {
+      flex: 1; min-width: 80px;
+      height: 4px; background: var(--border); border-radius: 2px; overflow: hidden;
+    }
+    .ctrl-progress-bar {
+      height: 100%; background: var(--accent);
+      transition: width 0.3s ease;
+    }
+    .ctrl-phase {
+      font-size: 0.7rem; padding: 2px 8px;
+      border-radius: var(--radius-full);
+      font-weight: 600;
+    }
+
+    /* ── Balloon SVG states ────────────────────────────── */
+    .bln { transition: opacity 0.35s ease, transform 0.35s ease; transform-origin: center center; }
+    .bln.state-normal   { opacity: 1; }
+    .bln.state-boundary { opacity: 0.45; }
+    .bln.state-hidden   { opacity: 0; }
+    .bln.state-dim      { opacity: 0.18; }
+    .bln.state-burst    { opacity: 0; }
+    .bln.state-focus    {}
+
+    @keyframes float-up {
+      0%  { transform: translateY(0); opacity: 1; }
+      100%{ transform: translateY(-55px); opacity: 0; }
+    }
+    .coin-anim { animation: float-up 1.2s ease-out forwards; }
+    @keyframes pop-ring {
+      0%  { r: 32; opacity: 0.8; stroke-width: 3; }
+      100%{ r: 58; opacity: 0; stroke-width: 1; }
+    }
+    .pop-ring { animation: pop-ring 0.6s ease-out forwards; }
+  </style>
+</head>
+<body data-root=".." data-page-title="Burst Balloons">
+  <nav class="topnav">
+    <a href="../index.html" class="topnav__logo" style="text-decoration:none;"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect width="20" height="20" rx="5" fill="var(--accent)"/><path d="M5 7l3 3-3 3M10 14h5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Interview<span>Hacks</span></span></a>
+    <div class="topnav__search"><svg class="topnav__search-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M11 11l3 3"/></svg><input type="text" id="search-input" placeholder="Search topics…" autocomplete="off" /><span class="topnav__kbd">/</span><div class="search-results" id="search-results"></div></div>
+    <div class="topnav__actions"><button class="btn-icon" id="theme-toggle" title="Toggle theme"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button></div>
+  </nav>
+
+  <div class="page-layout">
+    <aside class="sidebar">
+      <div class="sidebar__section"><div class="sidebar__label">On this page</div><nav class="toc">
+        <a href="#summary"     class="toc-link">Problem Summary</a>
+        <a href="#pattern"     class="toc-link">Pattern</a>
+        <a href="#insight"     class="toc-link">Key Insight</a>
+        <a href="#animation"   class="toc-link">🎬 Animation</a>
+        <a href="#brute"       class="toc-link">Brute Force</a>
+        <a href="#optimal"     class="toc-link">Optimal Solution</a>
+        <a href="#code"        class="toc-link">Python 2 Code</a>
+        <a href="#dryrun"      class="toc-link">Dry Run</a>
+        <a href="#complexity"  class="toc-link">Complexity</a>
+        <a href="#mistakes"    class="toc-link">Common Mistakes</a>
+        <a href="#revision"    class="toc-link">Revision Notes</a>
+        <a href="#related"     class="toc-link">Related</a>
+      </nav></div>
+      <div class="sidebar__section"><div class="sidebar__label">Problems</div>
+        <a href="two-sum.html"              class="sidebar__link">Two Sum</a>
+        <a href="number-of-islands.html"    class="sidebar__link">Number of Islands</a>
+        <a href="redundant-connection.html" class="sidebar__link">Redundant Connection</a>
+        <a href="burst-balloons.html"       class="sidebar__link active">Burst Balloons</a>
+      </div>
+      <div class="sidebar__section"><div class="sidebar__label">Recently Viewed</div><div id="recently-viewed"></div></div>
+    </aside>
+
+    <main class="content">
+      <nav class="breadcrumbs"><a href="../index.html">Home</a><span class="breadcrumbs__sep">›</span><a href="./">Problems</a><span class="breadcrumbs__sep">›</span><span class="breadcrumbs__current">Burst Balloons</span></nav>
+
+      <div class="page-header">
+        <div class="page-header__badges"><span class="badge badge--hard">Hard</span><span class="badge badge--cat">Dynamic Programming</span><span class="badge badge--cat">Interval DP</span></div>
+        <h1>Burst Balloons <span style="color:var(--text-muted);font-weight:400;font-size:1.2rem;">LC #312</span></h1>
+        <div class="page-header__meta"><span>⏱ 12 min revision</span><span>🎯 Interval DP — "Last to Burst"</span><span>📌 Frequency: Medium-High</span></div>
+      </div>
+
+      <!-- 1. Problem Summary -->
+      <section class="section" id="summary">
+        <h2><span class="section-num">1</span> Problem Summary</h2>
+        <div class="callout callout--info"><strong>Problem</strong>Given n balloons with values <code>nums[0..n-1]</code>, if you burst balloon <code>i</code> you earn <code>nums[i-1] × nums[i] × nums[i+1]</code> coins. After bursting, the neighbors become adjacent. Burst all balloons to maximize total coins.</div>
+        <p style="margin-top:0.75rem;"><strong>Example:</strong> nums = [3, 1, 5, 8] → Output: <strong>167</strong></p>
+        <div class="callout callout--warning" style="margin-top:0.75rem;"><strong>The trap</strong>The naive approach is "which balloon should I burst first?" — but every burst changes the neighbors. After bursting balloon i, the boundary is now (i-1) and (i+1) which are a new pair. Tracking all possible orderings = O(n!) × O(n) per ordering = completely infeasible.</div>
+      </section>
+
+      <!-- 2. Pattern -->
+      <section class="section" id="pattern">
+        <h2><span class="section-num">2</span> Pattern Recognition</h2>
+        <div class="callout callout--success"><strong>Interval DP — Think about the LAST balloon to burst</strong>Instead of "which burst first?" (unpredictable neighbors), ask "which balloon bursts LAST in range [l..r]?" The last balloon's neighbors are always <code>nums[l-1]</code> and <code>nums[r+1]</code> — the boundaries of the range, which are guaranteed to still be present.</div>
+      </section>
+
+      <!-- 3. Key Insight -->
+      <section class="section" id="insight">
+        <h2><span class="section-num">3</span> The "Last Balloon" Reversal — The Aha Moment</h2>
+        <p>This is one of the cleanest example of interval DP thinking. The key reversal:</p>
+        <div class="tricks-grid">
+          <div class="trick-card">
+            <div class="trick-card__icon">❌</div>
+            <h4>Wrong Question</h4>
+            <p>"Which balloon should I burst <em>first</em>?" — When balloon k bursts, its coins depend on its current neighbors, which have already changed from earlier bursts. Unpredictable.</p>
+          </div>
+          <div class="trick-card">
+            <div class="trick-card__icon">✅</div>
+            <h4>Right Question</h4>
+            <p>"Which balloon bursts <em>last</em> in range [l..r]?" — When k is last, all others in [l..r] are already gone. So k's neighbors are exactly <code>nums[l-1]</code> and <code>nums[r+1]</code>. Fully determined!</p>
+          </div>
+        </div>
+        <div class="callout callout--info" style="margin-top:0.75rem;">
+          <strong>The Recurrence</strong><br>
+          Pad array: <code>nums = [1] + nums + [1]</code> (virtual balloons worth 1 at both ends)<br><br>
+          <code>dp[l][r]</code> = max coins from bursting all balloons in range <code>[l..r]</code><br><br>
+          For each possible "last balloon" k in [l..r]:<br>
+          <code>dp[l][r] = max( dp[l][k-1] + nums[l-1]×nums[k]×nums[r+1] + dp[k+1][r] )</code><br><br>
+          Fill by increasing range length: length 1 → 2 → 3 → ... → n<br>
+          Answer = <code>dp[1][n]</code>
+        </div>
+      </section>
+
+      <!-- 4. ANIMATION -->
+      <section class="section" id="animation">
+        <h2><span class="section-num">4</span> 🎬 Interactive Step-Through Animation</h2>
+        <p style="margin-bottom:0.75rem;">Walk through the algorithm on <strong>nums = [3, 1, 5, 8]</strong>. Use ◀ / ▶ to step, or hit Play. Pause any time to study a step.</p>
+
+        <div class="anim-wrapper">
+          <!-- Step info -->
+          <div class="anim-info">
+            <div class="anim-step-title" id="step-title">Loading…</div>
+            <div class="anim-step-desc"  id="step-desc">…</div>
+          </div>
+
+          <!-- SVG Canvas -->
+          <div class="anim-canvas-wrap">
+            <svg id="anim-svg" viewBox="0 0 700 240" xmlns="http://www.w3.org/2000/svg">
+              <!-- Permanent elements: updated by JS -->
+              <!-- Range bracket -->
+              <path id="bkt-path" d="" stroke="var(--accent)" stroke-width="2" fill="none" opacity="0"/>
+              <text id="bkt-label" x="0" y="0" font-size="11" fill="var(--accent)" text-anchor="middle" opacity="0"></text>
+              <!-- Last-k indicator -->
+              <path id="k-arrow" d="" stroke="var(--warning)" stroke-width="2" fill="none" marker-end="url(#arr-y)" opacity="0"/>
+              <text id="k-label" x="0" y="0" font-size="11" fill="var(--warning)" text-anchor="middle" font-weight="600" opacity="0"></text>
+              <!-- Boundary arrows -->
+              <text id="bl-label" x="0" y="0" font-size="11" fill="var(--success)" text-anchor="middle" opacity="0"></text>
+              <text id="br-label" x="0" y="0" font-size="11" fill="var(--success)" text-anchor="middle" opacity="0"></text>
+              <!-- Formula display -->
+              <text id="formula-line1" x="350" y="180" font-size="13" fill="var(--text-primary)" text-anchor="middle" opacity="0"></text>
+              <text id="formula-line2" x="350" y="200" font-size="13" fill="var(--accent)" text-anchor="middle" font-weight="700" opacity="0"></text>
+              <text id="formula-line3" x="350" y="222" font-size="12" fill="var(--text-secondary)" text-anchor="middle" opacity="0"></text>
+              <!-- Running total -->
+              <text id="total-label" x="350" y="228" font-size="13" fill="var(--success)" text-anchor="middle" font-weight="700" opacity="0"></text>
+              <!-- Defs -->
+              <defs>
+                <marker id="arr-y" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                  <path d="M0,0 L0,6 L8,3 z" fill="var(--warning)"/>
+                </marker>
+                <marker id="arr-g" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                  <path d="M0,0 L0,6 L8,3 z" fill="var(--success)"/>
+                </marker>
+              </defs>
+              <!-- Pop rings (hidden until burst) -->
+              <circle id="pop-0" cx="0" cy="0" r="0" fill="none" stroke="transparent" opacity="0"/>
+              <circle id="pop-1" cx="0" cy="0" r="0" fill="none" stroke="transparent" opacity="0"/>
+              <circle id="pop-2" cx="0" cy="0" r="0" fill="none" stroke="transparent" opacity="0"/>
+              <circle id="pop-3" cx="0" cy="0" r="0" fill="none" stroke="transparent" opacity="0"/>
+              <circle id="pop-4" cx="0" cy="0" r="0" fill="none" stroke="transparent" opacity="0"/>
+              <!-- Coin texts -->
+              <text id="coin-1" x="0" y="0" font-size="15" fill="var(--success)" text-anchor="middle" font-weight="800" opacity="0"></text>
+              <text id="coin-2" x="0" y="0" font-size="15" fill="var(--success)" text-anchor="middle" font-weight="800" opacity="0"></text>
+              <text id="coin-3" x="0" y="0" font-size="15" fill="var(--success)" text-anchor="middle" font-weight="800" opacity="0"></text>
+              <text id="coin-4" x="0" y="0" font-size="15" fill="var(--success)" text-anchor="middle" font-weight="800" opacity="0"></text>
+              <!-- Balloons group (drawn last so they're on top) -->
+              <g id="balloons-group"></g>
+            </svg>
+          </div>
+
+          <!-- DP Table + Computation -->
+          <div class="dp-panels">
+            <div class="dp-table-wrap">
+              <h4>DP Table — dp[l][r]</h4>
+              <div class="dp-grid" id="dp-grid">
+                <!-- Filled by JS -->
+              </div>
+            </div>
+            <div class="dp-compute-wrap">
+              <h4>Current Computation</h4>
+              <div class="dp-compute-box" id="compute-box">Computation will appear here as we fill cells…</div>
+            </div>
+          </div>
+
+          <!-- Controls -->
+          <div class="anim-controls">
+            <button class="ctrl-btn" id="ctrl-first"  title="First step"  onclick="Anim.goTo(0)">⏮</button>
+            <button class="ctrl-btn" id="ctrl-prev"   title="Previous"    onclick="Anim.prev()">◀</button>
+            <button class="ctrl-btn" id="ctrl-play"   title="Play/Pause"  onclick="Anim.togglePlay()">▶</button>
+            <button class="ctrl-btn" id="ctrl-next"   title="Next"        onclick="Anim.next()">▶</button>
+            <button class="ctrl-btn" id="ctrl-last"   title="Last step"   onclick="Anim.goTo(23)">⏭</button>
+            <span class="ctrl-step-info" id="step-counter">1 / 24</span>
+            <div class="ctrl-progress"><div class="ctrl-progress-bar" id="progress-bar" style="width:0%"></div></div>
+            <span class="ctrl-phase badge badge--cat" id="phase-badge">intro</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. Brute Force -->
+      <section class="section" id="brute">
+        <h2><span class="section-num">5</span> Brute Force — O(n! × n)</h2>
+        <p>Try every permutation of balloon burst order. For each permutation, simulate the bursts and track coins. This is completely infeasible for n=30+.</p>
+        <div class="code-block">
+          <div class="code-block__header"><span class="code-block__lang">Python 2 — Brute Force (TLE)</span><button class="code-copy-btn">Copy</button></div>
+          <pre><code>from itertools import permutations
+
+def maxCoins_brute(nums):
+    best = 0
+    for perm in permutations(range(len(nums))):
+        arr = list(nums)
+        coins = 0
+        for i in perm:
+            # Rebuild current neighbors
+            left  = arr[i-1] if i > 0 else 1
+            right = arr[i+1] if i < len(arr)-1 else 1
+            # ... this approach fails because indices shift after deletions
+        best = max(best, coins)
+    return best   # Incorrect + O(n! * n)</code></pre>
+        </div>
+        <div class="callout callout--danger"><strong>Why brute force fails</strong>After each burst, indices shift. Tracking the changing array state while iterating over permutations is both complex and O(n!) — completely unusable.</div>
+      </section>
+
+      <!-- 6. Optimal -->
+      <section class="section" id="optimal">
+        <h2><span class="section-num">6</span> Optimal Solution — Interval DP O(n³)</h2>
+        <div class="steps">
+          <div class="step"><div class="step__num">1</div><div class="step__content"><h4>Pad the array</h4><p>Add virtual 1s: <code>nums = [1] + nums + [1]</code>. This eliminates out-of-bounds checking. Work on indices 1..n.</p></div></div>
+          <div class="step"><div class="step__num">2</div><div class="step__content"><h4>Define dp[l][r]</h4><p>Maximum coins from bursting all balloons strictly inside the boundary [l-1, r+1]. The l-1 and r+1 balloons are the "walls" that are NOT burst in this subproblem.</p></div></div>
+          <div class="step"><div class="step__num">3</div><div class="step__content"><h4>Fill by increasing length</h4><p>For length 1 (each single balloon), then length 2, ..., up to length n. Each subproblem depends only on smaller subproblems already computed.</p></div></div>
+          <div class="step"><div class="step__num">4</div><div class="step__content"><h4>For each [l,r], try every k as last</h4><p><code>dp[l][r] = max over k∈[l,r]: dp[l][k-1] + nums[l-1]×nums[k]×nums[r+1] + dp[k+1][r]</code></p></div></div>
+          <div class="step"><div class="step__num">5</div><div class="step__content"><h4>Answer</h4><p><code>dp[1][n]</code> is the max coins for the entire array.</p></div></div>
+        </div>
+      </section>
+
+      <!-- 7. Code -->
+      <section class="section" id="code">
+        <h2><span class="section-num">7</span> Python 2 Code</h2>
+        <div class="code-block">
+          <div class="code-block__header"><span class="code-block__lang">Python 2 — Interval DP (Optimal)</span><button class="code-copy-btn">Copy</button></div>
+          <pre><code>class Solution(object):
+    def maxCoins(self, nums):
+        # Step 1: Pad with virtual 1s at both ends
+        nums = [1] + nums + [1]
+        n    = len(nums)
+
+        # dp[l][r] = max coins bursting all balloons in (l-1, r+1) exclusive boundaries
+        # i.e., balloons at indices l through r (using 1-indexed real balloons)
+        dp = [[0] * n for _ in xrange(n)]
+
+        # Step 2: Fill by increasing range length
+        for length in xrange(1, n - 1):       # length of range [l..r]
+            for l in xrange(1, n - length):    # left boundary
+                r = l + length - 1             # right boundary
+
+                # Step 3: Try every k as the LAST balloon to burst in [l..r]
+                for k in xrange(l, r + 1):
+                    coins = (nums[l-1] * nums[k] * nums[r+1]   # burst k last
+                             + dp[l][k-1]                       # left subproblem
+                             + dp[k+1][r])                      # right subproblem
+                    dp[l][r] = max(dp[l][r], coins)
+
+        # Answer: burst all real balloons (indices 1 to n-2)
+        return dp[1][n - 2]
+
+
+# Example
+sol = Solution()
+print sol.maxCoins([3, 1, 5, 8])   # 167
+print sol.maxCoins([1, 5])          # 10</code></pre>
+        </div>
+
+        <h3 style="margin-top:1.25rem;">Top-down Memoization (Alternative)</h3>
+        <div class="code-block">
+          <div class="code-block__header"><span class="code-block__lang">Python 2 — Top-down with Memo</span><button class="code-copy-btn">Copy</button></div>
+          <pre><code>class Solution(object):
+    def maxCoins(self, nums):
+        nums = [1] + nums + [1]
+        memo = {}
+
+        def dp(l, r):
+            if l > r: return 0
+            if (l, r) in memo: return memo[(l, r)]
+            best = 0
+            for k in xrange(l, r + 1):
+                coins = (nums[l-1] * nums[k] * nums[r+1]
+                         + dp(l, k-1) + dp(k+1, r))
+                best = max(best, coins)
+            memo[(l, r)] = best
+            return best
+
+        return dp(1, len(nums) - 2)</code></pre>
+        </div>
+      </section>
+
+      <!-- 8. Dry Run -->
+      <section class="section" id="dryrun">
+        <h2><span class="section-num">8</span> Complete Dry Run — nums = [3, 1, 5, 8]</h2>
+        <p style="margin-bottom:0.75rem;">Padded: <code>[1, 3, 1, 5, 8, 1]</code> → indices 0..5. Real balloons at 1..4.</p>
+
+        <div class="callout callout--info"><strong>Length-1 subproblems</strong> (single balloon, boundaries are immediate neighbors in padded array)<br>
+          dp[1][1]: k=1 → 1×<strong>3</strong>×1 = <strong>3</strong><br>
+          dp[2][2]: k=2 → 3×<strong>1</strong>×5 = <strong>15</strong><br>
+          dp[3][3]: k=3 → 1×<strong>5</strong>×8 = <strong>40</strong><br>
+          dp[4][4]: k=4 → 5×<strong>8</strong>×1 = <strong>40</strong>
+        </div>
+
+        <div class="callout callout--success" style="margin-top:0.75rem;"><strong>Length-2 subproblems</strong><br>
+          dp[1][2]: k=1 → 0 + 1×3×5 + 15 = <strong>30</strong>&nbsp; | &nbsp;k=2 → 3 + 1×1×5 + 0 = 8 &nbsp;→ best = <strong>30</strong><br>
+          dp[2][3]: k=2 → 0 + 3×1×8 + 40 = 64 &nbsp;| &nbsp;k=3 → 15 + 3×5×8 + 0 = <strong>135</strong> &nbsp;→ best = <strong>135</strong><br>
+          dp[3][4]: k=3 → 0 + 1×5×1 + 40 = 45 &nbsp;| &nbsp;k=4 → 40 + 1×8×1 + 0 = <strong>48</strong> &nbsp;→ best = <strong>48</strong>
+        </div>
+
+        <div class="callout callout--warning" style="margin-top:0.75rem;"><strong>Length-3 subproblems</strong><br>
+          dp[1][3]: k=1 → 0+1×3×8+135=<strong>159</strong> | k=2 → 3+1×1×8+40=51 | k=3 → 30+1×5×8+0=70 &nbsp;→ best = <strong>159</strong><br>
+          dp[2][4]: k=2 → 0+3×1×1+48=51 | k=3 → 15+3×5×1+0=70 | k=4 → 135+3×8×1+0=<strong>159</strong> &nbsp;→ best = <strong>159</strong>
+        </div>
+
+        <div class="callout callout--danger" style="margin-top:0.75rem;"><strong>Length-4 (FINAL ANSWER)</strong><br>
+          dp[1][4]: k=1→162, k=2→52, k=3→75, k=4 → 159 + 1×8×1 + 0 = <strong>167</strong>&nbsp; ← ANSWER
+        </div>
+
+        <div class="callout callout--success" style="margin-top:0.75rem;"><strong>Optimal Burst Order (reading from dp trace)</strong>: burst index-2 (val=1) first → +15, then index-3 (val=5) → +120, then index-1 (val=3) → +24, finally index-4 (val=8) → +8. Total = <strong>167</strong> ✓</div>
+      </section>
+
+      <!-- 9. Complexity -->
+      <section class="section" id="complexity">
+        <h2><span class="section-num">9</span> Complexity Analysis</h2>
+        <table class="complexity-table">
+          <thead><tr><th>Approach</th><th>Time</th><th>Space</th></tr></thead>
+          <tbody>
+            <tr><td>Brute force (all orderings)</td><td>O(n! × n)</td><td>O(n)</td></tr>
+            <tr><td>Interval DP (bottom-up)</td><td>O(n³)</td><td>O(n²)</td></tr>
+            <tr><td>Interval DP (top-down memo)</td><td>O(n³)</td><td>O(n²)</td></tr>
+          </tbody>
+        </table>
+        <p style="margin-top:0.75rem;font-size:0.875rem;color:var(--text-secondary);">n³ because: O(n²) subproblems × O(n) choices of k per subproblem. For n=500, that's 125M operations — fast enough.</p>
+      </section>
+
+      <!-- 10. Mistakes -->
+      <section class="section" id="mistakes">
+        <h2><span class="section-num">10</span> Common Mistakes</h2>
+        <div class="callout callout--danger"><strong>Mistake 1 — Forgetting to pad</strong>Without the 1-padding, you need special boundary checks everywhere. Always add <code>[1] + nums + [1]</code> first.</div>
+        <div class="callout callout--danger"><strong>Mistake 2 — Wrong range length loop</strong>The outer loop must iterate by <em>length</em> (not just l,r independently) to ensure smaller subproblems are filled before larger ones.</div>
+        <div class="callout callout--warning"><strong>Mistake 3 — Off-by-one in boundaries</strong><code>nums[l-1]</code> and <code>nums[r+1]</code> are the boundary values (outside the range). <code>k</code> iterates from <code>l</code> to <code>r</code> inclusive.</div>
+        <div class="callout callout--warning"><strong>Mistake 4 — Thinking of "first" instead of "last"</strong>dp[l][k-1] and dp[k+1][r] are the subproblems for everything OTHER than k. They're solved assuming k hasn't burst yet (because k is last). If you reverse the logic, the coins formula breaks.</div>
+      </section>
+
+      <!-- 11. Revision Notes -->
+      <section class="section" id="revision">
+        <h2><span class="section-num">11</span> Revision Notes</h2>
+        <div class="revision-box">
+          <h3>⚡ 1-Minute Review</h3>
+          <ul>
+            <li>Think "which balloon bursts <strong>last</strong> in [l,r]?" — not first</li>
+            <li>When k is last: its neighbors are fixed at <code>nums[l-1]</code> and <code>nums[r+1]</code></li>
+            <li>Pad with 1s: <code>nums = [1] + nums + [1]</code></li>
+            <li>Recurrence: <code>dp[l][r] = max(dp[l][k-1] + nums[l-1]*nums[k]*nums[r+1] + dp[k+1][r])</code></li>
+            <li>Fill by <strong>increasing length</strong> (len=1 → 2 → ... → n)</li>
+            <li>O(n³) time, O(n²) space</li>
+            <li>Answer = <code>dp[1][n]</code></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 12. Related -->
+      <section class="section" id="related">
+        <h2><span class="section-num">12</span> Related Concepts</h2>
+        <div class="related-grid">
+          <a href="../concepts/dynamic-programming.html" class="related-card">Dynamic Programming</a>
+          <a href="../concepts/patterns.html#tier4"      class="related-card">Interval DP Pattern</a>
+          <a href="redundant-connection.html"            class="related-card">Redundant Connection</a>
+        </div>
+      </section>
+
+      <nav class="page-nav">
+        <a href="../index.html" class="page-nav__btn" data-nav="prev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg><div><div class="page-nav__btn__label">Back</div><div class="page-nav__btn__title">Dashboard</div></div></a>
+        <a href="../concepts/dynamic-programming.html" class="page-nav__btn page-nav__btn--next" data-nav="next"><div><div class="page-nav__btn__label">Concept</div><div class="page-nav__btn__title">Dynamic Programming</div></div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></a>
+      </nav>
+    </main>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="../assets/js/main.js"></script>
+  <script>
+  /* ══════════════════════════════════════════════════
+     BURST BALLOONS ANIMATION
+  ══════════════════════════════════════════════════ */
+  (function() {
+    // Padded array: [1, 3, 1, 5, 8, 1]  indices 0-5
+    // Real balloons at indices 1-4
+    const NUMS = [1, 3, 1, 5, 8, 1];
+    const COLORS = ['#4b5563','#6366f1','#22d3ee','#f59e0b','#ef4444','#4b5563'];
+    // x-positions of each balloon center
+    const BX = [60, 160, 260, 360, 460, 560];
+    const BY = 110; // y center
+    const BR = 30;  // radius
+
+    // dp values (precomputed)
+    const DP = [
+      [0,0,0,0,0,0],
+      [0,3,30,159,167,0],
+      [0,0,15,135,159,0],
+      [0,0,0,40,48,0],
+      [0,0,0,0,40,0],
+      [0,0,0,0,0,0]
+    ];
+
+    // States: 'normal','boundary','dim','focus','burst','hidden'
+    // STEPS: each step fully describes what to render
+    const STEPS = [
+      /* 0 */ { phase:'intro',    title:'🎈 The Problem — nums = [3, 1, 5, 8]',
+        desc:'You have 4 balloons labeled 3, 1, 5, 8. Bursting balloon i earns coins = nums[i-1] × nums[i] × nums[i+1]. Your goal: burst all balloons in the best order to maximize total coins.',
+        bs:['hidden','normal','normal','normal','normal','hidden'],
+        range:null, k:null, formula:null, dpCur:null, dpFilled:[], compute:'', coins:null, total:null },
+
+      /* 1 */ { phase:'intro',    title:'💡 The Burst Cost Formula',
+        desc:'If you burst balloon at index 1 (value 1): left neighbor is 3, right neighbor is 5. Coins = 3 × 1 × 5 = 15. After it bursts, 3 and 5 become adjacent — the array changes!',
+        bs:['hidden','dim','focus','dim','dim','hidden'],
+        range:null, k:2, formula:['Burst index 2 (value 1):', '3 × 1 × 5 = 15 coins'], dpCur:null, dpFilled:[], compute:'', coins:null, total:null },
+
+      /* 2 */ { phase:'naive',    title:'😵 The Hard Way: Order Matters!',
+        desc:'If you burst "1" first → neighbors 3 and 5 become adjacent. Then burst "5" → neighbors are 3 and 8. Every burst reshapes the array. Enumerating all orders is O(n!) — impossible for large n.',
+        bs:['hidden','dim','burst','dim','dim','hidden'],
+        range:null, k:null, formula:['After bursting value=1:','array becomes [3, 5, 8]','Neighbors changed!'], dpCur:null, dpFilled:[], compute:'', coins:null, total:null },
+
+      /* 3 */ { phase:'padding',  title:'🛡️ Step 1: Add Virtual Boundaries',
+        desc:'Pad with 1s on both ends: [1, 3, 1, 5, 8, 1]. The gray 1s are virtual boundaries — they never get burst. This ensures every real balloon always has defined neighbors when it bursts last.',
+        bs:['boundary','normal','normal','normal','normal','boundary'],
+        range:null, k:null, formula:['nums = [1] + [3,1,5,8] + [1]','indices: 0  1  2  3  4  5'], dpCur:null, dpFilled:[], compute:'', coins:null, total:null },
+
+      /* 4 */ { phase:'insight',  title:'🔑 The Key Insight: Think LAST, Not First',
+        desc:'Instead of "which balloon to burst FIRST?" (hard — neighbors change every time), ask: "which balloon bursts LAST in range [l..r]?" The last balloon\'s neighbors are always the fixed range boundaries!',
+        bs:['boundary','normal','normal','normal','normal','boundary'],
+        range:[1,4], k:null, formula:['Key Question:','Which balloon bursts LAST in [1..4]?'], dpCur:null, dpFilled:[], compute:'If balloon k is the LAST to burst in [l..r]:\n→ All others in [l..r] are already gone\n→ k\'s neighbors = nums[l-1] and nums[r+1]\n→ Always known! Always fixed!', coins:null, total:null },
+
+      /* 5 */ { phase:'insight',  title:'🎯 Suppose k=4 (value 8) Bursts Last',
+        desc:'We ask: what if balloon with value 8 (index 4) is the very last balloon burst in range [1..4]? All of 3, 1, 5 have already been burst before it.',
+        bs:['boundary','dim','dim','dim','focus','boundary'],
+        range:[1,4], k:4, formula:['k = 4 (value 8) bursts last','All of 3, 1, 5 are already gone'], dpCur:null, dpFilled:[], compute:'When k=4 is last in [1..4]:\n→ Left neighbor: nums[0] = 1 (boundary)\n→ Right neighbor: nums[5] = 1 (boundary)\n→ Coins from k: 1 × 8 × 1 = 8', coins:null, total:null },
+
+      /* 6 */ { phase:'insight',  title:'📐 Boundaries Are Fixed!',
+        desc:'Since 8 is the LAST to burst, its left wall is nums[0]=1 and right wall is nums[5]=1. The boundary values are deterministic. Coins from this burst = 1 × 8 × 1 = 8.',
+        bs:['boundary','dim','dim','dim','focus','boundary'],
+        range:[1,4], k:4, formula:['Left wall: nums[0] = 1','coins(k=4) = 1 × 8 × 1 = 8'], dpCur:null, dpFilled:[], compute:'Two independent subproblems remain:\n→ Left:  dp[1][3] — burst 3,1,5 with walls (1, 8)\n→ Right: dp[5][4] = 0 — empty range\n\nTotal: dp[1][3] + 8 + 0', coins:null, total:null },
+
+      /* 7 */ { phase:'insight',  title:'🔀 The Recurrence Formula',
+        desc:'For any range [l,r] and any choice of k (the last balloon), we get two independent subproblems. Pick the k that maximizes the total.',
+        bs:['boundary','dim','dim','dim','dim','boundary'],
+        range:[1,4], k:null, formula:['dp[l][r] = max over k in [l..r]:','dp[l][k-1] + nums[l-1]×nums[k]×nums[r+1] + dp[k+1][r]'], dpCur:null, dpFilled:[], compute:'Fill order (by range length):\nlen=1: dp[1][1], dp[2][2], dp[3][3], dp[4][4]\nlen=2: dp[1][2], dp[2][3], dp[3][4]\nlen=3: dp[1][3], dp[2][4]\nlen=4: dp[1][4] ← ANSWER', coins:null, total:null },
+
+      /* 8 */ { phase:'dp',       title:'📊 Initialize DP Table',
+        desc:'Create a dp[n][n] table (n=6 for padded array). All cells start at 0. We\'ll fill the upper triangle for l=1..4, r=1..4 with l ≤ r.',
+        bs:['boundary','normal','normal','normal','normal','boundary'],
+        range:null, k:null, formula:null, dpCur:null, dpFilled:[], compute:'dp[l][r] = max coins bursting all\nballoons in range [l..r]\n\nBase: dp[l][r] = 0 when l > r\n(empty range, no balloons)\n\nWe fill by increasing length...', coins:null, total:null },
+
+      /* 9 */ { phase:'dp',       title:'🔵 dp[1][1] = 3  (length-1 range)',
+        desc:'Range [1,1]: only balloon at index 1 (value 3). It must be the last (and only) to burst. Boundaries: nums[0]=1 on left, nums[2]=1 on right.',
+        bs:['boundary','focus','dim','dim','dim','boundary'],
+        range:[1,1], k:1, formula:['k=1: nums[0]×nums[1]×nums[2]','= 1 × 3 × 1 = 3'], dpCur:[1,1], dpFilled:[[1,1]], compute:'dp[1][1]: only k=1\n→ nums[0] × nums[1] × nums[2]\n= 1 × 3 × 1 = 3\n\n dp[1][1] = 3 ✓', coins:null, total:null },
+
+      /* 10 */ { phase:'dp',      title:'🔵 dp[2][2] = 15  (length-1)',
+        desc:'Range [2,2]: only balloon at index 2 (value 1). Boundaries: nums[1]=3 on left, nums[3]=5 on right. Cost = 3×1×5 = 15.',
+        bs:['boundary','dim','focus','dim','dim','boundary'],
+        range:[2,2], k:2, formula:['k=2: nums[1]×nums[2]×nums[3]','= 3 × 1 × 5 = 15'], dpCur:[2,2], dpFilled:[[1,1],[2,2]], compute:'dp[2][2]: only k=2\n→ nums[1] × nums[2] × nums[3]\n= 3 × 1 × 5 = 15\n\n dp[2][2] = 15 ✓', coins:null, total:null },
+
+      /* 11 */ { phase:'dp',      title:'🔵 dp[3][3] = 40  (length-1)',
+        desc:'Range [3,3]: only balloon at index 3 (value 5). Boundaries: nums[2]=1 on left, nums[4]=8 on right. Cost = 1×5×8 = 40.',
+        bs:['boundary','dim','dim','focus','dim','boundary'],
+        range:[3,3], k:3, formula:['k=3: nums[2]×nums[3]×nums[4]','= 1 × 5 × 8 = 40'], dpCur:[3,3], dpFilled:[[1,1],[2,2],[3,3]], compute:'dp[3][3]: only k=3\n→ nums[2] × nums[3] × nums[4]\n= 1 × 5 × 8 = 40\n\n dp[3][3] = 40 ✓', coins:null, total:null },
+
+      /* 12 */ { phase:'dp',      title:'🔵 dp[4][4] = 40  (length-1)',
+        desc:'Range [4,4]: only balloon at index 4 (value 8). Boundaries: nums[3]=5 on left, nums[5]=1 on right. Cost = 5×8×1 = 40.',
+        bs:['boundary','dim','dim','dim','focus','boundary'],
+        range:[4,4], k:4, formula:['k=4: nums[3]×nums[4]×nums[5]','= 5 × 8 × 1 = 40'], dpCur:[4,4], dpFilled:[[1,1],[2,2],[3,3],[4,4]], compute:'dp[4][4]: only k=4\n→ nums[3] × nums[4] × nums[5]\n= 5 × 8 × 1 = 40\n\n dp[4][4] = 40 ✓', coins:null, total:null },
+
+      /* 13 */ { phase:'dp',      title:'🟡 dp[1][2] = 30  (length-2)',
+        desc:'Range [1,2], walls: nums[0]=1 (left), nums[3]=5 (right). Try k=1: 0+1×3×5+15=30. Try k=2: 3+1×1×5+0=8. Best = 30 (burst index 1 last).',
+        bs:['boundary','focus','focus','dim','dim','boundary'],
+        range:[1,2], k:1, formula:['k=1 wins: 0 + 1×3×5 + dp[2][2]','= 0 + 15 + 15 = 30'], dpCur:[1,2], dpFilled:[[1,1],[2,2],[3,3],[4,4],[1,2]], compute:'dp[1][2] — try each k as last:\n  k=1: dp[1][0] + 1×3×5 + dp[2][2]\n     = 0 + 15 + 15 = 30 ✓ WIN\n  k=2: dp[1][1] + 1×1×5 + dp[3][2]\n     = 3 + 5 + 0 = 8\n\n dp[1][2] = 30', coins:null, total:null },
+
+      /* 14 */ { phase:'dp',      title:'🟡 dp[2][3] = 135  (length-2)',
+        desc:'Range [2,3], walls: nums[1]=3 (left), nums[4]=8 (right). k=2: 0+3×1×8+40=64. k=3 wins: 15+3×5×8+0=135.',
+        bs:['boundary','dim','focus','focus','dim','boundary'],
+        range:[2,3], k:3, formula:['k=3 wins: dp[2][2] + 3×5×8 + 0','= 15 + 120 + 0 = 135'], dpCur:[2,3], dpFilled:[[1,1],[2,2],[3,3],[4,4],[1,2],[2,3]], compute:'dp[2][3] — try each k as last:\n  k=2: dp[2][1] + 3×1×8 + dp[3][3]\n     = 0 + 24 + 40 = 64\n  k=3: dp[2][2] + 3×5×8 + dp[4][3]\n     = 15 + 120 + 0 = 135 ✓ WIN\n\n dp[2][3] = 135', coins:null, total:null },
+
+      /* 15 */ { phase:'dp',      title:'🟡 dp[3][4] = 48  (length-2)',
+        desc:'Range [3,4], walls: nums[2]=1 (left), nums[5]=1 (right). k=3: 0+1×5×1+40=45. k=4 wins: 40+1×8×1+0=48.',
+        bs:['boundary','dim','dim','focus','focus','boundary'],
+        range:[3,4], k:4, formula:['k=4 wins: dp[3][3] + 1×8×1 + 0','= 40 + 8 + 0 = 48'], dpCur:[3,4], dpFilled:[[1,1],[2,2],[3,3],[4,4],[1,2],[2,3],[3,4]], compute:'dp[3][4] — try each k as last:\n  k=3: dp[3][2] + 1×5×1 + dp[4][4]\n     = 0 + 5 + 40 = 45\n  k=4: dp[3][3] + 1×8×1 + dp[5][4]\n     = 40 + 8 + 0 = 48 ✓ WIN\n\n dp[3][4] = 48', coins:null, total:null },
+
+      /* 16 */ { phase:'dp',      title:'🟠 dp[1][3] = 159  (length-3)',
+        desc:'Range [1,3], walls: nums[0]=1, nums[4]=8. k=1 wins: 0+1×3×8+135=159. (k=2 gives 51, k=3 gives 70)',
+        bs:['boundary','focus','focus','focus','dim','boundary'],
+        range:[1,3], k:1, formula:['k=1 wins: 0 + 1×3×8 + dp[2][3]','= 0 + 24 + 135 = 159'], dpCur:[1,3], dpFilled:[[1,1],[2,2],[3,3],[4,4],[1,2],[2,3],[3,4],[1,3]], compute:'dp[1][3]:\n  k=1: 0 + 1×3×8 + dp[2][3] = 0+24+135=159 ✓WIN\n  k=2: dp[1][1]+1×1×8+dp[3][3] = 3+8+40=51\n  k=3: dp[1][2]+1×5×8+dp[4][3] = 30+40+0=70\n\n dp[1][3] = 159', coins:null, total:null },
+
+      /* 17 */ { phase:'dp',      title:'🟠 dp[2][4] = 159  (length-3)',
+        desc:'Range [2,4], walls: nums[1]=3, nums[5]=1. k=4 wins: 135+3×8×1+0=159. (k=2→51, k=3→70)',
+        bs:['boundary','dim','focus','focus','focus','boundary'],
+        range:[2,4], k:4, formula:['k=4 wins: dp[2][3] + 3×8×1 + 0','= 135 + 24 + 0 = 159'], dpCur:[2,4], dpFilled:[[1,1],[2,2],[3,3],[4,4],[1,2],[2,3],[3,4],[1,3],[2,4]], compute:'dp[2][4]:\n  k=2: dp[2][1]+3×1×1+dp[3][4] = 0+3+48=51\n  k=3: dp[2][2]+3×5×1+dp[4][4] = 15+15+40=70\n  k=4: dp[2][3]+3×8×1+dp[5][4] = 135+24+0=159 ✓\n\n dp[2][4] = 159', coins:null, total:null },
+
+      /* 18 */ { phase:'answer',  title:'🏆 dp[1][4] = 167 — The Answer!',
+        desc:'Final range [1,4], walls: nums[0]=1, nums[5]=1. k=4 wins: dp[1][3] + 1×8×1 + 0 = 159 + 8 = 167!',
+        bs:['boundary','focus','focus','focus','focus','boundary'],
+        range:[1,4], k:4, formula:['k=4 wins: dp[1][3] + 1×8×1 + dp[5][4]','= 159 + 8 + 0 = 167 🎉'], dpCur:[1,4], dpFilled:[[1,1],[2,2],[3,3],[4,4],[1,2],[2,3],[3,4],[1,3],[2,4],[1,4]], compute:'dp[1][4]:\n  k=1: 0+1×3×1+dp[2][4] = 0+3+159 = 162\n  k=2: dp[1][1]+1×1×1+dp[3][4] = 3+1+48=52\n  k=3: dp[1][2]+1×5×1+dp[4][4] = 30+5+40=75\n  k=4: dp[1][3]+1×8×1+0 = 159+8 = 167 ✓\n\n dp[1][4] = 167 ← ANSWER!', coins:null, total:null },
+
+      /* 19 */ { phase:'burst',   title:'🎆 Optimal Burst Sequence',
+        desc:'The optimal strategy: burst them in this order: index-2 (val=1), then index-3 (val=5), then index-1 (val=3), finally index-4 (val=8). Let\'s watch!',
+        bs:['boundary','normal','normal','normal','normal','boundary'],
+        range:[1,4], k:null, formula:['Optimal order:','Burst: 1 → 5 → 3 → 8'], dpCur:null, dpFilled:[[1,1],[2,2],[3,3],[4,4],[1,2],[2,3],[3,4],[1,3],[2,4],[1,4]], compute:'Burst order derived from dp trace.\nWe know k=4 is last in [1..4].\nSo balloon 8 bursts last.\nLeft subproblem dp[1][3]: k=1 is last\n→ balloon 3 bursts 3rd.\nIn dp[2][3]: k=3 → balloon 5 bursts 2nd.\nIn dp[2][2]: k=2 → balloon 1 bursts 1st.', coins:null, total:null },
+
+      /* 20 */ { phase:'burst',   title:'💥 Burst 1st: value=1 (index 2)',
+        desc:'Burst balloon with value 1. Its neighbors are 3 (left) and 5 (right). Coins = 3 × 1 × 5 = 15.',
+        bs:['boundary','normal','burst','normal','normal','boundary'],
+        range:null, k:null, formula:['Burst value=1:  3 × 1 × 5','= +15 coins'], dpCur:null, dpFilled:[[1,1],[2,2],[3,3],[4,4],[1,2],[2,3],[3,4],[1,3],[2,4],[1,4]], compute:'Balloons remaining: [3, 5, 8]\n\nCoins: 3 × 1 × 5 = 15\nRunning total: 15', coins:{idx:2, text:'+15'}, total:15 },
+
+      /* 21 */ { phase:'burst',   title:'💥 Burst 2nd: value=5 (index 3)',
+        desc:'Burst balloon with value 5. Its current neighbors are 3 (left) and 8 (right). Coins = 3 × 5 × 8 = 120!',
+        bs:['boundary','normal','burst','burst','normal','boundary'],
+        range:null, k:null, formula:['Burst value=5:  3 × 5 × 8','= +120 coins'], dpCur:null, dpFilled:[[1,1],[2,2],[3,3],[4,4],[1,2],[2,3],[3,4],[1,3],[2,4],[1,4]], compute:'Balloons remaining: [3, 8]\n\nCoins: 3 × 5 × 8 = 120\nRunning total: 15 + 120 = 135', coins:{idx:3, text:'+120'}, total:135 },
+
+      /* 22 */ { phase:'burst',   title:'💥 Burst 3rd: value=3 (index 1)',
+        desc:'Burst balloon with value 3. Neighbors are now the boundary 1 (left) and 8 (right). Coins = 1 × 3 × 8 = 24.',
+        bs:['boundary','burst','burst','burst','normal','boundary'],
+        range:null, k:null, formula:['Burst value=3:  1 × 3 × 8','= +24 coins'], dpCur:null, dpFilled:[[1,1],[2,2],[3,3],[4,4],[1,2],[2,3],[3,4],[1,3],[2,4],[1,4]], compute:'Balloons remaining: [8]\n\nCoins: 1 × 3 × 8 = 24\nRunning total: 135 + 24 = 159', coins:{idx:1, text:'+24'}, total:159 },
+
+      /* 23 */ { phase:'burst',   title:'🎉 Burst Last: value=8 (index 4) → TOTAL = 167!',
+        desc:'Final balloon! Both boundaries are 1s. Coins = 1 × 8 × 1 = 8. Total = 159 + 8 = 167 coins!',
+        bs:['boundary','burst','burst','burst','burst','boundary'],
+        range:null, k:null, formula:['Burst value=8:  1 × 8 × 1 = +8','TOTAL = 15 + 120 + 24 + 8 = 167 🏆'], dpCur:null, dpFilled:[[1,1],[2,2],[3,3],[4,4],[1,2],[2,3],[3,4],[1,3],[2,4],[1,4]], compute:'All balloons burst!\n\nCoins: 1 × 8 × 1 = 8\nFinal total: 159 + 8 = 167\n\n✓ Matches dp[1][4] = 167 ✓', coins:{idx:4, text:'+8'}, total:167 }
+    ];
+
+    /* ── Build DP grid ─────────────────────────────── */
+    function buildDPGrid() {
+      const grid = document.getElementById('dp-grid');
+      grid.innerHTML = '';
+      // Header row: blank + r labels
+      const blank = document.createElement('div');
+      blank.className = 'dp-cell dp-cell-header'; blank.textContent = 'l\\r';
+      grid.appendChild(blank);
+      for (let r = 1; r <= 4; r++) {
+        const h = document.createElement('div');
+        h.className = 'dp-cell dp-cell-header'; h.textContent = 'r='+r;
+        grid.appendChild(h);
+      }
+      // Data rows
+      for (let l = 1; l <= 4; l++) {
+        const rowLabel = document.createElement('div');
+        rowLabel.className = 'dp-cell dp-cell-row-label'; rowLabel.textContent = 'l='+l;
+        grid.appendChild(rowLabel);
+        for (let r = 1; r <= 4; r++) {
+          const cell = document.createElement('div');
+          cell.id = 'dp-'+l+'-'+r;
+          cell.className = 'dp-cell ' + (r < l ? 'dp-cell-invalid' : 'dp-cell-empty');
+          cell.textContent = r < l ? '' : '—';
+          grid.appendChild(cell);
+        }
+      }
+    }
+
+    /* ── Update DP grid state ──────────────────────── */
+    function updateDPGrid(step) {
+      // Reset all to empty
+      for (let l = 1; l <= 4; l++)
+        for (let r = l; r <= 4; r++) {
+          const c = document.getElementById('dp-'+l+'-'+r);
+          if (c) { c.className = 'dp-cell dp-cell-empty'; c.textContent = '—'; }
+        }
+      // Fill completed cells
+      (step.dpFilled || []).forEach(([l,r]) => {
+        const c = document.getElementById('dp-'+l+'-'+r);
+        if (!c) return;
+        const isAnswer = (l===1 && r===4);
+        c.className = 'dp-cell ' + (isAnswer ? 'dp-cell-answer' : 'dp-cell-filled');
+        c.textContent = DP[l][r];
+      });
+      // Highlight current cell
+      if (step.dpCur) {
+        const [l,r] = step.dpCur;
+        const c = document.getElementById('dp-'+l+'-'+r);
+        if (c) { c.className = 'dp-cell dp-cell-current'; c.textContent = DP[l][r]; }
+      }
+    }
+
+    /* ── SVG rendering helpers ─────────────────────── */
+    function attr(id, a, v) {
+      const el = document.getElementById(id);
+      if (el) el.setAttribute(a, v);
+    }
+    function show(id) { attr(id, 'opacity', '1'); }
+    function hide(id) { attr(id, 'opacity', '0'); }
+    function text(id, t) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = t;
+    }
+
+    function renderBalloons(step) {
+      const g = document.getElementById('balloons-group');
+      // Remove and recreate balloons for clean state
+      g.innerHTML = '';
+      const states = step.bs;
+      states.forEach((state, idx) => {
+        if (state === 'hidden') return;
+        const x = BX[idx], y = BY, r = BR;
+        const v = NUMS[idx];
+        const col = COLORS[idx];
+
+        let opacity = 1, scale = 1, strokeW = 2, strokeCol = col;
+        if (state === 'boundary') { opacity = 0.45; }
+        if (state === 'dim')      { opacity = 0.15; }
+        if (state === 'burst')    { opacity = 0; }
+        if (state === 'focus')    { scale = 1.1; strokeW = 3.5; strokeCol = 'white'; }
+
+        const g2 = document.createElementNS('http://www.w3.org/2000/svg','g');
+        g2.setAttribute('transform', `translate(${x},${y}) scale(${scale})`);
+        g2.setAttribute('style', `opacity:${opacity};transition:opacity 0.35s,transform 0.35s`);
+
+        // String/stem
+        if (state !== 'burst') {
+          const stem = document.createElementNS('http://www.w3.org/2000/svg','line');
+          stem.setAttribute('x1','0'); stem.setAttribute('y1', r+2);
+          stem.setAttribute('x2','0'); stem.setAttribute('y2', r+16);
+          stem.setAttribute('stroke', state==='boundary' ? '#4b5563' : col);
+          stem.setAttribute('stroke-width','2');
+          g2.appendChild(stem);
+        }
+
+        // Circle
+        const circle = document.createElementNS('http://www.w3.org/2000/svg','circle');
+        circle.setAttribute('cx','0'); circle.setAttribute('cy','0'); circle.setAttribute('r', r);
+        circle.setAttribute('fill', state==='boundary' ? '#1f2937' : col+'22');
+        circle.setAttribute('stroke', strokeCol); circle.setAttribute('stroke-width', strokeW);
+        if (state==='focus') {
+          circle.setAttribute('filter','url(#glow)');
+        }
+        g2.appendChild(circle);
+
+        // Value label
+        if (state !== 'burst') {
+          const label = document.createElementNS('http://www.w3.org/2000/svg','text');
+          label.setAttribute('x','0'); label.setAttribute('y','6');
+          label.setAttribute('text-anchor','middle');
+          label.setAttribute('font-size', v >= 10 ? '16' : '18');
+          label.setAttribute('font-weight','800');
+          label.setAttribute('fill', state==='boundary' ? '#6b7280' : '#ffffff');
+          label.textContent = v;
+          g2.appendChild(label);
+        }
+
+        // Index label (small, below)
+        if (state !== 'boundary' && state !== 'burst') {
+          const idx_label = document.createElementNS('http://www.w3.org/2000/svg','text');
+          idx_label.setAttribute('x','0'); idx_label.setAttribute('y', r+32);
+          idx_label.setAttribute('text-anchor','middle');
+          idx_label.setAttribute('font-size','9');
+          idx_label.setAttribute('fill','var(--text-muted)');
+          idx_label.textContent = 'idx='+idx;
+          g2.appendChild(idx_label);
+        }
+
+        g.appendChild(g2);
+      });
+
+      // Pop effect for burst balloons
+      const coinStep = step.coins;
+      if (coinStep) {
+        const cx = BX[coinStep.idx], cy = BY;
+        // Flash ring
+        const ring = document.createElementNS('http://www.w3.org/2000/svg','circle');
+        ring.setAttribute('cx', cx); ring.setAttribute('cy', cy);
+        ring.setAttribute('r', '32'); ring.setAttribute('fill','none');
+        ring.setAttribute('stroke', '#fbbf24'); ring.setAttribute('stroke-width','3');
+        ring.setAttribute('opacity','0');
+        ring.setAttribute('class','pop-ring');
+        g.appendChild(ring);
+        // Coin text
+        const coin = document.createElementNS('http://www.w3.org/2000/svg','text');
+        coin.setAttribute('x', cx); coin.setAttribute('y', cy - 20);
+        coin.setAttribute('text-anchor','middle'); coin.setAttribute('font-size','16');
+        coin.setAttribute('font-weight','800'); coin.setAttribute('fill','#34d399');
+        coin.setAttribute('class','coin-anim');
+        coin.textContent = coinStep.text;
+        g.appendChild(coin);
+      }
+    }
+
+    function renderAnnotations(step) {
+      // Range bracket
+      if (step.range) {
+        const [l,r] = step.range;
+        const x1 = BX[l] - 5, x2 = BX[r] + 5, y = 60;
+        attr('bkt-path','d', `M${x1},${y+15} L${x1},${y} L${x2},${y} L${x2},${y+15}`);
+        show('bkt-path');
+        attr('bkt-label','x', (x1+x2)/2);
+        attr('bkt-label','y', y-6);
+        text('bkt-label', 'range ['+l+'..'+r+']');
+        show('bkt-label');
+      } else {
+        hide('bkt-path'); hide('bkt-label');
+      }
+      // K indicator
+      if (step.k != null) {
+        const kx = BX[step.k], ky1 = BY - BR - 8, ky2 = 65;
+        attr('k-arrow','d', `M${kx},${ky2} L${kx},${ky1}`);
+        show('k-arrow');
+        attr('k-label','x', kx); attr('k-label','y', ky2 + 12);
+        text('k-label','k='+step.k+' (last)');
+        show('k-label');
+      } else {
+        hide('k-arrow'); hide('k-label');
+      }
+      // Formula lines
+      if (step.formula) {
+        const lines = step.formula;
+        attr('formula-line1','y','180'); text('formula-line1', lines[0] || ''); show('formula-line1');
+        attr('formula-line2','y','200'); text('formula-line2', lines[1] || ''); lines[1] ? show('formula-line2') : hide('formula-line2');
+        if (lines[2]) { attr('formula-line3','y','220'); text('formula-line3', lines[2]); show('formula-line3'); }
+        else hide('formula-line3');
+        hide('total-label');
+      } else if (step.total != null) {
+        hide('formula-line1'); hide('formula-line2'); hide('formula-line3');
+        attr('total-label','y','228');
+        text('total-label', '💰 Running total: ' + step.total + ' coins');
+        show('total-label');
+      } else {
+        hide('formula-line1'); hide('formula-line2'); hide('formula-line3');
+        hide('total-label');
+      }
+    }
+
+    /* ── Main render ───────────────────────────────── */
+    function render(stepIdx) {
+      const step = STEPS[stepIdx];
+      // Title + description
+      document.getElementById('step-title').textContent = step.title;
+      document.getElementById('step-desc').textContent  = step.desc;
+      // SVG
+      renderBalloons(step);
+      renderAnnotations(step);
+      // DP table
+      updateDPGrid(step);
+      // Compute box
+      document.getElementById('compute-box').innerHTML =
+        (step.compute || '').replace(/✓|WIN/g, m => '<span class="win">'+m+'</span>')
+          .replace(/ANSWER!/g,'<span class="ans">ANSWER! 🏆</span>');
+      // Controls
+      document.getElementById('step-counter').textContent = (stepIdx+1)+' / '+STEPS.length;
+      document.getElementById('progress-bar').style.width = ((stepIdx/(STEPS.length-1))*100)+'%';
+      const phases = {intro:'🎯 Intro', naive:'⚠️ Naive', padding:'🛡️ Padding', insight:'💡 Insight', dp:'📊 DP Fill', answer:'🏆 Answer', burst:'💥 Burst'};
+      document.getElementById('phase-badge').textContent = phases[step.phase] || step.phase;
+    }
+
+    /* ── Animation controller ──────────────────────── */
+    const Anim = (() => {
+      let cur = 0, playing = false, timer = null;
+      const INTERVAL = 3200;
+
+      function goTo(n) {
+        cur = Math.max(0, Math.min(n, STEPS.length-1));
+        render(cur);
+      }
+      function prev()  { if (playing) pause(); goTo(cur-1); }
+      function next()  { if (cur < STEPS.length-1) goTo(cur+1); else { pause(); } }
+      function play()  {
+        playing = true;
+        document.getElementById('ctrl-play').textContent = '⏸';
+        document.getElementById('ctrl-play').title = 'Pause';
+        timer = setInterval(() => { if (cur < STEPS.length-1) goTo(cur+1); else pause(); }, INTERVAL);
+      }
+      function pause() {
+        playing = false;
+        clearInterval(timer);
+        document.getElementById('ctrl-play').textContent = '▶';
+        document.getElementById('ctrl-play').title = 'Play';
+      }
+      function togglePlay() { playing ? pause() : play(); }
+
+      // Keyboard
+      document.addEventListener('keydown', e => {
+        if (e.target.tagName === 'INPUT') return;
+        if (e.key === 'ArrowRight') next();
+        if (e.key === 'ArrowLeft')  prev();
+        if (e.key === ' ') { e.preventDefault(); togglePlay(); }
+      });
+
+      goTo(0);
+      return { goTo, prev, next, togglePlay };
+    })();
+
+    window.Anim = Anim;
+
+    /* Init */
+    buildDPGrid();
+    render(0);
+  })();
+  </script>
+</body>
+</html>

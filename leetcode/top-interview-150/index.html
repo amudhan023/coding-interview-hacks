@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title id="page-title">Problem — Interview Hacks</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../../assets/css/main.css"/>
+  <style>
+    /* ── Detail page extras ─────────────────────────────── */
+    .detail-section { margin-bottom: 2.5rem; }
+    .detail-section h2 {
+      font-size: 1.1rem; font-weight: 700;
+      padding-bottom: 0.5rem; margin-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .section-icon {
+      width: 26px; height: 26px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.75rem; flex-shrink: 0;
+    }
+    .trick-item {
+      display: flex; gap: 0.75rem; align-items: flex-start;
+      padding: 0.6rem 0.85rem; margin-bottom: 0.4rem;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius-md); font-size: 0.85rem;
+    }
+    .trick-item__bullet {
+      width: 18px; height: 18px; border-radius: 50%;
+      background: var(--accent-subtle); color: var(--accent);
+      font-size: 0.7rem; font-weight: 800;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px;
+    }
+    .trick-item p { margin: 0; color: var(--text-secondary); line-height: 1.6; }
+    .trick-item strong { color: var(--text-primary); }
+    .walkthrough-step {
+      display: flex; gap: 0.75rem;
+      padding: 0.75rem 1rem; margin-bottom: 0.5rem;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+    }
+    .walkthrough-step__num {
+      width: 24px; height: 24px; border-radius: 50%;
+      background: var(--accent); color: white;
+      font-size: 0.75rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .walkthrough-step h4 { font-size: 0.85rem; margin-bottom: 0.2rem; }
+    .walkthrough-step p  { font-size: 0.82rem; margin: 0; color: var(--text-secondary); }
+    .similar-group { margin-bottom: 1rem; }
+    .similar-group h4 { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+    .similar-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .similar-chip {
+      padding: 0.3rem 0.75rem; border-radius: var(--radius-full);
+      background: var(--bg-card); border: 1px solid var(--border);
+      font-size: 0.78rem; color: var(--text-secondary);
+      text-decoration: none; transition: all var(--transition);
+    }
+    .similar-chip:hover { border-color: var(--accent); color: var(--accent); }
+    .complexity-row {
+      display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 0.75rem;
+    }
+    .complexity-pill {
+      padding: 0.35rem 0.85rem; border-radius: var(--radius-md);
+      border: 1px solid var(--border); font-size: 0.8rem;
+      font-family: var(--font-mono);
+    }
+    .complexity-pill--time { background: rgba(16,185,129,.1); color: var(--success); border-color: var(--success); }
+    .complexity-pill--space { background: rgba(245,158,11,.1); color: var(--warning); border-color: var(--warning); }
+    .not-found-card {
+      text-align: center; padding: 4rem 2rem;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); margin: 2rem 0;
+    }
+    .not-found-card h2 { margin-bottom: 0.5rem; }
+    .not-found-card p  { color: var(--text-muted); font-size: 0.9rem; }
+    .solved-toggle-btn {
+      display: flex; align-items: center; gap: 0.5rem;
+      padding: 0.45rem 1rem; border-radius: var(--radius-md);
+      border: 1.5px solid var(--border); background: var(--bg-card);
+      color: var(--text-secondary); font-size: 0.82rem; font-weight: 600;
+      cursor: pointer; transition: all var(--transition);
+    }
+    .solved-toggle-btn.is-solved { border-color: var(--success); color: var(--success); background: rgba(16,185,129,.08); }
+    .solved-toggle-btn:hover { border-color: var(--success); color: var(--success); }
+  </style>
+</head>
+<body>
+  <nav class="topnav">
+    <a href="../../index.html" class="topnav__logo" style="text-decoration:none;">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect width="20" height="20" rx="5" fill="var(--accent)"/><path d="M5 7l3 3-3 3M10 14h5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Interview<span>Hacks</span></span>
+    </a>
+    <div class="topnav__search">
+      <svg class="topnav__search-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M11 11l3 3"/></svg>
+      <input type="text" id="search-input" placeholder="Search topics…" autocomplete="off"/>
+      <span class="topnav__kbd">/</span>
+      <div class="search-results" id="search-results"></div>
+    </div>
+    <div class="topnav__actions">
+      <button class="btn-icon" id="theme-toggle" title="Toggle theme">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <div class="page-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar__section">
+        <div class="sidebar__label">On this page</div>
+        <nav class="toc" id="page-toc">
+          <a href="#s1" class="toc-link">1. Problem Explanation</a>
+          <a href="#s2" class="toc-link">2. Intuition & Approach</a>
+          <a href="#s3" class="toc-link">3. Tricks</a>
+          <a href="#s4" class="toc-link">4. Code</a>
+          <a href="#s5" class="toc-link">5. Walkthrough</a>
+          <a href="#s6" class="toc-link">6. Similar Problems</a>
+        </nav>
+      </div>
+      <div class="sidebar__section">
+        <div class="sidebar__label">Navigation</div>
+        <a id="nav-prev" href="#" class="sidebar__link">← Previous</a>
+        <a id="nav-next" href="#" class="sidebar__link">Next →</a>
+        <a href="../../index.html#lc150-container" class="sidebar__link">↩ Back to list</a>
+      </div>
+      <div class="sidebar__section"><div class="sidebar__label">Recently Viewed</div><div id="recently-viewed"></div></div>
+    </aside>
+
+    <!-- Main content -->
+    <main class="content" id="main-content">
+      <div id="problem-root">
+        <!-- Rendered by JS -->
+      </div>
+    </main>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <!-- Load problem data, then render -->
+  <script src="data/problems.js"></script>
+  <script src="../../assets/js/main.js"></script>
+  <script>
+  /* ── Detail page renderer ──────────────────────────────── */
+  (function() {
+    /* 1. Derive slug from URL path */
+    const parts = location.pathname.replace(/\/$/, '').split('/');
+    const slug  = parts[parts.length - 1] || '';
+    const p     = window.LC150_PROBLEMS && window.LC150_PROBLEMS[slug];
+    const root  = document.getElementById('problem-root');
+
+    /* 2. Not found */
+    if (!p) {
+      root.innerHTML = `<div class="not-found-card">
+        <h2>Problem not found</h2>
+        <p>Slug: <code>${slug || '(empty)'}</code></p>
+        <p>Make sure you navigated here via a Details link from the dashboard, or the server is running.</p>
+        <a href="../../index.html#lc150-container" class="btn btn--primary" style="margin-top:1rem;display:inline-block;">← Back to dashboard</a>
+      </div>`;
+      return;
+    }
+
+    /* 3. Set page title */
+    document.title = p.title + ' — Interview Hacks';
+    document.body.setAttribute('data-page-title', p.title);
+
+    /* 4. Breadcrumbs */
+    const diffClass = p.diff === 'Easy' ? 'badge--easy' : p.diff === 'Medium' ? 'badge--medium' : 'badge--hard';
+    const diffShort = p.diff[0];
+
+    /* 5. Build navigation */
+    const slugs = Object.keys(window.LC150_PROBLEMS);
+    const idx   = slugs.indexOf(slug);
+    const prevSlug = idx > 0 ? slugs[idx-1] : null;
+    const nextSlug = idx < slugs.length-1 ? slugs[idx+1] : null;
+    const prevEl = document.getElementById('nav-prev');
+    const nextEl = document.getElementById('nav-next');
+    if (prevSlug && prevEl) { prevEl.href = prevSlug; prevEl.textContent = '← ' + (window.LC150_PROBLEMS[prevSlug]?.title || prevSlug); }
+    else if (prevEl) { prevEl.style.display = 'none'; }
+    if (nextSlug && nextEl) { nextEl.href = nextSlug; nextEl.textContent = (window.LC150_PROBLEMS[nextSlug]?.title || nextSlug) + ' →'; }
+    else if (nextEl) { nextEl.style.display = 'none'; }
+
+    /* 6. Solved state helpers */
+    const LOCAL_KEY = 'lc150-solved-v1';
+    async function getSolved() {
+      try { const r = await fetch('/api/solved', {cache:'no-store'}); if (r.ok) return await r.json(); } catch {}
+      try { return JSON.parse(localStorage.getItem(LOCAL_KEY)||'{}'); } catch { return {}; }
+    }
+    async function toggleSolved() {
+      const state = await getSolved();
+      const next  = !state[slug];
+      try { await fetch('/api/solved',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({[slug]:next})}); } catch {}
+      try { const s = JSON.parse(localStorage.getItem(LOCAL_KEY)||'{}'); s[slug]=next; localStorage.setItem(LOCAL_KEY, JSON.stringify(s)); } catch {}
+      renderSolvedBtn(next);
+    }
+    function renderSolvedBtn(solved) {
+      const btn = document.getElementById('solved-btn');
+      if (!btn) return;
+      btn.className = 'solved-toggle-btn' + (solved ? ' is-solved' : '');
+      btn.innerHTML = solved
+        ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Solved'
+        : '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="20 6 9 17 4 12" opacity="0"/></svg> Mark Solved';
+    }
+    getSolved().then(s => renderSolvedBtn(!!s[slug]));
+
+    /* 7. Code block helper */
+    function codeBlock(code, lang='python') {
+      return `<div class="code-block">
+        <div class="code-block__header">
+          <span class="code-block__lang">${lang}</span>
+          <button class="code-copy-btn">Copy</button>
+        </div>
+        <pre><code>${escHtml(code)}</code></pre>
+      </div>`;
+    }
+    function escHtml(s) {
+      return String(s)
+        .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
+    /* 8. Tricks renderer */
+    function renderTricks(tricks) {
+      if (!tricks || !tricks.length) return '<p style="color:var(--text-muted)">See intuition above.</p>';
+      return tricks.map((t, i) => {
+        const title = typeof t === 'string' ? '' : (t.name || '');
+        const body  = typeof t === 'string' ? t  : (t.detail || '');
+        return `<div class="trick-item">
+          <div class="trick-item__bullet">${i+1}</div>
+          <div><p>${title ? `<strong>${escHtml(title)}</strong> — ` : ''}${escHtml(body)}</p></div>
+        </div>`;
+      }).join('');
+    }
+
+    /* 9. Walkthrough renderer */
+    function renderWalkthrough(wt) {
+      if (!wt) return '<p style="color:var(--text-muted)">See code comments above.</p>';
+      if (typeof wt === 'string') return `<p style="font-size:0.88rem;color:var(--text-secondary)">${escHtml(wt)}</p>`;
+      const steps = (wt.steps || []).map((s, i) => `
+        <div class="walkthrough-step">
+          <div class="walkthrough-step__num">${i+1}</div>
+          <div>
+            <h4>${escHtml(s.label || '')}</h4>
+            <p>${escHtml(s.detail || '')}</p>
+          </div>
+        </div>`).join('');
+      const edge = wt.edgeCase
+        ? `<div class="callout callout--warning" style="margin-top:1rem;font-size:0.85rem;"><strong>Edge Case</strong>${escHtml(wt.edgeCase)}</div>`
+        : '';
+      return steps + edge;
+    }
+
+    /* 10. Similar problems renderer */
+    function renderSimilar(sim) {
+      if (!sim) return '<p style="color:var(--text-muted)">See pattern pages for related problems.</p>';
+      if (Array.isArray(sim)) {
+        return `<div class="similar-chips">${sim.map(s=>`<a href="/leetcode/top-interview-150/${slugify(s)}" class="similar-chip">${escHtml(s)}</a>`).join('')}</div>`;
+      }
+      return Object.entries(sim).map(([group, items]) => `
+        <div class="similar-group">
+          <h4>${escHtml(group)}</h4>
+          <div class="similar-chips">${items.map(s=>`<a href="/leetcode/top-interview-150/${slugify(s)}" class="similar-chip">${escHtml(s)}</a>`).join('')}</div>
+        </div>`).join('');
+    }
+    function slugify(t) { return t.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''); }
+
+    /* 11. Render everything */
+    const s = p.sections || {};
+    const exHtml = s.explain
+      ? `<div class="callout callout--info"><strong>Problem</strong>${escHtml(s.explain)}</div>` : '';
+    const exampleHtml = s.example
+      ? `<div style="margin-top:0.75rem;background:var(--bg-code);border:1px solid var(--border);border-radius:8px;padding:0.85rem;font-family:var(--font-mono);font-size:0.82rem;color:var(--text-primary)">
+          <div><strong>Input:</strong>  ${escHtml(s.example.input||'')}</div>
+          <div style="margin-top:0.25rem"><strong>Output:</strong> ${escHtml(s.example.output||'')}</div>
+          ${s.example.why ? `<div style="margin-top:0.25rem;color:var(--text-muted)"><strong>Why:</strong> ${escHtml(s.example.why)}</div>` : ''}
+        </div>` : '';
+    const intuHtml = s.intuition
+      ? `<p style="font-size:0.9rem;line-height:1.7;color:var(--text-secondary)">${escHtml(s.intuition)}</p>` : '';
+    const codeHtml = s.code ? codeBlock(s.code, 'Python 3') : '';
+    const complexHtml = (s.tc || s.sc)
+      ? `<div class="complexity-row">
+          ${s.tc ? `<span class="complexity-pill complexity-pill--time">⏱ Time: ${escHtml(s.tc)}</span>` : ''}
+          ${s.sc ? `<span class="complexity-pill complexity-pill--space">💾 Space: ${escHtml(s.sc)}</span>` : ''}
+         </div>` : '';
+    const codeNoteHtml = s.codeNote
+      ? `<div class="callout callout--info" style="margin-top:0.75rem;font-size:0.85rem;">${escHtml(s.codeNote)}</div>` : '';
+
+    root.innerHTML = `
+      <nav class="breadcrumbs">
+        <a href="../../index.html">Home</a>
+        <span class="breadcrumbs__sep">›</span>
+        <span>LeetCode 150</span>
+        <span class="breadcrumbs__sep">›</span>
+        <span class="breadcrumbs__current">${escHtml(p.title)}</span>
+      </nav>
+
+      <div class="page-header">
+        <div class="page-header__badges">
+          <span class="badge ${diffClass}">${escHtml(p.diff)}</span>
+          <span class="badge badge--cat">${escHtml(p.cat)}</span>
+          ${p.pattern ? `<span class="badge badge--cat" style="color:var(--accent-2);border-color:var(--accent-2);">⚡ ${escHtml(p.pattern)}</span>` : ''}
+        </div>
+        <h1>${escHtml(p.title)} <span style="color:var(--text-muted);font-weight:400;font-size:1.1rem;">LC #${p.num}</span></h1>
+        <div class="page-header__meta">
+          <span>⏱ ${p.rev || '5 min'} revision</span>
+          <span>🎯 ${escHtml(p.pattern || p.cat)}</span>
+          <a href="${p.lc}" target="_blank" rel="noopener" style="color:var(--warning);font-size:0.8rem;">↗ LeetCode</a>
+        </div>
+        <div style="margin-top:0.75rem;">
+          <button class="solved-toggle-btn" id="solved-btn" onclick="(async()=>{await toggleSolved()})()">Mark Solved</button>
+        </div>
+      </div>
+
+      <!-- Section 1 -->
+      <section class="detail-section" id="s1">
+        <h2>
+          <span class="section-icon" style="background:rgba(99,102,241,.15);color:var(--accent);">1</span>
+          Problem Explanation
+        </h2>
+        ${exHtml}
+        ${exampleHtml}
+      </section>
+
+      <!-- Section 2 -->
+      <section class="detail-section" id="s2">
+        <h2>
+          <span class="section-icon" style="background:rgba(6,182,212,.15);color:var(--accent-2);">2</span>
+          Intuition &amp; Approach
+        </h2>
+        ${intuHtml}
+      </section>
+
+      <!-- Section 3 -->
+      <section class="detail-section" id="s3">
+        <h2>
+          <span class="section-icon" style="background:rgba(245,158,11,.15);color:var(--warning);">3</span>
+          Tricks &amp; Patterns
+        </h2>
+        ${renderTricks(s.tricks)}
+      </section>
+
+      <!-- Section 4 -->
+      <section class="detail-section" id="s4">
+        <h2>
+          <span class="section-icon" style="background:rgba(16,185,129,.15);color:var(--success);">4</span>
+          Code with Explanation
+        </h2>
+        ${codeHtml}
+        ${complexHtml}
+        ${codeNoteHtml}
+      </section>
+
+      <!-- Section 5 -->
+      <section class="detail-section" id="s5">
+        <h2>
+          <span class="section-icon" style="background:rgba(239,68,68,.15);color:var(--danger);">5</span>
+          Code Walkthrough
+        </h2>
+        ${renderWalkthrough(s.walkthrough)}
+      </section>
+
+      <!-- Section 6 -->
+      <section class="detail-section" id="s6">
+        <h2>
+          <span class="section-icon" style="background:var(--bg-code);color:var(--text-muted);">6</span>
+          Similar Problems
+        </h2>
+        ${renderSimilar(s.similar)}
+      </section>
+
+      <!-- Page nav -->
+      <nav class="page-nav">
+        ${prevSlug ? `<a href="${prevSlug}" class="page-nav__btn" data-nav="prev">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          <div><div class="page-nav__btn__label">Previous</div><div class="page-nav__btn__title">${escHtml(window.LC150_PROBLEMS[prevSlug]?.title||prevSlug)}</div></div>
+        </a>` : '<span></span>'}
+        ${nextSlug ? `<a href="${nextSlug}" class="page-nav__btn page-nav__btn--next" data-nav="next">
+          <div><div class="page-nav__btn__label">Next</div><div class="page-nav__btn__title">${escHtml(window.LC150_PROBLEMS[nextSlug]?.title||nextSlug)}</div></div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        </a>` : ''}
+      </nav>
+    `;
+
+    /* Wire the solved button now that it's in the DOM */
+    (async () => { const s = await getSolved(); renderSolvedBtn(!!s[slug]); })();
+
+  })();
+  </script>
+</body>
+</html>

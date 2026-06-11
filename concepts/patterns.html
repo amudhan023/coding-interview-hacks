@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hidden Patterns — Interview Hacks</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <style>
+    .pattern-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      margin-bottom: 1.25rem;
+      border-left: 4px solid var(--accent);
+      transition: border-color var(--transition);
+    }
+    .pattern-card:hover { border-left-color: var(--accent-2); }
+    .pattern-card--t1 { border-left-color: var(--danger); }
+    .pattern-card--t2 { border-left-color: var(--warning); }
+    .pattern-card--t3 { border-left-color: var(--success); }
+    .pattern-card--t4 { border-left-color: var(--accent-2); }
+
+    .pattern-header {
+      display: flex; align-items: flex-start; gap: 0.75rem; margin-bottom: 0.75rem;
+    }
+    .pattern-rank {
+      width: 32px; height: 32px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; font-weight: 800; flex-shrink: 0;
+      font-family: var(--font-mono);
+    }
+    .pattern-card--t1 .pattern-rank { background: rgba(239,68,68,.15); color: var(--danger); }
+    .pattern-card--t2 .pattern-rank { background: rgba(245,158,11,.15); color: var(--warning); }
+    .pattern-card--t3 .pattern-rank { background: rgba(16,185,129,.15); color: var(--success); }
+    .pattern-card--t4 .pattern-rank { background: rgba(6,182,212,.15); color: var(--accent-2); }
+
+    .pattern-name { font-size: 1.05rem; font-weight: 700; margin-bottom: 2px; }
+    .pattern-subtitle { font-size: 0.8rem; color: var(--text-muted); }
+
+    .pattern-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.75rem; }
+    .pattern-tag {
+      padding: 2px 8px; border-radius: var(--radius-full);
+      font-size: 0.7rem; font-weight: 600;
+      background: var(--bg-code); color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+    .pattern-tag--hot { background: rgba(239,68,68,.1); color: var(--danger); border-color: var(--danger); }
+    .pattern-tag--key { background: var(--accent-subtle); color: var(--accent); border-color: var(--accent); }
+
+    .pattern-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-top: 0.75rem; }
+    @media (max-width: 700px) { .pattern-grid { grid-template-columns: 1fr; } }
+
+    .pattern-block {
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 0.75rem 1rem;
+      font-size: 0.85rem;
+    }
+    .pattern-block__label {
+      font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em;
+      font-weight: 700; margin-bottom: 0.35rem;
+    }
+    .pattern-block--trigger .pattern-block__label { color: var(--warning); }
+    .pattern-block--example .pattern-block__label { color: var(--accent); }
+    .pattern-block--mistake .pattern-block__label { color: var(--danger); }
+    .pattern-block--save    .pattern-block__label { color: var(--success); }
+    .pattern-block p { font-size: 0.85rem; margin: 0; line-height: 1.6; }
+    .pattern-block code { font-family: var(--font-mono); font-size: 0.8em; }
+
+    /* Pattern map table */
+    .pmap { width: 100%; border-collapse: collapse; font-size: 0.82rem; margin: 1rem 0; }
+    .pmap th, .pmap td { padding: 0.5rem 0.75rem; text-align: left; border-bottom: 1px solid var(--border); vertical-align: top; }
+    .pmap th { background: var(--bg-code); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); }
+    .pmap tr:last-child td { border-bottom: none; }
+    .pmap td:first-child { font-weight: 600; color: var(--text-primary); white-space: nowrap; }
+    .pmap .pill {
+      display: inline-block; padding: 1px 7px; border-radius: 99px;
+      font-size: 0.68rem; font-weight: 600; margin: 1px 2px;
+      background: var(--accent-subtle); color: var(--accent);
+    }
+    .pmap .pill--r { background: rgba(239,68,68,.1); color: var(--danger); }
+    .pmap .pill--y { background: rgba(245,158,11,.1); color: var(--warning); }
+    .pmap .pill--g { background: rgba(16,185,129,.1); color: var(--success); }
+    .pmap .pill--c { background: rgba(6,182,212,.1); color: var(--accent-2); }
+
+    /* Study order */
+    .study-order { counter-reset: study; }
+    .study-week {
+      display: flex; gap: 1rem; align-items: flex-start;
+      padding: 0.75rem 0; border-bottom: 1px solid var(--border);
+      counter-increment: study;
+    }
+    .study-week:last-child { border-bottom: none; }
+    .study-week__num {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--accent-subtle); color: var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 0.85rem; flex-shrink: 0;
+    }
+    .study-week__label { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.2rem; }
+    .study-week__detail { font-size: 0.82rem; color: var(--text-secondary); }
+
+    /* Tier headers */
+    .tier-header {
+      display: flex; align-items: center; gap: 0.75rem;
+      margin: 2rem 0 1rem; padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--border);
+    }
+    .tier-badge {
+      padding: 3px 10px; border-radius: var(--radius-full);
+      font-size: 0.75rem; font-weight: 700;
+    }
+    .tier-badge--1 { background: rgba(239,68,68,.15); color: var(--danger); }
+    .tier-badge--2 { background: rgba(245,158,11,.15); color: var(--warning); }
+    .tier-badge--3 { background: rgba(16,185,129,.15); color: var(--success); }
+    .tier-badge--4 { background: rgba(6,182,212,.15); color: var(--accent-2); }
+  </style>
+</head>
+<body data-page-title="Hidden Patterns">
+  <nav class="topnav">
+    <a href="../index.html" class="topnav__logo" style="text-decoration:none;"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect width="20" height="20" rx="5" fill="var(--accent)"/><path d="M5 7l3 3-3 3M10 14h5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Interview<span>Hacks</span></span></a>
+    <div class="topnav__search"><svg class="topnav__search-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M11 11l3 3"/></svg><input type="text" id="search-input" placeholder="Search topics…" autocomplete="off" /><span class="topnav__kbd">/</span><div class="search-results" id="search-results"></div></div>
+    <div class="topnav__actions"><button class="btn-icon" id="theme-toggle" title="Toggle theme"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button></div>
+  </nav>
+
+  <div class="page-layout">
+    <aside class="sidebar">
+      <div class="sidebar__section"><div class="sidebar__label">Jump to tier</div><nav class="toc">
+        <a href="#tier1" class="toc-link" style="color:var(--danger);">🔴 Tier 1 — Must Know</a>
+        <a href="#tier2" class="toc-link" style="color:var(--warning);">🟡 Tier 2 — High Value</a>
+        <a href="#tier3" class="toc-link" style="color:var(--success);">🟢 Tier 3 — Specialists</a>
+        <a href="#tier4" class="toc-link" style="color:var(--accent-2);">🔵 Tier 4 — Deep Cuts</a>
+        <a href="#pattern-map" class="toc-link">📊 Pattern Map</a>
+        <a href="#study-order" class="toc-link">📅 Study Order</a>
+      </nav></div>
+      <div class="sidebar__section"><div class="sidebar__label">Concepts</div>
+        <a href="prefix-sum.html"          class="sidebar__link">Prefix Sum</a>
+        <a href="bfs.html"                 class="sidebar__link">BFS</a>
+        <a href="dfs.html"                 class="sidebar__link">DFS</a>
+        <a href="union-find.html"          class="sidebar__link">Union Find</a>
+        <a href="dijkstra.html"            class="sidebar__link">Dijkstra</a>
+        <a href="dynamic-programming.html" class="sidebar__link">Dynamic Programming</a>
+        <a href="patterns.html"            class="sidebar__link active">Hidden Patterns</a>
+      </div>
+      <div class="sidebar__section"><div class="sidebar__label">Recently Viewed</div><div id="recently-viewed"></div></div>
+    </aside>
+
+    <main class="content">
+      <nav class="breadcrumbs"><a href="../index.html">Home</a><span class="breadcrumbs__sep">›</span><a href="./">Concepts</a><span class="breadcrumbs__sep">›</span><span class="breadcrumbs__current">Hidden Patterns</span></nav>
+
+      <div class="page-header">
+        <div class="page-header__badges">
+          <span class="badge badge--cat">Top Interview 150</span>
+          <span class="badge badge--cat">Pattern Analysis</span>
+        </div>
+        <h1>Hidden Patterns Across the Top 150</h1>
+        <div class="page-header__meta">
+          <span>⏱ 15 min read</span>
+          <span>🎯 20 ranked patterns</span>
+          <span>📌 Ranked by interview frequency</span>
+        </div>
+        <p style="margin-top:0.75rem;">These aren't category labels. They're <strong>reusable thinking instincts</strong> — the mental shortcuts that let experienced engineers solve problems in minutes, not hours. Each pattern is ranked by how many Top 150 problems it unlocks and how much time it saves under interview pressure.</p>
+      </div>
+
+      <!-- ══════════════════════════════
+           TIER 1 — MUST KNOW
+      ══════════════════════════════ -->
+      <div class="tier-header" id="tier1">
+        <span class="tier-badge tier-badge--1">TIER 1</span>
+        <h2 style="margin:0;font-size:1.2rem;">Must Know — Core Patterns</h2>
+        <span style="font-size:0.8rem;color:var(--text-muted);margin-left:auto;">Appears in 10+ problems each</span>
+      </div>
+
+      <!-- P1: Hash Map -->
+      <div class="pattern-card pattern-card--t1">
+        <div class="pattern-header">
+          <div class="pattern-rank">#1</div>
+          <div>
+            <div class="pattern-name">Hash Map as O(1) State</div>
+            <div class="pattern-subtitle">The universal lookup accelerator — covers ~30 problems in the Top 150</div>
+          </div>
+        </div>
+        <div class="pattern-tags">
+          <span class="pattern-tag pattern-tag--hot">🔥 Highest Frequency</span>
+          <span class="pattern-tag pattern-tag--key">Two Sum Complement</span>
+          <span class="pattern-tag pattern-tag--key">Frequency Counter</span>
+          <span class="pattern-tag pattern-tag--key">Visited Set</span>
+          <span class="pattern-tag pattern-tag--key">Memoization</span>
+        </div>
+        <p style="font-size:0.875rem;margin-bottom:0.75rem;">Store things you've already seen so you can answer "have I seen this before?" or "what's the complement of this?" in O(1) instead of O(n). The map stores the answer to your question, not just the value.</p>
+        <div class="pattern-grid">
+          <div class="pattern-block pattern-block--trigger">
+            <div class="pattern-block__label">🎯 Trigger</div>
+            <p>"Does X exist in the array?" · "Count of each element" · "Complement/partner of X" · "Group elements by key" · "Have I seen this state before?"</p>
+          </div>
+          <div class="pattern-block pattern-block--example">
+            <div class="pattern-block__label">📌 Example — Two Sum</div>
+            <p>For each num, check if <code>target - num</code> is in the map. Store <code>{value: index}</code> as you scan. O(n) instead of O(n²).</p>
+          </div>
+          <div class="pattern-block pattern-block--mistake">
+            <div class="pattern-block__label">❌ Common Mistake</div>
+            <p>Using a list/set when you need the <em>index</em> too. Or forgetting to update the map before checking — order matters for self-pair avoidance.</p>
+          </div>
+          <div class="pattern-block pattern-block--save">
+            <div class="pattern-block__label">⏱ Saves</div>
+            <p>Avoids the O(n²) brute force. <strong>Valid Anagram, Group Anagrams, Ransom Note, Isomorphic Strings, Word Pattern, Happy Number, Longest Consecutive</strong> all reduce to this.</p>
+          </div>
+        </div>
+        <div class="callout callout--info" style="margin-top:0.75rem;"><strong>Mental shortcut</strong>When you think "I need to search for something I've seen before," reach for a dict. The question to ask: <em>"What is the key, and what is the value I need to store?"</em></div>
+      </div>
+
+      <!-- P2: Two Pointers -->
+      <div class="pattern-card pattern-card--t1">
+        <div class="pattern-header">
+          <div class="pattern-rank">#2</div>
+          <div>
+            <div class="pattern-name">Two Pointers — Inward Squeeze & Gap Pointer</div>
+            <div class="pattern-subtitle">Two flavors: (L,R) squeezing from both ends, or (slow, fast) with a gap</div>
+          </div>
+        </div>
+        <div class="pattern-tags">
+          <span class="pattern-tag pattern-tag--hot">🔥 Very High Frequency</span>
+          <span class="pattern-tag pattern-tag--key">Sorted Array Pair</span>
+          <span class="pattern-tag pattern-tag--key">Remove Nth from End</span>
+          <span class="pattern-tag pattern-tag--key">Palindrome Check</span>
+        </div>
+        <p style="font-size:0.875rem;margin-bottom:0.75rem;"><strong>Inward squeeze</strong>: left and right pointers move toward each other — used when the answer improves as pointers converge on a sorted (or near-sorted) structure. <strong>Gap pointer</strong>: two pointers separated by k steps — used for "kth from end" or "intersection" problems.</p>
+        <div class="pattern-grid">
+          <div class="pattern-block pattern-block--trigger">
+            <div class="pattern-block__label">🎯 Trigger</div>
+            <p>"Find pair summing to target" in sorted array · "Maximize area/sum" · "Is this a palindrome?" · "Remove nth from end" · "Is A a subsequence of B?"</p>
+          </div>
+          <div class="pattern-block pattern-block--example">
+            <div class="pattern-block__label">📌 Example — 3Sum</div>
+            <p>Sort, fix one element, then squeeze two pointers on the rest. Skip duplicates by checking <code>if nums[i] == nums[i-1]: continue</code> at each level.</p>
+          </div>
+          <div class="pattern-block pattern-block--mistake">
+            <div class="pattern-block__label">❌ Common Mistake</div>
+            <p>Forgetting to advance <em>both</em> pointers when a match is found in 3Sum, leading to infinite loops. Also: using two pointers on an unsorted array when they depend on order.</p>
+          </div>
+          <div class="pattern-block pattern-block--save">
+            <div class="pattern-block__label">⏱ Saves</div>
+            <p>Turns O(n²) brute force into O(n). <strong>Container With Most Water</strong> becomes one-pass. <strong>Remove Nth Node</strong> becomes one-pass with a dummy head.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- P3: Tree Recursion -->
+      <div class="pattern-card pattern-card--t1">
+        <div class="pattern-header">
+          <div class="pattern-rank">#3</div>
+          <div>
+            <div class="pattern-name">Tree Recursion Return Value</div>
+            <div class="pattern-subtitle">The recursive function returns <em>richer information</em> than just the answer</div>
+          </div>
+        </div>
+        <div class="pattern-tags">
+          <span class="pattern-tag pattern-tag--hot">🔥 Covers 12+ Tree Problems</span>
+          <span class="pattern-tag pattern-tag--key">Post-order</span>
+          <span class="pattern-tag pattern-tag--key">Subtree Info</span>
+          <span class="pattern-tag pattern-tag--key">Global Variable</span>
+        </div>
+        <p style="font-size:0.875rem;margin-bottom:0.75rem;">Most binary tree problems that feel different are the same recursion template. The function returns what the parent needs to know about this subtree. A global variable captures the overall answer. The key question is: <em>"What does the parent need from me?"</em></p>
+        <div class="pattern-grid">
+          <div class="pattern-block pattern-block--trigger">
+            <div class="pattern-block__label">🎯 Trigger</div>
+            <p>Any problem that asks you to aggregate info across a tree: max path, diameter, balance, LCA, max/min depth, count good nodes.</p>
+          </div>
+          <div class="pattern-block pattern-block--example">
+            <div class="pattern-block__label">📌 Example — Diameter</div>
+            <p>Return <code>height</code> to parent. At each node, update <code>self.ans = max(self.ans, left_h + right_h)</code>. The diameter is the max across all such sums.</p>
+          </div>
+          <div class="pattern-block pattern-block--mistake">
+            <div class="pattern-block__label">❌ Common Mistake</div>
+            <p>Trying to compute the answer in the return value instead of a nonlocal/global. The return value is <em>for the parent</em>; the global accumulates the final answer.</p>
+          </div>
+          <div class="pattern-block pattern-block--save">
+            <div class="pattern-block__label">⏱ Saves</div>
+            <p>One template handles: <strong>Max Depth, Diameter, Balanced Tree, Max Path Sum, LCA, Count Good Nodes, Binary Tree Cameras</strong>. Recognize the shape, swap the return value.</p>
+          </div>
+        </div>
+        <div class="code-block" style="margin-top:0.75rem;">
+          <div class="code-block__header"><span class="code-block__lang">Python 2 — Universal Tree Template</span><button class="code-copy-btn">Copy</button></div>
+          <pre><code>self.ans = 0   # or -inf, or float('inf')
+
+def dfs(node):
+    if not node: return BASE_VALUE   # e.g. 0 for height, float('-inf') for max path
+    left  = dfs(node.left)
+    right = dfs(node.right)
+    # Update global answer using left + right info
+    self.ans = max(self.ans, COMBINE(left, right, node.val))
+    # Return what the PARENT needs from this subtree
+    return RETURN_TO_PARENT(left, right, node.val)
+
+dfs(root)
+return self.ans</code></pre>
+        </div>
+      </div>
+
+      <!-- P4: BFS Level / Flood -->
+      <div class="pattern-card pattern-card--t1">
+        <div class="pattern-header">
+          <div class="pattern-rank">#4</div>
+          <div>
+            <div class="pattern-name">BFS Level Order / Multi-Source Flood Fill</div>
+            <div class="pattern-subtitle">Guarantees shortest path; scales to grids, graphs, implicit state spaces</div>
+          </div>
+        </div>
+        <div class="pattern-tags">
+          <span class="pattern-tag pattern-tag--hot">🔥 High Frequency</span>
+          <span class="pattern-tag pattern-tag--key">Level-at-a-time</span>
+          <span class="pattern-tag pattern-tag--key">Multi-source</span>
+          <span class="pattern-tag pattern-tag--key">Implicit Graph</span>
+        </div>
+        <p style="font-size:0.875rem;margin-bottom:0.75rem;">BFS's killer feature is level-order processing: you naturally know the distance from the source. Multi-source BFS (enqueue ALL sources at distance 0) solves "nearest X to every cell" in one pass.</p>
+        <div class="pattern-grid">
+          <div class="pattern-block pattern-block--trigger">
+            <div class="pattern-block__label">🎯 Trigger</div>
+            <p>"Minimum steps/moves" · "Shortest path in unweighted graph" · "Spread from multiple sources" · "Level-by-level processing" · Grid problems</p>
+          </div>
+          <div class="pattern-block pattern-block--example">
+            <div class="pattern-block__label">📌 Example — Word Ladder</div>
+            <p>Each word is a node. Two words are connected if they differ by one letter. BFS finds shortest transformation. The graph is <em>implicit</em> — you don't build it explicitly.</p>
+          </div>
+          <div class="pattern-block pattern-block--mistake">
+            <div class="pattern-block__label">❌ Common Mistake</div>
+            <p>Marking visited on <em>dequeue</em> instead of <em>enqueue</em>. This lets duplicate nodes pile up in the queue, turning O(V+E) into O(V²) for dense graphs.</p>
+          </div>
+          <div class="pattern-block pattern-block--save">
+            <div class="pattern-block__label">⏱ Saves</div>
+            <p><strong>Rotting Oranges</strong> is 3 lines with multi-source BFS. <strong>Pacific Atlantic Water Flow</strong> runs two reverse-BFS from each coast — where they meet is the answer.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- P5: Sliding Window -->
+      <div class="pattern-card pattern-card--t1">
+        <div class="pattern-header">
+          <div class="pattern-rank">#5</div>
+          <div>
+            <div class="pattern-name">Sliding Window + Frequency Map</div>
+            <div class="pattern-subtitle">Maintain a valid window by expanding right and shrinking left</div>
+          </div>
+        </div>
+        <div class="pattern-tags">
+          <span class="pattern-tag pattern-tag--hot">🔥 High Frequency</span>
+          <span class="pattern-tag pattern-tag--key">Fixed Window</span>
+          <span class="pattern-tag pattern-tag--key">Variable Window</span>
+          <span class="pattern-tag pattern-tag--key">At-most-k</span>
+        </div>
+        <p style="font-size:0.875rem;margin-bottom:0.75rem;">Avoid recomputing from scratch by maintaining a running count of what's inside the window. Expand the right pointer always; shrink from the left only when the window violates a constraint.</p>
+        <div class="pattern-grid">
+          <div class="pattern-block pattern-block--trigger">
+            <div class="pattern-block__label">🎯 Trigger</div>
+            <p>"Longest/shortest subarray/substring satisfying condition" · "Contains all characters of T" · "Minimum window covering" · "At most k distinct characters"</p>
+          </div>
+          <div class="pattern-block pattern-block--example">
+            <div class="pattern-block__label">📌 Example — Minimum Window Substring</div>
+            <p>Track <code>need</code> (chars still required). Expand right until window is valid (need==0). Shrink left to minimize. Record min window at each valid state.</p>
+          </div>
+          <div class="pattern-block pattern-block--mistake">
+            <div class="pattern-block__label">❌ Common Mistake</div>
+            <p>Shrinking the left pointer in a <code>while</code> loop when a single <code>if</code> would do (for "at most k"). Causes O(n²). Or updating the frequency map in the wrong direction.</p>
+          </div>
+          <div class="pattern-block pattern-block--save">
+            <div class="pattern-block__label">⏱ Saves</div>
+            <p>Turns O(n²) substring search into O(n). <strong>Substring with Concatenation of All Words</strong> is sliding window with a word-level frequency map instead of char-level.</p>
+          </div>
+        </div>
+        <div class="code-block" style="margin-top:0.75rem;">
+          <div class="code-block__header"><span class="code-block__lang">Python 2 — Variable Sliding Window Template</span><button class="code-copy-btn">Copy</button></div>
+          <pre><code>left = 0
+window = {}   # or Counter
+
+for right in xrange(len(s)):
+    # 1. Add s[right] to window state
+    window[s[right]] = window.get(s[right], 0) + 1
+
+    # 2. Shrink from left while window is invalid
+    while WINDOW_INVALID(window):
+        window[s[left]] -= 1
+        if window[s[left]] == 0:
+            del window[s[left]]
+        left += 1
+
+    # 3. Window [left, right] is now valid — update answer
+    ans = max(ans, right - left + 1)</code></pre>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════
+           TIER 2 — HIGH VALUE
+      ══════════════════════════════ -->
+      <div class="tier-header" id="tier2">
+        <span class="tier-badge tier-badge--2">TIER 2</span>
+        <h2 style="margin:0;font-size:1.2rem;">High Value — Power Patterns</h2>
+        <span style="font-size:0.8rem;color:var(--text-muted);margin-left:auto;">Appears in 6–10 problems, high signal</span>
+      </div>
+
+      <!-- P6: Monotonic Stack -->
+      <div class="pattern-card pattern-card--t2">
+        <div class="pattern-header">
+          <div class="pattern-rank">#6</div>
+          <div>
+            <div class="pattern-name">Monotonic Stack</div>
+            <div class="pattern-subtitle">Maintain a stack that is always increasing (or decreasing) — pops trigger the answer</div>
+          </div>
+        </div>
+        <div class="pattern-tags">
+          <span class="pattern-tag pattern-tag--key">Next Greater Element</span>
+          <span class="pattern-tag pattern-tag--key">Trapping Rain Water</span>
+          <span class="pattern-tag pattern-tag--key">Heights / Boundaries</span>
+        </div>
+        <p style="font-size:0.875rem;margin-bottom:0.75rem;">Keep a stack of indices in monotone order. When the current element breaks the monotonicity, pop and compute the answer for the popped element using the current element as its boundary.</p>
+        <div class="pattern-grid">
+          <div class="pattern-block pattern-block--trigger">
+            <div class="pattern-block__label">🎯 Trigger</div>
+            <p>"For each element, find the next greater/smaller" · "Maximum rectangle in histogram" · "Trapping rain water" · Any problem where an element's answer depends on what comes next</p>
+          </div>
+          <div class="pattern-block pattern-block--example">
+            <div class="pattern-block__label">📌 Example — Trapping Rain Water</div>
+            <p>Maintain a stack of decreasing heights. When height[i] > stack top, water is trapped between current element and the new stack top. Area = width × min_height.</p>
+          </div>
+          <div class="pattern-block pattern-block--mistake">
+            <div class="pattern-block__label">❌ Common Mistake</div>
+            <p>Forgetting to handle elements left in the stack at the end (they have no right boundary). Add a sentinel 0 at the end, or handle the flush separately.</p>
+          </div>
+          <div class="pattern-block pattern-block--save">
+            <div class="pattern-block__label">⏱ Saves</div>
+            <p>Turns O(n²) "for each element, scan forward" into O(n) one-pass. Also used in <strong>Simplify Path</strong> (directory stack), <strong>Valid Parentheses</strong> (matching stack).</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- P7: Backtracking Template -->
+      <div class="pattern-card pattern-card--t2">
+        <div class="pattern-header">
+          <div class="pattern-rank">#7</div>
+          <div>
+            <div class="pattern-name">Backtracking: Choose → Explore → Unchoose</div>
+            <div class="pattern-subtitle">The universal template for exhaustive search with pruning</div>
+          </div>
+        </div>
+        <div class="pattern-tags">
+          <span class="pattern-tag pattern-tag--key">Permutations</span>
+          <span class="pattern-tag pattern-tag--key">Subsets</span>
+          <span class="pattern-tag pattern-tag--key">Combination Sum</span>
+          <span class="pattern-tag pattern-tag--key">Generate Parentheses</span>
+        </div>
+        <p style="font-size:0.875rem;margin-bottom:0.75rem;">All 7 backtracking problems use the same skeleton. The variation is only in: base case, the choices available, and the pruning condition. Get the skeleton correct once; reuse it everywhere.</p>
+        <div class="pattern-grid">
+          <div class="pattern-block pattern-block--trigger">
+            <div class="pattern-block__label">🎯 Trigger</div>
+            <p>"Generate all..." · "Find all valid..." · "Count all combinations/permutations/partitions" — problems where you must enumerate all possibilities</p>
+          </div>
+          <div class="pattern-block pattern-block--example">
+            <div class="pattern-block__label">📌 Example — Generate Parentheses</div>
+            <p>State = (current_str, open_count, close_count). Prune: don't add <code>(</code> if open==n; don't add <code>)</code> if close==open. No explicit "unchoose" since strings are immutable.</p>
+          </div>
+          <div class="pattern-block pattern-block--mistake">
+            <div class="pattern-block__label">❌ Common Mistake</div>
+            <p>Forgetting the <em>unchoose</em> step (e.g., not popping from path after recursion). This corrupts sibling branches and produces wrong results silently.</p>
+          </div>
+          <div class="pattern-block pattern-block--save">
+            <div class="pattern-block__label">⏱ Saves</div>
+            <p>Sorted input + skip-duplicate logic (<code>if i > start and nums[i]==nums[i-1]: continue</code>) handles all deduplication. Works for Subsets II, Combination Sum II, Permutations II.</p>
+          </div>
+        </div>
+        <div class="code-block" style="margin-top:0.75rem;">
+          <div class="code-block__header"><span class="code-block__lang">Python 2 — Universal Backtracking Template</span><button class="code-copy-btn">Copy</button></div>
+          <pre><code>def backtrack(start, path, result):
+    if BASE_CASE:
+        result.append(list(path))   # deep copy!
+        return
+    for i in xrange(start, len(candidates)):
+        if PRUNE_CONDITION: continue   # early exit
+        path.append(candidates[i])    # choose
+        backtrack(NEXT_START, path, result)
+        path.pop()                    # unchoose
+
+result = []
+backtrack(0, [], result)
+return result</code></pre>
+        </div>
+      </div>
+
+      <!-- P8: DP State Machine -->
+      <div class="pattern-card pattern-card--t2">
+        <div class="pattern-header">
+          <div class="pattern-rank">#8</div>
+          <div>
+            <div class="pattern-name">DP State Machine</div>
+            <div class="pattern-subtitle">Define discrete states; transitions depend on the current decision</div>
+          </div>
+        </div>
+        <div class="pattern-tags">
+          <span class="pattern-tag pattern-tag--key">House Robber</span>
+          <span class="pattern-tag pattern-tag--key">Buy/Sell Stock</span>
+          <span class="pattern-tag pattern-tag--key">Decode Ways</span>
+          <span class="pattern-tag pattern-tag--key">Target Sum</span>
+        </div>
+        <p style="font-size:0.875rem;margin-bottom:0.75rem;">Some DP problems have constraints on consecutive choices (can't rob adjacent houses; can't buy after selling same day). Model as a state machine: each state represents what you last did, and transitions are legal moves.</p>
+        <div class="pattern-grid">
+          <div class="pattern-block pattern-block--trigger">
+            <div class="pattern-block__label">🎯 Trigger</div>
+            <p>"Can't take two in a row" · "Must wait k steps" · "Track whether item is currently held" · "Path with forbidden consecutive moves"</p>
+          </div>
+          <div class="pattern-block pattern-block--example">
+            <div class="pattern-block__label">📌 Example — Stock with Cooldown</div>
+            <p>States: HELD, SOLD (cooldown), REST. Transitions: HELD→SOLD (sell), SOLD→REST, REST/SOLD→HELD (buy). dp[state] = max profit in that state.</p>
+          </div>
+          <div class="pattern-block pattern-block--mistake">
+            <div class="pattern-block__label">❌ Common Mistake</div>
+            <p>Initializing states to 0 when they should be <code>-inf</code> (unreachable states). A state that's never valid should never be selected by max/min.</p>
+          </div>
+          <div class="pattern-block pattern-block--save">
+            <div class="pattern-block__label">⏱ Saves</div>
+            <p>The house-robber pattern (<code>dp[i] = max(dp[i-1], dp[i-2] + nums[i])</code>) reduces to 2 variables, not an array. Space O(1) instead of O(n).</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- P9: Binary Search on Answer -->
+      <div class="pattern-card pattern-card--t2">
+        <div class="pattern-header">
+          <div class="pattern-rank">#9</div>
+          <div>
+            <div class="pattern-name">Binary Search on Answer (not on Index)</div>
+            <div class="pattern-subtitle">When the feasibility of an answer is monotone, binary search the answer space</div>
+          </div>
+        </div>
+        <div class="pattern-tags">
+          <span class="pattern-tag pattern-tag--key">Koko Bananas</span>
+          <span class="pattern-tag pattern-tag--key">Minimize Maximum</span>
+          <span class="pattern-tag pattern-tag--key">Feasibility Check</span>
+        </div>
+        <p style="font-size:0.875rem;margin-bottom:0.75rem;">Classic binary search finds a value in a sorted array. This variant asks: "what is the minimum k such that condition(k) is true?" If condition is monotone (false, false, ..., true, true, ...), binary search the answer.</p>
+        <div class="pattern-grid">
+          <div class="pattern-block pattern-block--trigger">
+            <div class="pattern-block__label">🎯 Trigger</div>
+            <p>"Minimize the maximum" · "Maximize the minimum" · "What is the smallest k where X is possible?" · "Can we achieve X within budget k?"</p>
+          </div>
+          <div class="pattern-block pattern-block--example">
+            <div class="pattern-block__label">📌 Example — Koko Eating Bananas</div>
+            <p>Binary search speed k from 1 to max(piles). For each k, check if Koko can finish all piles in h hours. Find the minimum valid k.</p>
+          </div>
+          <div class="pattern-block pattern-block--mistake">
+            <div class="pattern-block__label">❌ Common Mistake</div>
+            <p>Off-by-one in the binary search bounds. Use <code>lo, hi = MIN_POSSIBLE, MAX_POSSIBLE</code> and converge to the first true with <code>while lo < hi: mid = (lo+hi)//2</code>.</p>
+          </div>
+          <div class="pattern-block pattern-block--save">
+            <div class="pattern-block__label">⏱ Saves</div>
+            <p>Turns O(max_val × n) brute force into O(n log max_val). Also applies to <strong>Find Peak Element</strong> (binary search on unsorted but unimodal array).</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- P10: Prefix Sum + Running State -->
+      <div class="pattern-card pattern-card--t2">
+        <div class="pattern-header">
+          <div class="pattern-rank">#10</div>
+          <div>
+            <div class="pattern-name">Prefix Sum + Running State</div>
+            <div class="pattern-subtitle">Precompute cumulative state; use subtraction for O(1) range queries</div>
+          </div>
+        </div>
+        <div class="pattern-tags">
+          <span class="pattern-tag pattern-tag--key">Subarray Sum = k</span>
+          <span class="pattern-tag pattern-tag--key">Product Array</span>
+          <span class="pattern-tag pattern-tag--key">Running Max/Min</span>
+        </div>
+        <p style="font-size:0.875rem;margin-bottom:0.75rem;">Not just for sums — "running state" generalizes to prefix products, prefix XOR, prefix max. Combined with a hash map, it answers "how many subarrays have property P?" in one pass.</p>
+        <div class="pattern-grid">
+          <div class="pattern-block pattern-block--trigger">
+            <div class="pattern-block__label">🎯 Trigger</div>
+            <p>"Subarray sum equals k" · "Product of array except self" · "Subarray divisible by k" · Any range aggregate on a static array</p>
+          </div>
+          <div class="pattern-block pattern-block--example">
+            <div class="pattern-block__label">📌 Example — Product of Array Except Self</div>
+            <p>Left pass: <code>left[i] = product of all nums[0..i-1]</code>. Right pass: multiply by suffix product. No division needed, handles zeros.</p>
+          </div>
+          <div class="pattern-block pattern-block--mistake">
+            <div class="pattern-block__label">❌ Common Mistake</div>
+            <p>Forgetting the sentinel <code>prefix[0] = 0</code>. Without it, subarrays starting at index 0 require special casing in every query.</p>
+          </div>
+          <div class="pattern-block pattern-block--save">
+            <div class="pattern-block__label">⏱ Saves</div>
+            <p>Prefix sum + hash map turns "count subarrays with sum k" from O(n²) into O(n). The trick: <code>count += seen[prefix - k]</code> at each step.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════
+           TIER 3 — SPECIALISTS
+      ══════════════════════════════ -->
+      <div class="tier-header" id="tier3">
+        <span class="tier-badge tier-badge--3">TIER 3</span>
+        <h2 style="margin:0;font-size:1.2rem;">Specialist Patterns</h2>
+        <span style="font-size:0.8rem;color:var(--text-muted);margin-left:auto;">Appears in 3–6 problems, high specificity</span>
+      </div>
+
+      <!-- P11: Sentinel/Dummy Node -->
+      <div class="pattern-card pattern-card--t3">
+        <div class="pattern-header">
+          <div class="pattern-rank">#11</div>
+          <div>
+            <div class="pattern-name">Sentinel / Dummy Head Node</div>
+            <div class="pattern-subtitle">Eliminates all "is head null?" special cases in linked list problems</div>
+          </div>
+        </div>
+        <div class="pattern-tags">
+          <span class="pattern-tag pattern-tag--hot">🔥 Instant Bug Prevention</span>
+          <span class="pattern-tag pattern-tag--key">Linked List</span>
+          <span class="pattern-tag pattern-tag--key">Merge</span>
+          <span class="pattern-tag pattern-tag--key">Remove Nth</span>
+        </div>
+        <p style="font-size:0.875rem;margin-bottom:0.75rem;">Create a fake node <code>dummy = ListNode(0); dummy.next = head</code>. Now you never need to check if <code>head</code> is None before operating. Return <code>dummy.next</code>.</p>
+        <div class="pattern-grid">
+          <div class="pattern-block pattern-block--trigger">
+            <div class="pattern-block__label">🎯 Trigger</div>
+            <p>Any linked list problem that modifies or returns the head: <strong>Merge Two Sorted Lists, Remove Nth Node, Partition List, Remove Duplicates II</strong></p>
+          </div>
+          <div class="pattern-block pattern-block--save">
+            <div class="pattern-block__label">⏱ Saves</div>
+            <p>Eliminates 4–6 lines of null-checking boilerplate. More importantly, prevents a whole class of "what if the answer is the new head?" bugs. Used in 8+ linked list problems.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- P12: Fast/Slow Pointer -->
+      <div class="pattern-card pattern-card--t3">
+        <div class="pattern-header">
+          <div class="pattern-rank">#12</div>
+          <div>
+            <div class="pattern-name">Fast / Slow Pointer (Floyd's)</div>
+            <div class="pattern-subtitle">Two pointers moving at different speeds detect cycles and find midpoints</div>
+          </div>
+        </div>
+        <div class="pattern-tags">
+          <span class="pattern-tag pattern-tag--key">Cycle Detection</span>
+          <span class="pattern-tag pattern-tag--key">Find Middle</span>
+          <span class="pattern-tag pattern-tag--key">Happy Number</span>
+        </div>
+        <div class="pattern-grid">
+          <div class="pattern-block pattern-block--trigger">
+            <div class="pattern-block__label">🎯 Trigger</div>
+            <p>"Does this linked list have a cycle?" · "Find the middle node" · "Happy Number" (cycle in sequence) · Any problem with a repeated-state or cycle question</p>
+          </div>
+          <div class="pattern-block pattern-block--example">
+            <div class="pattern-block__label">📌 Example — Linked List Cycle</div>
+            <p><code>slow = slow.next; fast = fast.next.next</code>. If they meet, there's a cycle. If fast reaches None, no cycle. Never needs extra space.</p>
+          </div>
+          <div class="pattern-block pattern-block--mistake">
+            <div class="pattern-block__label">❌ Common Mistake</div>
+            <p>Checking <code>fast.next</code> without checking <code>fast</code> first — causes AttributeError on NoneType. Always check: <code>while fast and fast.next</code>.</p>
+          </div>
+          <div class="pattern-block pattern-block--save">
+            <div class="pattern-block__label">⏱ Saves</div>
+            <p>O(1) space vs O(n) visited set for cycle detection. Happy Number uses the same logic on digit-sum sequences.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- P13: Topological Sort -->
+      <div class="pattern-card pattern-card--t3">
+        <div class="pattern-header">
+          <div class="pattern-rank">#13</div>
+          <div>
+            <div class="pattern-name">Topological Sort + In-degree BFS (Kahn's)</div>
+            <div class="pattern-subtitle">Process nodes with no dependencies first; detect cycles via leftover nodes</div>
+          </div>
+        </div>
+        <div class="pattern-tags">
+          <span class="pattern-tag pattern-tag--key">Course Schedule</span>
+          <span class="pattern-tag pattern-tag--key">DAG ordering</span>
+          <span class="pattern-tag pattern-tag--key">Cycle Detection</span>
+        </div>
+        <div class="pattern-grid">
+          <div class="pattern-block pattern-block--trigger">
+            <div class="pattern-block__label">🎯 Trigger</div>
+            <p>"Given prerequisites, is this possible?" · "What order should we process these?" · Any dependency/scheduling problem in a directed graph</p>
+          </div>
+          <div class="pattern-block pattern-block--example">
+            <div class="pattern-block__label">📌 Example — Course Schedule</div>
+            <p>Build in-degree array. Queue all nodes with in-degree 0. Process: for each neighbor, decrement in-degree; if 0, add to queue. If all nodes processed → no cycle.</p>
+          </div>
+          <div class="pattern-block pattern-block--save">
+            <div class="pattern-block__label">⏱ Saves</div>
+            <p>Kahn's algorithm doubles as cycle detection (if processed count &lt; n, there's a cycle). Covers both <strong>Course Schedule I and II</strong> with the same code.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- P14: Two Heaps -->
+      <div class="pattern-card pattern-card--t3">
+        <div class="pattern-header">
+          <div class="pattern-rank">#14</div>
+          <div>
+            <div class="pattern-name">Two Heaps — Size-Balanced Partition</div>
+            <div class="pattern-subtitle">Split data into two halves; the boundary gives the median in O(log n)</div>
+          </div>
+        </div>
+        <div class="pattern-tags">
+          <span class="pattern-tag pattern-tag--key">Find Median from Data Stream</span>
+          <span class="pattern-tag pattern-tag--key">Sliding Window Median</span>
+        </div>
+        <div class="pattern-grid">
+          <div class="pattern-block pattern-block--trigger">
+            <div class="pattern-block__label">🎯 Trigger</div>
+            <p>"Running median" · "Find median after each insertion" · "Kth largest in a stream" · Any problem where you need fast access to both extremes of a dynamic dataset</p>
+          </div>
+          <div class="pattern-block pattern-block--example">
+            <div class="pattern-block__label">📌 Example — Find Median from Data Stream</div>
+            <p>Max-heap for lower half, min-heap for upper half. Invariant: sizes differ by at most 1 and max(lower) ≤ min(upper). Rebalance after every insert.</p>
+          </div>
+          <div class="pattern-block pattern-block--save">
+            <div class="pattern-block__label">⏱ Saves</div>
+            <p>Median in O(log n) per insert vs O(n) for sorted insertion or O(n log n) rebuild. The rebalancing logic is always the same — memorize it once.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- P15: Interval Sweep -->
+      <div class="pattern-card pattern-card--t3">
+        <div class="pattern-header">
+          <div class="pattern-rank">#15</div>
+          <div>
+            <div class="pattern-name">Interval Sort + Greedy Merge</div>
+            <div class="pattern-subtitle">Sort by start; merge when current interval overlaps the previous end</div>
+          </div>
+        </div>
+        <div class="pattern-tags">
+          <span class="pattern-tag pattern-tag--key">Merge Intervals</span>
+          <span class="pattern-tag pattern-tag--key">Minimum Arrows</span>
+          <span class="pattern-tag pattern-tag--key">Non-overlapping</span>
+        </div>
+        <div class="pattern-grid">
+          <div class="pattern-block pattern-block--trigger">
+            <div class="pattern-block__label">🎯 Trigger</div>
+            <p>"Merge overlapping intervals" · "Minimum number of groups/arrows/meeting rooms" · "Insert interval into sorted list" · Any problem with ranges [start, end]</p>
+          </div>
+          <div class="pattern-block pattern-block--example">
+            <div class="pattern-block__label">📌 Example — Minimum Arrows to Burst Balloons</div>
+            <p>Sort by end. Greedily shoot at the end of the current balloon. Any balloon whose start ≤ current arrow position is also burst. Count shots.</p>
+          </div>
+          <div class="pattern-block pattern-block--save">
+            <div class="pattern-block__label">⏱ Saves</div>
+            <p>All four interval problems use sort-then-greedy. The specific condition varies (overlap vs containment vs touch) but the skeleton is identical.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- P16: Union Find -->
+      <div class="pattern-card pattern-card--t3">
+        <div class="pattern-header">
+          <div class="pattern-rank">#16</div>
+          <div>
+            <div class="pattern-name">Union Find — Incremental Connectivity</div>
+            <div class="pattern-subtitle">Near O(1) dynamic component merging; detects cycles via same-root check</div>
+          </div>
+        </div>
+        <div class="pattern-tags">
+          <span class="pattern-tag pattern-tag--key">Redundant Connection</span>
+          <span class="pattern-tag pattern-tag--key">Number of Components</span>
+          <span class="pattern-tag pattern-tag--key">Graph Valid Tree</span>
+        </div>
+        <div class="pattern-grid">
+          <div class="pattern-block pattern-block--trigger">
+            <div class="pattern-block__label">🎯 Trigger</div>
+            <p>"Are these two nodes connected?" · "How many connected components?" · "Does this edge create a cycle?" · Edges arrive one at a time (dynamic connectivity)</p>
+          </div>
+          <div class="pattern-block pattern-block--save">
+            <div class="pattern-block__label">⏱ Saves</div>
+            <p>BFS/DFS rebuild connectivity from scratch — O(V+E) per query. Union Find maintains it incrementally — O(α) per edge. Covers <strong>Redundant Connection, Graph Valid Tree, Number of Connected Components</strong>.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- P17: Greedy Sort by Key -->
+      <div class="pattern-card pattern-card--t3">
+        <div class="pattern-header">
+          <div class="pattern-rank">#17</div>
+          <div>
+            <div class="pattern-name">Greedy "Sort by Key, Then Decide"</div>
+            <div class="pattern-subtitle">Ordering often transforms a hard decision problem into an easy greedy one</div>
+          </div>
+        </div>
+        <div class="pattern-tags">
+          <span class="pattern-tag pattern-tag--key">Task Scheduler</span>
+          <span class="pattern-tag pattern-tag--key">Partition Labels</span>
+          <span class="pattern-tag pattern-tag--key">Gas Station</span>
+          <span class="pattern-tag pattern-tag--key">Jump Game</span>
+        </div>
+        <div class="pattern-grid">
+          <div class="pattern-block pattern-block--trigger">
+            <div class="pattern-block__label">🎯 Trigger</div>
+            <p>"Optimal scheduling" · "Minimum number of groups/rooms" · "Can we reach the end?" · "Assign tasks to minimize/maximize objective"</p>
+          </div>
+          <div class="pattern-block pattern-block--example">
+            <div class="pattern-block__label">📌 Example — Jump Game II</div>
+            <p>Track <code>farthest</code> reachable and current <code>end</code> of level. When i reaches end, increment jumps, update end to farthest. One pass, O(n).</p>
+          </div>
+          <div class="pattern-block pattern-block--save">
+            <div class="pattern-block__label">⏱ Saves</div>
+            <p><strong>Gas Station</strong>: if total gas ≥ total cost, a solution always exists. Start from the first station after the deficit — greedy O(n). No DP needed.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════
+           TIER 4 — DEEP CUTS
+      ══════════════════════════════ -->
+      <div class="tier-header" id="tier4">
+        <span class="tier-badge tier-badge--4">TIER 4</span>
+        <h2 style="margin:0;font-size:1.2rem;">Deep Cut Patterns</h2>
+        <span style="font-size:0.8rem;color:var(--text-muted);margin-left:auto;">Specialized but high signal when triggered</span>
+      </div>
+
+      <!-- P18: DFS State Modeling -->
+      <div class="pattern-card pattern-card--t4">
+        <div class="pattern-header">
+          <div class="pattern-rank">#18</div>
+          <div>
+            <div class="pattern-name">DFS State Modeling</div>
+            <div class="pattern-subtitle">The "state" in the DFS isn't always (node) — it's (node + extra context)</div>
+          </div>
+        </div>
+        <p style="font-size:0.875rem;margin-bottom:0.75rem;">For many graph problems, the hard part is defining what a "node" is. In <strong>Word Ladder</strong>, a node is a word. In <strong>Pacific Atlantic</strong>, you run DFS backwards from each ocean. In <strong>Word Search</strong>, a node is (row, col, index in word). Always ask: "what uniquely defines a position in my search?"</p>
+        <div class="callout callout--warning" style="margin-top:0.5rem;"><strong>Pacific Atlantic trick</strong>Run BFS/DFS from all Pacific borders and all Atlantic borders separately. Mark cells reachable from each ocean. Answer = intersection. Reverse-flow thinking saves you from the hard forward direction.</div>
+      </div>
+
+      <!-- P19: Trie -->
+      <div class="pattern-card pattern-card--t4">
+        <div class="pattern-header">
+          <div class="pattern-rank">#19</div>
+          <div>
+            <div class="pattern-name">Trie + DFS for Prefix Matching</div>
+            <div class="pattern-subtitle">Index a dictionary by prefix for O(L) lookup; prune DFS using the Trie</div>
+          </div>
+        </div>
+        <p style="font-size:0.875rem;margin-bottom:0.75rem;">Word Search II would TLE with brute-force DFS over all words. Insert all words into a Trie; DFS the grid while simultaneously traversing the Trie. The moment the Trie has no child for the current character, stop — massive pruning.</p>
+        <div class="callout callout--info" style="margin-top:0.5rem;"><strong>Implementation shortcut</strong>Use a Python dict as the Trie node: <code>node = {}</code>. Terminal marker: <code>node['#'] = word</code>. This is faster to code than a class in interviews.</div>
+      </div>
+
+      <!-- P20: DP on Intervals -->
+      <div class="pattern-card pattern-card--t4">
+        <div class="pattern-header">
+          <div class="pattern-rank">#20</div>
+          <div>
+            <div class="pattern-name">Interval DP — "What Was Processed Last?"</div>
+            <div class="pattern-subtitle">Solve problems by asking which item was processed last in a range</div>
+          </div>
+        </div>
+        <p style="font-size:0.875rem;margin-bottom:0.75rem;">For <a href="../problems/burst-balloons.html" style="color:var(--accent);font-weight:600;">Burst Balloons →</a>, instead of "which balloon bursts first?" (hard), ask "which balloon bursts last in range [l,r]?" (easy). The last balloon has neighbors l-1 and r+1 which are definitely still present — computable.</p>
+        <div class="callout callout--success" style="margin-top:0.5rem;"><strong>Pattern recognition</strong>Interval DP applies when: the problem involves a range [l, r]; you make a choice within the range; the cost of that choice depends on what's left. Recurrence: <code>dp[l][r] = max/min over k in [l..r] of: cost(k) + dp[l][k-1] + dp[k+1][r]</code>. O(n³) time, O(n²) space.</div>
+      </div>
+
+      <!-- ══════════════════════════════
+           PATTERN MAP TABLE
+      ══════════════════════════════ -->
+      <section class="section" id="pattern-map">
+        <h2><span class="section-num">→</span> Pattern Map — Category × Hidden Pattern</h2>
+        <p style="font-size:0.875rem;margin-bottom:1rem;">Quick reference: which hidden patterns dominate each LeetCode category.</p>
+        <div style="overflow-x:auto;">
+        <table class="pmap">
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>Primary Hidden Patterns</th>
+              <th>High-Yield Trick</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Array / String</td>
+              <td><span class="pill pill--r">Prefix Sum</span><span class="pill pill--y">Two Pointers</span><span class="pill pill--g">Greedy Scan</span></td>
+              <td>Trapping Rain Water = prefix max from both sides</td>
+            </tr>
+            <tr>
+              <td>Two Pointers</td>
+              <td><span class="pill pill--r">Inward Squeeze</span><span class="pill pill--y">Gap Pointer</span></td>
+              <td>3Sum: fix + squeeze; skip duplicates with <code>i > start and nums[i]==nums[i-1]</code></td>
+            </tr>
+            <tr>
+              <td>Sliding Window</td>
+              <td><span class="pill pill--r">Expand right / shrink left</span><span class="pill pill--y">Frequency map</span></td>
+              <td>The <code>need</code> counter for Minimum Window avoids scanning the whole map each step</td>
+            </tr>
+            <tr>
+              <td>Hashmap</td>
+              <td><span class="pill pill--r">Hash Map as O(1) State</span></td>
+              <td>Isomorphic/Word Pattern = two hash maps (both directions) to check bijection</td>
+            </tr>
+            <tr>
+              <td>Stack</td>
+              <td><span class="pill pill--r">Monotonic Stack</span><span class="pill pill--y">Matching Brackets</span></td>
+              <td>Basic Calculator: push on <code>(</code>, resolve on <code>)</code>; sign tracking</td>
+            </tr>
+            <tr>
+              <td>Linked List</td>
+              <td><span class="pill pill--r">Dummy Head</span><span class="pill pill--y">Fast/Slow Pointer</span><span class="pill pill--g">Two Pointers with gap</span></td>
+              <td>Every linked list problem: start with <code>dummy = ListNode(0); dummy.next = head</code></td>
+            </tr>
+            <tr>
+              <td>Binary Tree</td>
+              <td><span class="pill pill--r">Post-order Return Value</span><span class="pill pill--y">BFS Level Order</span></td>
+              <td>12 of 18 problems use the post-order template with a global answer accumulator</td>
+            </tr>
+            <tr>
+              <td>Graphs</td>
+              <td><span class="pill pill--r">BFS (shortest)</span><span class="pill pill--y">DFS (state)</span><span class="pill pill--g">Union Find</span><span class="pill pill--c">Topo Sort</span></td>
+              <td>Pacific Atlantic = reverse BFS from both coasts; find intersection</td>
+            </tr>
+            <tr>
+              <td>Heap</td>
+              <td><span class="pill pill--r">Two Heaps</span><span class="pill pill--y">Top-k with min-heap</span></td>
+              <td>K Closest Points: min-heap of size k → O(n log k) instead of sorting</td>
+            </tr>
+            <tr>
+              <td>Binary Search</td>
+              <td><span class="pill pill--r">Binary Search on Answer</span><span class="pill pill--y">Shrink to sorted half</span></td>
+              <td>Rotated sorted array: one half is always sorted — check which, then decide where to go</td>
+            </tr>
+            <tr>
+              <td>Backtracking</td>
+              <td><span class="pill pill--r">Choose/Explore/Unchoose</span></td>
+              <td>All 7 problems use the same template — only the pruning condition changes</td>
+            </tr>
+            <tr>
+              <td>Dynamic Programming</td>
+              <td><span class="pill pill--r">DP State Machine</span><span class="pill pill--y">1D/2D Tabulation</span><span class="pill pill--g">Interval DP</span></td>
+              <td>Define state precisely first; space-optimize to O(1) by rolling two variables</td>
+            </tr>
+            <tr>
+              <td>Greedy</td>
+              <td><span class="pill pill--r">Sort-then-greedy</span><span class="pill pill--y">Track reachable frontier</span></td>
+              <td>Gas Station: net of gas-cost; if total ≥ 0 a solution exists; start after first deficit</td>
+            </tr>
+            <tr>
+              <td>Intervals</td>
+              <td><span class="pill pill--r">Sort by start/end</span><span class="pill pill--y">Greedy merge</span></td>
+              <td>All 4 interval problems solve with sort + one pass; vary only in merge vs count logic</td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════
+           STUDY ORDER
+      ══════════════════════════════ -->
+      <section class="section" id="study-order">
+        <h2><span class="section-num">→</span> Minimal Study Order by Pattern Reuse</h2>
+        <p style="font-size:0.875rem;margin-bottom:1rem;">Learn patterns that unlock the most problems first. This order maximizes problems you can solve after each session.</p>
+
+        <div class="study-order">
+          <div class="study-week">
+            <div class="study-week__num">1</div>
+            <div>
+              <div class="study-week__label">Hash Map + Two Pointers + Sliding Window</div>
+              <div class="study-week__detail">Unlocks: Two Sum, Group Anagrams, Valid Anagram, 3Sum, Container with Most Water, Longest Substring, Minimum Window. ~30 problems solved after week 1.</div>
+            </div>
+          </div>
+          <div class="study-week">
+            <div class="study-week__num">2</div>
+            <div>
+              <div class="study-week__label">Tree Recursion Return Value + BFS Level Order</div>
+              <div class="study-week__detail">Unlocks all 18 Binary Tree problems and most Graph BFS problems (Rotting Oranges, Level Order, Right Side View). One template, ~25 problems.</div>
+            </div>
+          </div>
+          <div class="study-week">
+            <div class="study-week__num">3</div>
+            <div>
+              <div class="study-week__label">Dummy Head + Fast/Slow Pointer (Linked Lists)</div>
+              <div class="study-week__detail">Unlocks all 11 linked list problems. Two patterns cover the entire category. Also: LRU Cache (hash map + doubly linked list).</div>
+            </div>
+          </div>
+          <div class="study-week">
+            <div class="study-week__num">4</div>
+            <div>
+              <div class="study-week__label">Backtracking Template + DFS State Modeling</div>
+              <div class="study-week__detail">Unlocks all 7 backtracking problems + Graph DFS problems (Word Search, Clone Graph, Pacific Atlantic, Course Schedule with DFS). ~20 problems.</div>
+            </div>
+          </div>
+          <div class="study-week">
+            <div class="study-week__num">5</div>
+            <div>
+              <div class="study-week__label">DP State Machine + Binary Search on Answer</div>
+              <div class="study-week__detail">Unlocks most of the 22 DP problems. Start with 1D DP (Climbing Stairs, Coin Change, House Robber), then 2D (LCS, Edit Distance). Binary Search on Answer covers Koko + rotated search.</div>
+            </div>
+          </div>
+          <div class="study-week">
+            <div class="study-week__num">6</div>
+            <div>
+              <div class="study-week__label">Topo Sort + Union Find + Two Heaps + Interval Merge</div>
+              <div class="study-week__detail">Cleans up remaining graph problems (Course Schedule), all interval problems, Find Median from Data Stream, Redundant Connection. Hard hards: Burst Balloons (Interval DP), Word Search II (Trie + DFS).</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="revision-box" style="margin-top:1.5rem;">
+        <h3>⚡ Pre-Interview Pattern Checklist</h3>
+        <ul>
+          <li>Is this a "find pair / group / count" → <strong>Hash Map O(1)</strong></li>
+          <li>Sorted array, find two elements → <strong>Two Pointers squeeze</strong></li>
+          <li>Substring/subarray with a "window condition" → <strong>Sliding Window + freq map</strong></li>
+          <li>Binary tree aggregation → <strong>post-order return value + global answer</strong></li>
+          <li>Shortest path, unweighted → <strong>BFS</strong> · weighted → <strong>Dijkstra</strong></li>
+          <li>Generate all combinations / permutations → <strong>backtracking template</strong></li>
+          <li>Linked list modify/return head → <strong>dummy head first, always</strong></li>
+          <li>Minimize maximum / maximize minimum → <strong>binary search on answer</strong></li>
+          <li>DP on sequence with skip constraint → <strong>state machine (hold/rest/sold)</strong></li>
+          <li>Prerequisites / ordering → <strong>topological sort (Kahn's in-degree)</strong></li>
+        </ul>
+      </div>
+
+      <nav class="page-nav">
+        <a href="../index.html" class="page-nav__btn" data-nav="prev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg><div><div class="page-nav__btn__label">Back</div><div class="page-nav__btn__title">Dashboard</div></div></a>
+        <a href="dynamic-programming.html" class="page-nav__btn page-nav__btn--next" data-nav="next"><div><div class="page-nav__btn__label">Deep Dive</div><div class="page-nav__btn__title">Dynamic Programming</div></div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></a>
+      </nav>
+    </main>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

@@ -1,11 +1,5 @@
 {
-  "version": 2,
-  "builds": [
-    { "src": "server.js", "use": "@vercel/node" }
-  ],
-  "routes": [
-    { "src": "/api/(.*)",                              "dest": "/server.js" },
-    { "src": "/leetcode/top-interview-150/([^.]+)",   "dest": "/server.js" },
-    { "src": "/(.*)",                                  "dest": "/$1" }
+  "rewrites": [
+    { "source": "/leetcode/top-interview-150/:path*", "destination": "/leetcode/top-interview-150/index.html" }
   ]
 }

@@ -45,6 +45,40 @@
 .code-wrap pre{margin:0;border-radius:var(--radius-sm);max-height:420px;overflow:auto;font-size:.8rem}
 .no-code{font-size:.82rem;color:var(--text-muted);margin:.5rem 0 0}
 .hidden{display:none!important}
+
+/* ── Search bar ── */
+.search-wrap{position:relative;margin:1.25rem 0 0}
+.search-bar{display:flex;align-items:center;gap:0;background:var(--bg-secondary);border:1.5px solid var(--border);border-radius:999px;padding:0 .5rem 0 1rem;transition:border-color .2s,box-shadow .2s}
+.search-bar:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px #6366f122}
+.search-icon{color:var(--text-muted);flex-shrink:0;margin-right:.5rem}
+.search-input{flex:1;background:transparent;border:none;outline:none;color:var(--text-primary);font-size:.9rem;padding:.65rem 0;min-width:0}
+.search-input::placeholder{color:var(--text-muted)}
+.search-clear{display:none;background:none;border:none;color:var(--text-muted);cursor:pointer;padding:.3rem;border-radius:50%;line-height:1;font-size:1rem}
+.search-clear:hover{color:var(--text-primary)}
+.search-clear.visible{display:flex;align-items:center;justify-content:center}
+.mic-btn{flex-shrink:0;width:36px;height:36px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;background:transparent;color:var(--text-secondary);margin-left:.25rem}
+.mic-btn:hover{background:var(--bg-primary);color:var(--accent)}
+.mic-btn.listening{background:#ef4444;color:#fff;animation:mic-pulse 1.4s ease-in-out infinite}
+.mic-btn.listening:hover{background:#dc2626}
+.mic-btn:disabled{opacity:.4;cursor:not-allowed}
+@keyframes mic-pulse{0%,100%{box-shadow:0 0 0 0 #ef444455}50%{box-shadow:0 0 0 8px #ef444400}}
+
+/* ── Voice status bar ── */
+.voice-status{display:none;align-items:center;gap:.6rem;margin-top:.6rem;padding:.5rem .9rem;background:#ef444411;border:1px solid #ef444433;border-radius:var(--radius-sm);font-size:.82rem;color:#ef4444}
+.voice-status.visible{display:flex}
+.voice-status.interim{background:#6366f111;border-color:#6366f133;color:var(--accent)}
+.voice-dots{display:flex;gap:3px;align-items:center}
+.voice-dots span{width:5px;height:5px;border-radius:50%;background:currentColor;animation:dot-bounce .9s ease-in-out infinite}
+.voice-dots span:nth-child(2){animation-delay:.15s}
+.voice-dots span:nth-child(3){animation-delay:.3s}
+@keyframes dot-bounce{0%,80%,100%{transform:scale(.8);opacity:.5}40%{transform:scale(1.2);opacity:1}}
+
+/* ── Search results info ── */
+.search-results-info{font-size:.78rem;color:var(--text-muted);margin:.5rem 0 0;min-height:1.2em}
+.search-results-info strong{color:var(--text-primary)}
+.no-results{text-align:center;padding:3rem 1rem;color:var(--text-muted);display:none}
+.no-results.visible{display:block}
+.no-results svg{margin-bottom:.75rem;opacity:.4}
 </style>
 </head>
 <body data-page-title="My Coding Patterns">
@@ -70,6 +104,31 @@
         <span class="stat-pill">Language: <strong>Python</strong></span>
       </div>
     </div>
+    <!-- Search + Voice -->
+    <div class="search-wrap">
+      <div class="search-bar">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="6.5" cy="6.5" r="4.5"/><path d="M10.5 10.5l3 3"/></svg>
+        <input class="search-input" id="pattern-search" type="text" placeholder="Search problems, patterns, tags…" autocomplete="off" spellcheck="false"/>
+        <button class="search-clear" id="search-clear" title="Clear" aria-label="Clear search">&times;</button>
+        <button class="mic-btn" id="mic-btn" title="Voice search" aria-label="Start voice search">
+          <svg id="mic-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="2" width="6" height="12" rx="3"/>
+            <path d="M5 10a7 7 0 0014 0"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="8" y1="22" x2="16" y2="22"/>
+          </svg>
+        </button>
+      </div>
+      <div class="voice-status" id="voice-status">
+        <div class="voice-dots"><span></span><span></span><span></span></div>
+        <span id="voice-status-text">Listening…</span>
+      </div>
+      <div class="search-results-info" id="search-results-info"></div>
+    </div>
+    <div class="no-results" id="no-results">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      <p>No problems match <strong id="no-results-query"></strong></p>
+      <p style="font-size:.82rem">Try a different keyword or pattern name</p>
+    </div>
+
     <div class="tab-bar" id="tab-bar"><button class="tab-btn active" data-target="all">All Patterns</button><button class="tab-btn" data-target="slidingwindow">Sliding Window <span class="tab-count">22</span></button><button class="tab-btn" data-target="binarysearch">Binary Search <span class="tab-count">28</span></button><button class="tab-btn" data-target="dynamicprogramming">Dynamic Programming <span class="tab-count">19</span></button><button class="tab-btn" data-target="bfslevelorder">BFS / Level Order <span class="tab-count">32</span></button><button class="tab-btn" data-target="dfsbacktracking">DFS / Backtracking <span class="tab-count">20</span></button><button class="tab-btn" data-target="prefixsum">Prefix Sum <span class="tab-count">8</span></button><button class="tab-btn" data-target="stackqueue">Stack & Queue <span class="tab-count">10</span></button><button class="tab-btn" data-target="twopointers">Two Pointers <span class="tab-count">3</span></button><button class="tab-btn" data-target="greedy">Greedy <span class="tab-count">2</span></button><button class="tab-btn" data-target="mathbit">Math & Bit <span class="tab-count">4</span></button></div>
     <div id="patterns-content"><section class="pattern-section" id="slidingwindow"><div class="section-header"><h2>Sliding Window</h2><span class="count-badge">22</span></div><div class="prob-grid"><div class="prob-card" data-slug="longest-substring-without-repeating-characters" data-diff="MEDIUM"><div class="prob-header"><span class="prob-num">#3</span><h3 class="prob-title"><a href="https://leetcode.com/problems/longest-substring-without-repeating-characters/" target="_blank" rel="noopener">Longest Substring Without Repeating Characters</a></h3><span class="diff-badge medium">Medium</span></div><div class="prob-tags"><span class="tag">Hash Table</span><span class="tag">String</span><span class="tag">Sliding Window</span></div><p class="prob-desc">Find the length of the longest substring that contains no duplicate characters. Classic variable-size window with a frequency map.</p><div class="approach"><strong>Approach</strong><ol><li>Maintain a sliding window [left, right] and a char-frequency map</li><li>Expand right; when a duplicate enters, shrink left until window is valid again</li><li>Track the global max window length</li></ol></div><details class="code-details"><summary>View Code (Python) &middot; 34 ms &middot; 12.6 MB</summary><div class="code-wrap"><pre><code class="language-python">class Solution(object):
     def lengthOfLongestSubstring(self, s):
@@ -3732,19 +3791,169 @@ class LRUCache(object):
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
   <script>
+/* ── Pattern tab filter ── */
 const tabs = document.querySelectorAll('.tab-btn');
 const sections = document.querySelectorAll('.pattern-section');
+let activeTab = 'all';
+
 tabs.forEach(btn => {
   btn.addEventListener('click', () => {
     tabs.forEach(t => t.classList.remove('active'));
     btn.classList.add('active');
-    const target = btn.dataset.target;
-    sections.forEach(s => {
-      s.classList.toggle('hidden', target !== 'all' && s.id !== target);
-    });
+    activeTab = btn.dataset.target;
+    applyFilters();
     window.scrollTo({top: 0, behavior: 'smooth'});
   });
 });
+
+/* ── Search filter ── */
+const searchInput = document.getElementById('pattern-search');
+const clearBtn    = document.getElementById('search-clear');
+const resultsInfo = document.getElementById('search-results-info');
+const noResults   = document.getElementById('no-results');
+const noResultsQ  = document.getElementById('no-results-query');
+const allCards    = Array.from(document.querySelectorAll('.prob-card'));
+
+function normalise(str) {
+  return str.toLowerCase().replace(/[^a-z0-9\s]/g, ' ');
+}
+
+function cardSearchText(card) {
+  return normalise(card.textContent);
+}
+
+function applyFilters() {
+  const q = normalise(searchInput.value.trim());
+  let visible = 0;
+
+  allCards.forEach(card => {
+    const inTab   = activeTab === 'all' || card.closest('.pattern-section').id === activeTab;
+    const matches = !q || cardSearchText(card).includes(q);
+    card.classList.toggle('hidden', !(inTab && matches));
+    if (inTab && matches) visible++;
+  });
+
+  /* show/hide sections based on visible cards */
+  sections.forEach(sec => {
+    const tabMatch = activeTab === 'all' || sec.id === activeTab;
+    if (!tabMatch) { sec.classList.add('hidden'); return; }
+    const hasVisible = Array.from(sec.querySelectorAll('.prob-card')).some(c => !c.classList.contains('hidden'));
+    sec.classList.toggle('hidden', !hasVisible);
+  });
+
+  /* results info */
+  if (q) {
+    resultsInfo.innerHTML = `<strong>${visible}</strong> of <strong>${allCards.length}</strong> problems match &ldquo;${searchInput.value.trim()}&rdquo;`;
+    noResults.classList.toggle('visible', visible === 0);
+    noResultsQ.textContent = `"${searchInput.value.trim()}"`;
+  } else {
+    resultsInfo.textContent = '';
+    noResults.classList.remove('visible');
+  }
+
+  clearBtn.classList.toggle('visible', searchInput.value.length > 0);
+}
+
+searchInput.addEventListener('input', applyFilters);
+
+clearBtn.addEventListener('click', () => {
+  searchInput.value = '';
+  searchInput.focus();
+  applyFilters();
+});
+
+/* ── Voice search ── */
+const micBtn      = document.getElementById('mic-btn');
+const voiceStatus = document.getElementById('voice-status');
+const voiceText   = document.getElementById('voice-status-text');
+
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+if (!SR) {
+  micBtn.disabled = true;
+  micBtn.title = 'Voice search not supported in this browser (use Chrome or Edge)';
+  micBtn.style.opacity = '0.35';
+} else {
+  const recognition = new SR();
+  recognition.lang = 'en-US';
+  recognition.continuous = false;
+  recognition.interimResults = true;
+  recognition.maxAlternatives = 1;
+
+  let listening = false;
+
+  function startListening() {
+    if (listening) { recognition.stop(); return; }
+    recognition.start();
+  }
+
+  recognition.onstart = () => {
+    listening = true;
+    micBtn.classList.add('listening');
+    voiceStatus.classList.add('visible');
+    voiceStatus.classList.remove('interim');
+    voiceText.textContent = 'Listening…';
+    searchInput.value = '';
+    clearBtn.classList.remove('visible');
+    applyFilters();
+  };
+
+  recognition.onresult = e => {
+    const interim = Array.from(e.results)
+      .map(r => r[0].transcript)
+      .join('');
+    const isFinal = e.results[e.results.length - 1].isFinal;
+
+    searchInput.value = interim;
+    clearBtn.classList.add('visible');
+
+    if (isFinal) {
+      voiceStatus.classList.add('interim');
+      voiceText.textContent = '“' + interim + '”';
+    } else {
+      voiceText.textContent = 'Hearing… “' + interim + '”';
+    }
+    applyFilters();
+  };
+
+  recognition.onerror = e => {
+    const msgs = {
+      'not-allowed': 'Microphone access denied — allow it in browser settings.',
+      'no-speech':   'No speech detected. Try again.',
+      'network':     'Network error during voice recognition.',
+    };
+    voiceText.textContent = msgs[e.error] || ('Error: ' + e.error);
+    voiceStatus.classList.remove('interim');
+  };
+
+  recognition.onend = () => {
+    listening = false;
+    micBtn.classList.remove('listening');
+    if (!searchInput.value.trim()) {
+      voiceStatus.classList.remove('visible');
+    } else {
+      voiceStatus.classList.add('interim');
+      voiceText.textContent = '“' + searchInput.value.trim() + '” — tap mic to search again';
+      setTimeout(() => voiceStatus.classList.remove('visible'), 3000);
+    }
+    searchInput.focus();
+  };
+
+  micBtn.addEventListener('click', startListening);
+
+  /* also allow pressing / to focus search */
+  document.addEventListener('keydown', e => {
+    if (e.key === '/' && document.activeElement !== searchInput) {
+      e.preventDefault();
+      searchInput.focus();
+    }
+    if (e.key === 'Escape' && document.activeElement === searchInput) {
+      searchInput.value = '';
+      applyFilters();
+      searchInput.blur();
+    }
+  });
+}
 </script>
 </body>
 </html>

@@ -6,6 +6,8 @@ A visual coding interview knowledge base for rapid revision — patterns, algori
 
 [coding-interview-hacks.vercel.app](https://coding-interview-hacks.vercel.app)
 
+> Deployed on Vercel — auto-aliases to this URL on every `vercel --prod` push.
+
 GitHub: [github.com/amudhan023/coding-interview-hacks](https://github.com/amudhan023/coding-interview-hacks)
 
 ---

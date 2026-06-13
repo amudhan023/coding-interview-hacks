@@ -4,9 +4,7 @@ A visual coding interview knowledge base for rapid revision — patterns, algori
 
 ## Live Site
 
-[coding-interview-hacks.vercel.app](https://coding-interview-hacks.vercel.app)
-
-> Deployed on Vercel — auto-aliases to this URL on every `vercel --prod` push.
+**[coding-interview-hacks.vercel.app](https://coding-interview-hacks.vercel.app)**
 
 GitHub: [github.com/amudhan023/coding-interview-hacks](https://github.com/amudhan023/coding-interview-hacks)
 
@@ -14,13 +12,14 @@ GitHub: [github.com/amudhan023/coding-interview-hacks](https://github.com/amudha
 
 ## What's Inside
 
-| Section | Topics |
+| Section | Details |
 |---|---|
 | **Concepts** | Prefix Sum, BFS, DFS, Union Find, Dijkstra, Dynamic Programming, Patterns |
 | **Problems** | Merge Sorted Array, Majority Element, Best Time to Buy & Sell Stock, Burst Balloons |
 | **LeetCode Top 150** | Full tracker with solved state, difficulty filter, and per-problem detail pages |
+| **My Coding Patterns** | 154 solved problems from a personal LeetCode list with actual submitted code, grouped by pattern (Sliding Window, Binary Search, DP, Trees, Graphs, and more), with problem descriptions, approach steps, and voice-to-text search |
 
-Every page includes: intuitive explanation · SVG visualizations · Python 2 code templates · complexity analysis · common mistakes · LeetCode problem list · revision notes.
+Every concept/problem page includes: intuitive explanation · SVG visualizations · Python 2 code templates · complexity analysis · common mistakes · revision notes.
 
 ---
 
@@ -28,48 +27,41 @@ Every page includes: intuitive explanation · SVG visualizations · Python 2 cod
 
 ### Option 1 — Node server (recommended)
 
-The Node server enables the "mark solved" tracker and correct routing for detail pages.
+Enables the "mark solved" tracker and correct routing for LC150 detail pages.
 
 ```bash
 # 1. Clone the repo
 git clone https://github.com/amudhan023/coding-interview-hacks.git
 cd coding-interview-hacks
 
-# 2. Install dependencies (only Express — no build step)
+# 2. Install dependencies (Express only — no build step)
 npm install
 
-# 3. Start the server
+# 3. Start
 npm start
 # → http://localhost:3000
 ```
 
-The server runs on port `3000` by default. Override with `PORT=8080 npm start`.
+Override the port: `PORT=8080 npm start`
 
 ### Option 2 — Open as a static file
 
-No install required. Most features work, but the solved-state API is unavailable (the tracker falls back to `localStorage`).
+No install required. Most features work; the solved-state API falls back to `localStorage`.
 
 ```bash
-# macOS
-open index.html
-
-# Windows
-start index.html
-
-# Linux
-xdg-open index.html
+open index.html        # macOS
+start index.html       # Windows
+xdg-open index.html    # Linux
 ```
 
 ### Option 3 — Python static server
 
 ```bash
 python3 -m http.server 8080
-# then open http://localhost:8080
+# open http://localhost:8080
 ```
 
-> **Note:** Options 2 and 3 do not support the `/api/solved` endpoints or the
-> `/leetcode/top-interview-150/:slug` detail-page routes. Use Option 1 for the
-> full experience.
+> Options 2 and 3 do not support `/api/solved` or the LC150 slug routes. Use Option 1 for the full experience.
 
 ---
 
@@ -78,11 +70,15 @@ python3 -m http.server 8080
 ```
 /
 ├── index.html                        # Dashboard (homepage)
-├── server.js                         # Express dev + production server
+├── my-patterns.html                  # My Coding Patterns — 154 solved problems with code
+├── server.js                         # Express local dev server
 ├── package.json
 ├── vercel.json                       # Vercel deployment config
 ├── search-index.json                 # Instant search data
-├── solved-state.json                 # Persisted LC150 solved state (local)
+├── solved-state.json                 # LC150 solved state (local only)
+│
+├── api/
+│   └── solved.js                     # Vercel serverless function for solved-state API
 │
 ├── assets/
 │   ├── css/main.css
@@ -90,7 +86,7 @@ python3 -m http.server 8080
 │       ├── lc150-enhanced.js         # LC150 tracker UI
 │       └── problem-page.js           # Per-problem detail page logic
 │
-├── concepts/                         # Concept pages (BFS, DFS, DP, …)
+├── concepts/                         # Concept pages (BFS, DFS, DP, Union Find, …)
 ├── problems/                         # Problem walkthrough pages
 └── leetcode/
     └── top-interview-150/
@@ -100,22 +96,26 @@ python3 -m http.server 8080
 
 ---
 
-## API Endpoints (local / Vercel)
+## API Endpoints
 
 | Method | Path | Description |
 |---|---|---|
 | `GET` | `/api/solved` | Return the current solved-state map |
 | `POST` | `/api/solved` | Merge `{ slug: true/false }` into solved state |
-| `DELETE` | `/api/solved/:slug` | Remove a single problem from solved state |
+| `DELETE` | `/api/solved?slug=<slug>` | Remove a single problem from solved state |
+
+> On Vercel the filesystem is read-only, so POST/DELETE succeed silently but don't persist — the UI falls back to `localStorage`.
 
 ---
 
 ## Stack
 
-- HTML5 · CSS3 · Vanilla JavaScript (no frameworks)
-- Node.js + Express (server and API)
-- Dark/light mode, mobile responsive, keyboard shortcuts
-- Instant search across all topics
+- HTML5 · CSS3 · Vanilla JavaScript (no frameworks, no build step)
+- Node.js + Express (local dev server)
+- Vercel — static hosting + serverless API function
+- Web Speech API — voice-to-text search on My Coding Patterns page
+- Prism.js — syntax highlighting for submitted code
+- Dark/light mode · mobile responsive · keyboard shortcuts · instant search
 
 ---
 
@@ -126,29 +126,28 @@ python3 -m http.server 8080
 | `/` | Focus search |
 | `←` | Previous page |
 | `→` | Next page |
+| `Escape` | Clear search (on My Coding Patterns) |
 
 ---
 
 ## Deploy to Vercel
 
+Pushes to `main` deploy automatically via the connected GitHub repo.
+
+To deploy manually:
+
 ```bash
-# Install Vercel CLI (once)
-npm install -g vercel
-
-# Deploy from the project root
-vercel
-
-# Promote to production
+npm install -g vercel   # once
 vercel --prod
 ```
 
-Vercel auto-detects `vercel.json` and runs the Express server as a serverless function, so all routes and the API work identically to local.
+Static files are served directly by Vercel's CDN. The `/api/solved` endpoint runs as a native Vercel serverless function (`api/solved.js`). The LC150 SPA slug route is handled via a rewrite in `vercel.json`.
 
 ---
 
 ## Adding Topics
 
-To add a new concept or problem, see `CLAUDE.md` for the full page template and auto-linking workflow.
+See `CLAUDE.md` for the full page template and auto-linking workflow.
 
 ---
 

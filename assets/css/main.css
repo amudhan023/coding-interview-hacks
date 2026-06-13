@@ -931,7 +931,7 @@ p code, li code {
 /* ── Enhanced list row ─────────────────────────────────────── */
 .lc150-list li {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.4rem;
   padding: 0.3rem 0.75rem 0.3rem 1rem;
   transition: background var(--transition);
@@ -946,9 +946,8 @@ p code, li code {
   color: var(--text-secondary);
   text-decoration: none;
   font-size: 0.82rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
+  word-break: break-word;
   transition: color var(--transition);
 }
 .lc150-list .lc150-title-link:hover { color: var(--accent); }
@@ -956,6 +955,7 @@ p code, li code {
 /* Details button */
 .lc150-detail-btn {
   flex-shrink: 0;
+  margin-top: 1px;
   padding: 2px 8px;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border);
@@ -981,6 +981,7 @@ p code, li code {
   position: relative;
   width: 18px;
   height: 18px;
+  margin-top: 1px;
   cursor: pointer;
 }
 

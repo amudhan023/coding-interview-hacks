@@ -4,7 +4,7 @@ window.LC150_PROBLEMS = {
 /* ════════════════ ARRAY / STRING ════════════════ */
 "merge-sorted-array": {
   num:1, title:"Merge Sorted Array", diff:"Easy", cat:"Array / String",
-  lc:"https://leetcode.com/problems/merge-sorted-array/",
+  lc:"https://leetcode.com/problems/merge-sorted-array/?envType=problem-list-v2&envId=wk69juu6",
   rev:"5 min", pattern:"Two Pointers from the End",
   sections:{
     explain:"Merge nums2 into nums1 in-place. nums1 has size m+n with m valid elements; nums2 has n. Result must be in nums1.",
@@ -42,7 +42,7 @@ window.LC150_PROBLEMS = {
 
 "remove-element": {
   num:2, title:"Remove Element", diff:"Easy", cat:"Array / String",
-  lc:"https://leetcode.com/problems/remove-element/",
+  lc:"https://leetcode.com/problems/remove-element/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"Two Pointers (write pointer)",
   sections:{
     explain:"Remove all occurrences of val in-place; return new length. Order can change.",
@@ -64,7 +64,7 @@ window.LC150_PROBLEMS = {
 
 "remove-duplicates-from-sorted-array": {
   num:3, title:"Remove Duplicates from Sorted Array", diff:"Easy", cat:"Array / String",
-  lc:"https://leetcode.com/problems/remove-duplicates-from-sorted-array/",
+  lc:"https://leetcode.com/problems/remove-duplicates-from-sorted-array/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"Write Pointer on Sorted Array",
   sections:{
     explain:"Remove duplicates in-place from sorted nums. Return count of unique elements.",
@@ -85,7 +85,7 @@ window.LC150_PROBLEMS = {
 
 "remove-duplicates-from-sorted-array-ii": {
   num:4, title:"Remove Duplicates from Sorted Array II", diff:"Medium", cat:"Array / String",
-  lc:"https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii/",
+  lc:"https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"Write Pointer — allow at most 2",
   sections:{
     explain:"Same as Remove Duplicates I but allow each unique element to appear at most twice.",
@@ -106,7 +106,7 @@ window.LC150_PROBLEMS = {
 
 "majority-element": {
   num:5, title:"Majority Element", diff:"Easy", cat:"Array / String",
-  lc:"https://leetcode.com/problems/majority-element/",
+  lc:"https://leetcode.com/problems/majority-element/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"Boyer-Moore Voting",
   sections:{
     explain:"Find the element that appears more than n/2 times. It always exists.",
@@ -141,7 +141,7 @@ window.LC150_PROBLEMS = {
 
 "rotate-array": {
   num:6, title:"Rotate Array", diff:"Medium", cat:"Array / String",
-  lc:"https://leetcode.com/problems/rotate-array/",
+  lc:"https://leetcode.com/problems/rotate-array/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"Reverse Three Times",
   sections:{
     explain:"Rotate array right by k steps in-place.",
@@ -161,7 +161,7 @@ window.LC150_PROBLEMS = {
 
 "best-time-to-buy-and-sell-stock": {
   num:7, title:"Best Time to Buy and Sell Stock", diff:"Easy", cat:"Array / String",
-  lc:"https://leetcode.com/problems/best-time-to-buy-and-sell-stock/",
+  lc:"https://leetcode.com/problems/best-time-to-buy-and-sell-stock/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"Greedy — Track Running Minimum",
   sections:{
     explain:"Given daily prices, buy once and sell once for maximum profit. Return 0 if no profit possible.",
@@ -198,7 +198,7 @@ window.LC150_PROBLEMS = {
 
 "best-time-to-buy-and-sell-stock-ii": {
   num:8, title:"Best Time to Buy and Sell Stock II", diff:"Medium", cat:"Array / String",
-  lc:"https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/",
+  lc:"https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"Greedy — Capture Every Upslope",
   sections:{
     explain:"Multiple transactions allowed (sell before rebuy). Maximize total profit.",
@@ -215,7 +215,7 @@ window.LC150_PROBLEMS = {
 
 "jump-game": {
   num:9, title:"Jump Game", diff:"Medium", cat:"Array / String",
-  lc:"https://leetcode.com/problems/jump-game/",
+  lc:"https://leetcode.com/problems/jump-game/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"Greedy — Track Max Reachable",
   sections:{
     explain:"Each element is max jump length from that index. Can you reach the last index?",
@@ -240,7 +240,7 @@ window.LC150_PROBLEMS = {
 
 "jump-game-ii": {
   num:10, title:"Jump Game II", diff:"Medium", cat:"Array / String",
-  lc:"https://leetcode.com/problems/jump-game-ii/",
+  lc:"https://leetcode.com/problems/jump-game-ii/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"Greedy — BFS Levels",
   sections:{
     explain:"Return minimum number of jumps to reach last index (guaranteed reachable).",
@@ -267,7 +267,7 @@ window.LC150_PROBLEMS = {
 
 "h-index": {
   num:11, title:"H-Index", diff:"Medium", cat:"Array / String",
-  lc:"https://leetcode.com/problems/h-index/",
+  lc:"https://leetcode.com/problems/h-index/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"Sort + Greedy",
   sections:{
     explain:"Given citation counts, return h: max h where at least h papers have ≥ h citations.",
@@ -289,7 +289,7 @@ window.LC150_PROBLEMS = {
 
 "insert-delete-getrandom-o1": {
   num:12, title:"Insert Delete GetRandom O(1)", diff:"Medium", cat:"Array / String",
-  lc:"https://leetcode.com/problems/insert-delete-getrandom-o1/",
+  lc:"https://leetcode.com/problems/insert-delete-getrandom-o1/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"HashMap + Dynamic Array",
   sections:{
     explain:"Design data structure with O(1) insert, delete, and getRandom.",
@@ -322,7 +322,7 @@ class RandomizedSet:
 
 "product-of-array-except-self": {
   num:13, title:"Product of Array Except Self", diff:"Medium", cat:"Array / String",
-  lc:"https://leetcode.com/problems/product-of-array-except-self/",
+  lc:"https://leetcode.com/problems/product-of-array-except-self/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"Prefix Product × Suffix Product",
   sections:{
     explain:"Return array where output[i] = product of all nums except nums[i]. No division, O(n) time.",
@@ -357,7 +357,7 @@ class RandomizedSet:
 
 "gas-station": {
   num:14, title:"Gas Station", diff:"Medium", cat:"Array / String",
-  lc:"https://leetcode.com/problems/gas-station/",
+  lc:"https://leetcode.com/problems/gas-station/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"Greedy — Start After Deficit",
   sections:{
     explain:"n gas stations in a circle. gas[i] available, cost[i] to go to next. Find starting station for full circuit (or -1).",
@@ -390,7 +390,7 @@ class RandomizedSet:
 
 "candy": {
   num:15, title:"Candy", diff:"Hard", cat:"Array / String",
-  lc:"https://leetcode.com/problems/candy/",
+  lc:"https://leetcode.com/problems/candy/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"Two-Pass Greedy",
   sections:{
     explain:"Each child has a rating. Give at least 1 candy each. Higher-rated children must get more than both neighbors. Minimize total.",
@@ -415,7 +415,7 @@ class RandomizedSet:
 
 "trapping-rain-water": {
   num:16, title:"Trapping Rain Water", diff:"Hard", cat:"Array / String",
-  lc:"https://leetcode.com/problems/trapping-rain-water/",
+  lc:"https://leetcode.com/problems/trapping-rain-water/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"Two Pointers with Running Max",
   sections:{
     explain:"Given heights, compute total water trapped after rain.",
@@ -454,7 +454,7 @@ class RandomizedSet:
 
 "roman-to-integer": {
   num:17, title:"Roman to Integer", diff:"Easy", cat:"Array / String",
-  lc:"https://leetcode.com/problems/roman-to-integer/",
+  lc:"https://leetcode.com/problems/roman-to-integer/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"Hash Map + Look-Ahead",
   sections:{
     explain:"Convert Roman numeral string to integer.",
@@ -478,7 +478,7 @@ class RandomizedSet:
 
 "integer-to-roman": {
   num:18, title:"Integer to Roman", diff:"Medium", cat:"Array / String",
-  lc:"https://leetcode.com/problems/integer-to-roman/",
+  lc:"https://leetcode.com/problems/integer-to-roman/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"Greedy — Largest Symbol First",
   sections:{
     explain:"Convert integer (1-3999) to Roman numeral string.",
@@ -501,7 +501,7 @@ class RandomizedSet:
 
 "length-of-last-word": {
   num:19, title:"Length of Last Word", diff:"Easy", cat:"Array / String",
-  lc:"https://leetcode.com/problems/length-of-last-word/",
+  lc:"https://leetcode.com/problems/length-of-last-word/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"String Traversal from Right",
   sections:{
     explain:"Return length of the last word in a string of words separated by spaces.",
@@ -523,7 +523,7 @@ class RandomizedSet:
 
 "longest-common-prefix": {
   num:20, title:"Longest Common Prefix", diff:"Easy", cat:"Array / String",
-  lc:"https://leetcode.com/problems/longest-common-prefix/",
+  lc:"https://leetcode.com/problems/longest-common-prefix/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"Vertical Scan",
   sections:{
     explain:"Find longest common prefix among array of strings.",
@@ -545,7 +545,7 @@ class RandomizedSet:
 
 "reverse-words-in-a-string": {
   num:21, title:"Reverse Words in a String", diff:"Medium", cat:"Array / String",
-  lc:"https://leetcode.com/problems/reverse-words-in-a-string/",
+  lc:"https://leetcode.com/problems/reverse-words-in-a-string/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"Split + Reverse",
   sections:{
     explain:"Return string with words in reverse order, single spaces, no leading/trailing spaces.",
@@ -562,7 +562,7 @@ class RandomizedSet:
 
 "zigzag-conversion": {
   num:22, title:"Zigzag Conversion", diff:"Medium", cat:"Array / String",
-  lc:"https://leetcode.com/problems/zigzag-conversion/",
+  lc:"https://leetcode.com/problems/zigzag-conversion/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"Simulate Row Traversal",
   sections:{
     explain:"Write PAYPALISHIRING in zigzag pattern over numRows rows, then read row by row.",
@@ -587,7 +587,7 @@ class RandomizedSet:
 
 "find-the-index-of-the-first-occurrence-in-a-string": {
   num:23, title:"Find the Index of the First Occurrence in a String", diff:"Easy", cat:"Array / String",
-  lc:"https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/",
+  lc:"https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"Substring Search (KMP or built-in)",
   sections:{
     explain:"Return index of first occurrence of needle in haystack, or -1.",
@@ -606,7 +606,7 @@ class RandomizedSet:
 
 "text-justification": {
   num:24, title:"Text Justification", diff:"Hard", cat:"Array / String",
-  lc:"https://leetcode.com/problems/text-justification/",
+  lc:"https://leetcode.com/problems/text-justification/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"Greedy Line-Packing + Careful Space Distribution",
   sections:{
     explain:"Justify text to exactly maxWidth. Extra spaces distributed left-to-right; last line is left-justified.",
@@ -642,7 +642,7 @@ class RandomizedSet:
 /* ════════════════ TWO POINTERS ════════════════ */
 "valid-palindrome": {
   num:25, title:"Valid Palindrome", diff:"Easy", cat:"Two Pointers",
-  lc:"https://leetcode.com/problems/valid-palindrome/",
+  lc:"https://leetcode.com/problems/valid-palindrome/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"Two Pointers (Inward Squeeze)",
   sections:{
     explain:"A string is a palindrome if, considering only alphanumeric characters and ignoring case, it reads the same forwards and backwards.",
@@ -665,7 +665,7 @@ class RandomizedSet:
 
 "is-subsequence": {
   num:26, title:"Is Subsequence", diff:"Easy", cat:"Two Pointers",
-  lc:"https://leetcode.com/problems/is-subsequence/",
+  lc:"https://leetcode.com/problems/is-subsequence/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"Two Pointers (Advancing Independently)",
   sections:{
     explain:"Check if s is a subsequence of t (characters of s appear in t in order).",
@@ -686,7 +686,7 @@ class RandomizedSet:
 
 "two-sum-ii-input-array-is-sorted": {
   num:27, title:"Two Sum II — Input Array Is Sorted", diff:"Medium", cat:"Two Pointers",
-  lc:"https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/",
+  lc:"https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"Two Pointers Inward Squeeze (Sorted)",
   sections:{
     explain:"Find two numbers in a sorted array that sum to target. Return 1-indexed positions.",
@@ -708,7 +708,7 @@ class RandomizedSet:
 
 "container-with-most-water": {
   num:28, title:"Container With Most Water", diff:"Medium", cat:"Two Pointers",
-  lc:"https://leetcode.com/problems/container-with-most-water/",
+  lc:"https://leetcode.com/problems/container-with-most-water/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"Two Pointers — Always Move Shorter Side",
   sections:{
     explain:"Given heights array, find two lines forming a container holding the most water.",
@@ -736,7 +736,7 @@ class RandomizedSet:
 
 "3sum": {
   num:29, title:"3Sum", diff:"Medium", cat:"Two Pointers",
-  lc:"https://leetcode.com/problems/3sum/",
+  lc:"https://leetcode.com/problems/3sum/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"Sort + Fix One + Two Pointer Squeeze",
   sections:{
     explain:"Find all unique triplets in an array that sum to zero.",
@@ -779,7 +779,7 @@ class RandomizedSet:
 /* ════════════════ SLIDING WINDOW ════════════════ */
 "minimum-size-subarray-sum": {
   num:30, title:"Minimum Size Subarray Sum", diff:"Medium", cat:"Sliding Window",
-  lc:"https://leetcode.com/problems/minimum-size-subarray-sum/",
+  lc:"https://leetcode.com/problems/minimum-size-subarray-sum/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"Variable Sliding Window",
   sections:{
     explain:"Find minimal length subarray with sum ≥ target.",
@@ -804,7 +804,7 @@ class RandomizedSet:
 
 "longest-substring-without-repeating-characters": {
   num:31, title:"Longest Substring Without Repeating Characters", diff:"Medium", cat:"Sliding Window",
-  lc:"https://leetcode.com/problems/longest-substring-without-repeating-characters/",
+  lc:"https://leetcode.com/problems/longest-substring-without-repeating-characters/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"Sliding Window + Last Seen Map",
   sections:{
     explain:"Find length of longest substring without repeating characters.",
@@ -840,7 +840,7 @@ class RandomizedSet:
 
 "substring-with-concatenation-of-all-words": {
   num:32, title:"Substring with Concatenation of All Words", diff:"Hard", cat:"Sliding Window",
-  lc:"https://leetcode.com/problems/substring-with-concatenation-of-all-words/",
+  lc:"https://leetcode.com/problems/substring-with-concatenation-of-all-words/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"Sliding Window with Word-Level Frequency Map",
   sections:{
     explain:"Find all starting indices of substrings that are a concatenation of all words (each exactly once, in any order).",
@@ -878,7 +878,7 @@ class RandomizedSet:
 
 "minimum-window-substring": {
   num:33, title:"Minimum Window Substring", diff:"Hard", cat:"Sliding Window",
-  lc:"https://leetcode.com/problems/minimum-window-substring/",
+  lc:"https://leetcode.com/problems/minimum-window-substring/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"Variable Sliding Window + Need Counter",
   sections:{
     explain:"Find the minimum window in s containing all characters of t.",
@@ -925,7 +925,7 @@ def minWindow(self, s, t):
 /* ════════════════ MATRIX ════════════════ */
 "valid-sudoku": {
   num:34, title:"Valid Sudoku", diff:"Medium", cat:"Matrix",
-  lc:"https://leetcode.com/problems/valid-sudoku/",
+  lc:"https://leetcode.com/problems/valid-sudoku/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"Three Sets per Dimension",
   sections:{
     explain:"Validate a 9×9 Sudoku board (don't solve it). Each row, column, and 3×3 box must have digits 1-9 at most once.",
@@ -953,7 +953,7 @@ def minWindow(self, s, t):
 
 "spiral-matrix": {
   num:35, title:"Spiral Matrix", diff:"Medium", cat:"Matrix",
-  lc:"https://leetcode.com/problems/spiral-matrix/",
+  lc:"https://leetcode.com/problems/spiral-matrix/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"Boundary Shrink",
   sections:{
     explain:"Return all elements of an m×n matrix in spiral order.",
@@ -980,7 +980,7 @@ def minWindow(self, s, t):
 
 "rotate-image": {
   num:36, title:"Rotate Image", diff:"Medium", cat:"Matrix",
-  lc:"https://leetcode.com/problems/rotate-image/",
+  lc:"https://leetcode.com/problems/rotate-image/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"Transpose then Reverse Rows",
   sections:{
     explain:"Rotate an n×n matrix 90 degrees clockwise in-place.",
@@ -1004,7 +1004,7 @@ def minWindow(self, s, t):
 
 "set-matrix-zeroes": {
   num:37, title:"Set Matrix Zeroes", diff:"Medium", cat:"Matrix",
-  lc:"https://leetcode.com/problems/set-matrix-zeroes/",
+  lc:"https://leetcode.com/problems/set-matrix-zeroes/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"Use First Row/Col as Markers",
   sections:{
     explain:"If cell is 0, set its entire row and column to 0, in-place.",
@@ -1037,7 +1037,7 @@ def minWindow(self, s, t):
 
 "game-of-life": {
   num:38, title:"Game of Life", diff:"Medium", cat:"Matrix",
-  lc:"https://leetcode.com/problems/game-of-life/",
+  lc:"https://leetcode.com/problems/game-of-life/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"In-Place State Encoding",
   sections:{
     explain:"Compute one step of Conway's Game of Life in-place. 1=live, 0=dead.",
@@ -1073,7 +1073,7 @@ def minWindow(self, s, t):
 /* ════════════════ HASHMAP ════════════════ */
 "ransom-note": {
   num:39, title:"Ransom Note", diff:"Easy", cat:"Hashmap",
-  lc:"https://leetcode.com/problems/ransom-note/",
+  lc:"https://leetcode.com/problems/ransom-note/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"Character Frequency Counter",
   sections:{
     explain:"Can ransomNote be constructed using letters from magazine (each letter used once)?",
@@ -1095,7 +1095,7 @@ def canConstruct(self, ransomNote, magazine):
 
 "isomorphic-strings": {
   num:40, title:"Isomorphic Strings", diff:"Easy", cat:"Hashmap",
-  lc:"https://leetcode.com/problems/isomorphic-strings/",
+  lc:"https://leetcode.com/problems/isomorphic-strings/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"Bijection via Two Maps",
   sections:{
     explain:"Two strings are isomorphic if s's chars can be replaced to get t, with consistent mapping (bijection).",
@@ -1117,7 +1117,7 @@ def canConstruct(self, ransomNote, magazine):
 
 "word-pattern": {
   num:41, title:"Word Pattern", diff:"Easy", cat:"Hashmap",
-  lc:"https://leetcode.com/problems/word-pattern/",
+  lc:"https://leetcode.com/problems/word-pattern/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"Bijection via Two Maps",
   sections:{
     explain:"Check if string s follows pattern p (each letter maps to exactly one word, bijection).",
@@ -1141,7 +1141,7 @@ def canConstruct(self, ransomNote, magazine):
 
 "valid-anagram": {
   num:42, title:"Valid Anagram", diff:"Easy", cat:"Hashmap",
-  lc:"https://leetcode.com/problems/valid-anagram/",
+  lc:"https://leetcode.com/problems/valid-anagram/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"Character Frequency Counter",
   sections:{
     explain:"Check if t is an anagram of s (same chars same frequency).",
@@ -1159,7 +1159,7 @@ def isAnagram(self, s, t):
 
 "group-anagrams": {
   num:43, title:"Group Anagrams", diff:"Medium", cat:"Hashmap",
-  lc:"https://leetcode.com/problems/group-anagrams/",
+  lc:"https://leetcode.com/problems/group-anagrams/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"HashMap with Sorted String Key",
   sections:{
     explain:"Group strings that are anagrams of each other.",
@@ -1183,7 +1183,7 @@ def groupAnagrams(self, strs):
 
 "two-sum": {
   num:44, title:"Two Sum", diff:"Easy", cat:"Hashmap",
-  lc:"https://leetcode.com/problems/two-sum/",
+  lc:"https://leetcode.com/problems/two-sum/?envType=problem-list-v2&envId=wk69juu6",
   rev:"5 min", pattern:"Hash Map Complement",
   sections:{
     explain:"Find indices of two numbers in nums that sum to target. Exactly one solution exists.",
@@ -1213,7 +1213,7 @@ def groupAnagrams(self, strs):
 
 "happy-number": {
   num:45, title:"Happy Number", diff:"Easy", cat:"Hashmap",
-  lc:"https://leetcode.com/problems/happy-number/",
+  lc:"https://leetcode.com/problems/happy-number/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"Cycle Detection via Set (or Fast/Slow)",
   sections:{
     explain:"A happy number eventually reaches 1 by repeatedly replacing with sum of squares of digits. Return true if happy.",
@@ -1240,7 +1240,7 @@ def groupAnagrams(self, strs):
 
 "contains-duplicate-ii": {
   num:46, title:"Contains Duplicate II", diff:"Medium", cat:"Hashmap",
-  lc:"https://leetcode.com/problems/contains-duplicate-ii/",
+  lc:"https://leetcode.com/problems/contains-duplicate-ii/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"Sliding Window Set / HashMap Index",
   sections:{
     explain:"Return true if there exist indices i,j such that nums[i]==nums[j] and |i-j|<=k.",
@@ -1263,7 +1263,7 @@ def groupAnagrams(self, strs):
 
 "longest-consecutive-sequence": {
   num:47, title:"Longest Consecutive Sequence", diff:"Medium", cat:"Hashmap",
-  lc:"https://leetcode.com/problems/longest-consecutive-sequence/",
+  lc:"https://leetcode.com/problems/longest-consecutive-sequence/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"HashSet + Only Start Sequences at n-1 Not in Set",
   sections:{
     explain:"Find length of longest consecutive elements sequence. O(n) time.",
@@ -1293,7 +1293,7 @@ def groupAnagrams(self, strs):
 /* ════════════════ INTERVALS ════════════════ */
 "summary-ranges": {
   num:48, title:"Summary Ranges", diff:"Easy", cat:"Intervals",
-  lc:"https://leetcode.com/problems/summary-ranges/",
+  lc:"https://leetcode.com/problems/summary-ranges/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"Linear Scan with Range Tracking",
   sections:{
     explain:"Given sorted unique integers, return smallest list of ranges covering all numbers.",
@@ -1317,7 +1317,7 @@ def groupAnagrams(self, strs):
 
 "merge-intervals": {
   num:49, title:"Merge Intervals", diff:"Medium", cat:"Intervals",
-  lc:"https://leetcode.com/problems/merge-intervals/",
+  lc:"https://leetcode.com/problems/merge-intervals/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"Sort by Start + Greedy Merge",
   sections:{
     explain:"Merge all overlapping intervals.",
@@ -1349,7 +1349,7 @@ def groupAnagrams(self, strs):
 
 "insert-interval": {
   num:50, title:"Insert Interval", diff:"Medium", cat:"Intervals",
-  lc:"https://leetcode.com/problems/insert-interval/",
+  lc:"https://leetcode.com/problems/insert-interval/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"Three-Phase Linear Scan",
   sections:{
     explain:"Insert a new interval into a sorted non-overlapping list, merging if necessary.",
@@ -1379,7 +1379,7 @@ def groupAnagrams(self, strs):
 
 "minimum-number-of-arrows-to-burst-balloons": {
   num:51, title:"Minimum Number of Arrows to Burst Balloons", diff:"Medium", cat:"Intervals",
-  lc:"https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/",
+  lc:"https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"Greedy — Sort by End, Shoot at End",
   sections:{
     explain:"Balloons are intervals on x-axis. Arrows shot vertically burst all balloons at that x. Minimum arrows to burst all?",
@@ -1408,7 +1408,7 @@ def groupAnagrams(self, strs):
 /* ════════════════ STACK ════════════════ */
 "valid-parentheses": {
   num:52, title:"Valid Parentheses", diff:"Easy", cat:"Stack",
-  lc:"https://leetcode.com/problems/valid-parentheses/",
+  lc:"https://leetcode.com/problems/valid-parentheses/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"Stack for Matching Brackets",
   sections:{
     explain:"Given string of brackets, determine if all brackets are correctly matched and closed.",
@@ -1443,7 +1443,7 @@ def groupAnagrams(self, strs):
 
 "simplify-path": {
   num:53, title:"Simplify Path", diff:"Medium", cat:"Stack",
-  lc:"https://leetcode.com/problems/simplify-path/",
+  lc:"https://leetcode.com/problems/simplify-path/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"Stack for Directory Processing",
   sections:{
     explain:"Simplify Unix-style file path: '..' goes up, '.' stays, double slashes ignored.",
@@ -1466,7 +1466,7 @@ def groupAnagrams(self, strs):
 
 "min-stack": {
   num:54, title:"Min Stack", diff:"Medium", cat:"Stack",
-  lc:"https://leetcode.com/problems/min-stack/",
+  lc:"https://leetcode.com/problems/min-stack/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"Auxiliary Min Stack",
   sections:{
     explain:"Design stack with push, pop, top, and getMin all in O(1).",
@@ -1493,7 +1493,7 @@ def groupAnagrams(self, strs):
 
 "evaluate-reverse-polish-notation": {
   num:55, title:"Evaluate Reverse Polish Notation", diff:"Medium", cat:"Stack",
-  lc:"https://leetcode.com/problems/evaluate-reverse-polish-notation/",
+  lc:"https://leetcode.com/problems/evaluate-reverse-polish-notation/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"Stack-Based Expression Evaluation",
   sections:{
     explain:"Evaluate RPN expression. Operators apply to two preceding operands.",
@@ -1519,7 +1519,7 @@ def groupAnagrams(self, strs):
 
 "basic-calculator": {
   num:56, title:"Basic Calculator", diff:"Hard", cat:"Stack",
-  lc:"https://leetcode.com/problems/basic-calculator/",
+  lc:"https://leetcode.com/problems/basic-calculator/?envType=problem-list-v2&envId=wk69juu6",
   pattern:"Stack for Sign and Parentheses",
   sections:{
     explain:"Evaluate expression with +, -, (, ). No multiply/divide.",
@@ -1555,7 +1555,7 @@ def groupAnagrams(self, strs):
 
 "linked-list-cycle": {
   num:57, title:"Linked List Cycle", diff:"Easy", cat:"Linked List",
-  lc:"https://leetcode.com/problems/linked-list-cycle/",
+  lc:"https://leetcode.com/problems/linked-list-cycle/?envType=problem-list-v2&envId=wk69juu6",
   rev:"5 min", pattern:"Floyd's Cycle Detection (Fast/Slow Pointers)",
   sections:{
     explain:"Given the head of a linked list, determine if it contains a cycle. A cycle exists if some node can be reached again by following next pointers.",
@@ -1588,7 +1588,7 @@ def groupAnagrams(self, strs):
 
 "add-two-numbers": {
   num:58, title:"Add Two Numbers", diff:"Medium", cat:"Linked List",
-  lc:"https://leetcode.com/problems/add-two-numbers/",
+  lc:"https://leetcode.com/problems/add-two-numbers/?envType=problem-list-v2&envId=wk69juu6",
   rev:"8 min", pattern:"Dummy Head + Carry Simulation",
   sections:{
     explain:"Two non-empty linked lists represent non-negative integers in reverse order. Add them and return the sum as a linked list in the same reverse order.",
@@ -1626,7 +1626,7 @@ def groupAnagrams(self, strs):
 
 "merge-two-sorted-lists": {
   num:59, title:"Merge Two Sorted Lists", diff:"Easy", cat:"Linked List",
-  lc:"https://leetcode.com/problems/merge-two-sorted-lists/",
+  lc:"https://leetcode.com/problems/merge-two-sorted-lists/?envType=problem-list-v2&envId=wk69juu6",
   rev:"5 min", pattern:"Dummy Head + Two-Pointer Merge",
   sections:{
     explain:"Merge two sorted linked lists into one sorted list. Return the head of the merged list.",
@@ -1661,7 +1661,7 @@ def groupAnagrams(self, strs):
 
 "copy-list-with-random-pointer": {
   num:60, title:"Copy List with Random Pointer", diff:"Medium", cat:"Linked List",
-  lc:"https://leetcode.com/problems/copy-list-with-random-pointer/",
+  lc:"https://leetcode.com/problems/copy-list-with-random-pointer/?envType=problem-list-v2&envId=wk69juu6",
   rev:"10 min", pattern:"Hash Map Old→New Node",
   sections:{
     explain:"Each node has val, next, and random (points to any node or null). Deep-copy the entire list.",
@@ -1698,7 +1698,7 @@ def groupAnagrams(self, strs):
 
 "reverse-linked-list-ii": {
   num:61, title:"Reverse Linked List II", diff:"Medium", cat:"Linked List",
-  lc:"https://leetcode.com/problems/reverse-linked-list-ii/",
+  lc:"https://leetcode.com/problems/reverse-linked-list-ii/?envType=problem-list-v2&envId=wk69juu6",
   rev:"8 min", pattern:"One-Pass In-Place Reversal with Dummy",
   sections:{
     explain:"Reverse the nodes from position left to right (1-indexed) in a linked list. Do it in one pass.",
@@ -1735,7 +1735,7 @@ def groupAnagrams(self, strs):
 
 "reverse-nodes-in-k-group": {
   num:62, title:"Reverse Nodes in k-Group", diff:"Hard", cat:"Linked List",
-  lc:"https://leetcode.com/problems/reverse-nodes-in-k-group/",
+  lc:"https://leetcode.com/problems/reverse-nodes-in-k-group/?envType=problem-list-v2&envId=wk69juu6",
   rev:"12 min", pattern:"Group Reversal with Reconnection",
   sections:{
     explain:"Reverse every k consecutive nodes. If the remaining nodes are fewer than k, leave them as-is.",
@@ -1783,7 +1783,7 @@ def getKth(self, curr, k):
 
 "remove-nth-node-from-end-of-list": {
   num:63, title:"Remove Nth Node From End of List", diff:"Medium", cat:"Linked List",
-  lc:"https://leetcode.com/problems/remove-nth-node-from-end-of-list/",
+  lc:"https://leetcode.com/problems/remove-nth-node-from-end-of-list/?envType=problem-list-v2&envId=wk69juu6",
   rev:"6 min", pattern:"Two Pointers with n-gap",
   sections:{
     explain:"Remove the nth node from the end of a linked list in one pass.",
@@ -1818,7 +1818,7 @@ def getKth(self, curr, k):
 
 "remove-duplicates-from-sorted-list-ii": {
   num:64, title:"Remove Duplicates from Sorted List II", diff:"Medium", cat:"Linked List",
-  lc:"https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/",
+  lc:"https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/?envType=problem-list-v2&envId=wk69juu6",
   rev:"8 min", pattern:"Dummy + Skip All Duplicates",
   sections:{
     explain:"Given a sorted linked list, delete all nodes that have duplicate numbers, leaving only distinct numbers.",
@@ -1858,7 +1858,7 @@ def getKth(self, curr, k):
 
 "rotate-list": {
   num:65, title:"Rotate List", diff:"Medium", cat:"Linked List",
-  lc:"https://leetcode.com/problems/rotate-list/",
+  lc:"https://leetcode.com/problems/rotate-list/?envType=problem-list-v2&envId=wk69juu6",
   rev:"8 min", pattern:"Find New Tail by Length Modulo",
   sections:{
     explain:"Rotate a linked list to the right by k places.",
@@ -1900,7 +1900,7 @@ def getKth(self, curr, k):
 
 "partition-list": {
   num:66, title:"Partition List", diff:"Medium", cat:"Linked List",
-  lc:"https://leetcode.com/problems/partition-list/",
+  lc:"https://leetcode.com/problems/partition-list/?envType=problem-list-v2&envId=wk69juu6",
   rev:"6 min", pattern:"Two Dummy Lists (Before / After)",
   sections:{
     explain:"Partition a linked list so all nodes less than x come before nodes greater than or equal to x. Preserve relative order within each partition.",
@@ -1938,7 +1938,7 @@ def getKth(self, curr, k):
 
 "lru-cache": {
   num:67, title:"LRU Cache", diff:"Medium", cat:"Linked List",
-  lc:"https://leetcode.com/problems/lru-cache/",
+  lc:"https://leetcode.com/problems/lru-cache/?envType=problem-list-v2&envId=wk69juu6",
   rev:"15 min", pattern:"HashMap + Doubly Linked List",
   sections:{
     explain:"Implement an LRU (Least Recently Used) cache with O(1) get and put operations. Evict the least recently used key when capacity is exceeded.",
@@ -2002,7 +2002,7 @@ def getKth(self, curr, k):
 
 "maximum-depth-of-binary-tree": {
   num:68, title:"Maximum Depth of Binary Tree", diff:"Easy", cat:"Binary Tree",
-  lc:"https://leetcode.com/problems/maximum-depth-of-binary-tree/",
+  lc:"https://leetcode.com/problems/maximum-depth-of-binary-tree/?envType=problem-list-v2&envId=wk69juu6",
   rev:"5 min", pattern:"DFS Post-Order",
   sections:{
     explain:"Return the maximum depth (number of nodes along the longest path from root to the farthest leaf) of a binary tree.",
@@ -2031,7 +2031,7 @@ def getKth(self, curr, k):
 
 "same-tree": {
   num:69, title:"Same Tree", diff:"Easy", cat:"Binary Tree",
-  lc:"https://leetcode.com/problems/same-tree/",
+  lc:"https://leetcode.com/problems/same-tree/?envType=problem-list-v2&envId=wk69juu6",
   rev:"5 min", pattern:"Simultaneous DFS",
   sections:{
     explain:"Given two binary tree roots, determine if the trees are structurally identical with the same node values.",
@@ -2057,7 +2057,7 @@ def getKth(self, curr, k):
 
 "invert-binary-tree": {
   num:70, title:"Invert Binary Tree", diff:"Easy", cat:"Binary Tree",
-  lc:"https://leetcode.com/problems/invert-binary-tree/",
+  lc:"https://leetcode.com/problems/invert-binary-tree/?envType=problem-list-v2&envId=wk69juu6",
   rev:"5 min", pattern:"DFS Swap",
   sections:{
     explain:"Invert (mirror) a binary tree and return its root.",
@@ -2085,7 +2085,7 @@ def getKth(self, curr, k):
 
 "symmetric-tree": {
   num:71, title:"Symmetric Tree", diff:"Easy", cat:"Binary Tree",
-  lc:"https://leetcode.com/problems/symmetric-tree/",
+  lc:"https://leetcode.com/problems/symmetric-tree/?envType=problem-list-v2&envId=wk69juu6",
   rev:"6 min", pattern:"Mirror DFS (Two-Pointer Recursion)",
   sections:{
     explain:"Check whether a binary tree is a mirror of itself (symmetric around its center).",
@@ -2114,7 +2114,7 @@ def getKth(self, curr, k):
 
 "subtree-of-another-tree": {
   num:72, title:"Subtree of Another Tree", diff:"Easy", cat:"Binary Tree",
-  lc:"https://leetcode.com/problems/subtree-of-another-tree/",
+  lc:"https://leetcode.com/problems/subtree-of-another-tree/?envType=problem-list-v2&envId=wk69juu6",
   rev:"6 min", pattern:"DFS + isSameTree Helper",
   sections:{
     explain:"Given roots of trees root and subRoot, return true if subRoot is a subtree of root (identical structure and values).",
@@ -2147,7 +2147,7 @@ def isSame(self, p, q):
 
 "construct-binary-tree-from-preorder-and-inorder-traversal": {
   num:73, title:"Construct Binary Tree from Preorder and Inorder Traversal", diff:"Medium", cat:"Binary Tree",
-  lc:"https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/",
+  lc:"https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/?envType=problem-list-v2&envId=wk69juu6",
   rev:"10 min", pattern:"Recursive Split with Index Map",
   sections:{
     explain:"Given preorder and inorder traversal arrays of a binary tree, reconstruct and return the tree.",
@@ -2184,7 +2184,7 @@ def isSame(self, p, q):
 
 "binary-tree-level-order-traversal": {
   num:74, title:"Binary Tree Level Order Traversal", diff:"Medium", cat:"Binary Tree",
-  lc:"https://leetcode.com/problems/binary-tree-level-order-traversal/",
+  lc:"https://leetcode.com/problems/binary-tree-level-order-traversal/?envType=problem-list-v2&envId=wk69juu6",
   rev:"6 min", pattern:"BFS with Level Grouping",
   sections:{
     explain:"Return the level order traversal of a binary tree as a list of lists, where each inner list contains values at that level.",
@@ -2219,7 +2219,7 @@ def levelOrder(self, root):
 
 "binary-tree-zigzag-level-order-traversal": {
   num:75, title:"Binary Tree Zigzag Level Order Traversal", diff:"Medium", cat:"Binary Tree",
-  lc:"https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/",
+  lc:"https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/?envType=problem-list-v2&envId=wk69juu6",
   rev:"6 min", pattern:"BFS + Direction Flag",
   sections:{
     explain:"Return zigzag level order traversal: first level left-to-right, second right-to-left, alternating.",
@@ -2255,7 +2255,7 @@ def zigzagLevelOrder(self, root):
 
 "maximum-binary-tree": {
   num:76, title:"Maximum Binary Tree", diff:"Medium", cat:"Binary Tree",
-  lc:"https://leetcode.com/problems/maximum-binary-tree/",
+  lc:"https://leetcode.com/problems/maximum-binary-tree/?envType=problem-list-v2&envId=wk69juu6",
   rev:"6 min", pattern:"Recursive Max-Split",
   sections:{
     explain:"Build a maximum binary tree from an array: root is the maximum element; left subtree built from elements before it, right from elements after it.",
@@ -2284,7 +2284,7 @@ def zigzagLevelOrder(self, root):
 
 "diameter-of-binary-tree": {
   num:77, title:"Diameter of Binary Tree", diff:"Easy", cat:"Binary Tree",
-  lc:"https://leetcode.com/problems/diameter-of-binary-tree/",
+  lc:"https://leetcode.com/problems/diameter-of-binary-tree/?envType=problem-list-v2&envId=wk69juu6",
   rev:"6 min", pattern:"DFS with Global Max",
   sections:{
     explain:"Find the length of the longest path between any two nodes in a binary tree (the diameter). Path may or may not pass through root.",
@@ -2316,7 +2316,7 @@ def zigzagLevelOrder(self, root):
 
 "balanced-binary-tree": {
   num:78, title:"Balanced Binary Tree", diff:"Easy", cat:"Binary Tree",
-  lc:"https://leetcode.com/problems/balanced-binary-tree/",
+  lc:"https://leetcode.com/problems/balanced-binary-tree/?envType=problem-list-v2&envId=wk69juu6",
   rev:"6 min", pattern:"DFS — Return -1 on Imbalance",
   sections:{
     explain:"Determine if a binary tree is height-balanced: for every node, the heights of its left and right subtrees differ by at most 1.",
@@ -2347,7 +2347,7 @@ def zigzagLevelOrder(self, root):
 
 "binary-tree-right-side-view": {
   num:79, title:"Binary Tree Right Side View", diff:"Medium", cat:"Binary Tree",
-  lc:"https://leetcode.com/problems/binary-tree-right-side-view/",
+  lc:"https://leetcode.com/problems/binary-tree-right-side-view/?envType=problem-list-v2&envId=wk69juu6",
   rev:"6 min", pattern:"BFS — Last Node Per Level",
   sections:{
     explain:"Return a list of values visible when looking at a binary tree from the right side (rightmost node at each level).",
@@ -2383,7 +2383,7 @@ def rightSideView(self, root):
 
 "count-good-nodes-in-binary-tree": {
   num:80, title:"Count Good Nodes in Binary Tree", diff:"Medium", cat:"Binary Tree",
-  lc:"https://leetcode.com/problems/count-good-nodes-in-binary-tree/",
+  lc:"https://leetcode.com/problems/count-good-nodes-in-binary-tree/?envType=problem-list-v2&envId=wk69juu6",
   rev:"6 min", pattern:"DFS with Running Maximum",
   sections:{
     explain:"A node is 'good' if on the path from the root to that node, no node has a value greater than the node's value. Count all good nodes.",
@@ -2412,7 +2412,7 @@ def rightSideView(self, root):
 
 "validate-binary-search-tree": {
   num:81, title:"Validate Binary Search Tree", diff:"Medium", cat:"Binary Tree",
-  lc:"https://leetcode.com/problems/validate-binary-search-tree/",
+  lc:"https://leetcode.com/problems/validate-binary-search-tree/?envType=problem-list-v2&envId=wk69juu6",
   rev:"8 min", pattern:"DFS with Min/Max Bounds",
   sections:{
     explain:"Determine if a binary tree is a valid BST: left subtree values < node value < right subtree values, recursively for every node.",
@@ -2443,7 +2443,7 @@ def rightSideView(self, root):
 
 "kth-smallest-element-in-a-bst": {
   num:82, title:"Kth Smallest Element in a BST", diff:"Medium", cat:"Binary Tree",
-  lc:"https://leetcode.com/problems/kth-smallest-element-in-a-bst/",
+  lc:"https://leetcode.com/problems/kth-smallest-element-in-a-bst/?envType=problem-list-v2&envId=wk69juu6",
   rev:"6 min", pattern:"Inorder Traversal (BST Property)",
   sections:{
     explain:"Find the kth smallest element in a BST (1-indexed).",
@@ -2477,7 +2477,7 @@ def rightSideView(self, root):
 
 "lowest-common-ancestor-of-a-binary-tree": {
   num:83, title:"Lowest Common Ancestor of a Binary Tree", diff:"Medium", cat:"Binary Tree",
-  lc:"https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/",
+  lc:"https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/?envType=problem-list-v2&envId=wk69juu6",
   rev:"8 min", pattern:"Post-Order DFS",
   sections:{
     explain:"Find the lowest common ancestor (LCA) of two nodes p and q in a binary tree. LCA is the deepest node that has both p and q as descendants (a node can be a descendant of itself).",
@@ -2506,7 +2506,7 @@ def rightSideView(self, root):
 
 "binary-tree-maximum-path-sum": {
   num:84, title:"Binary Tree Maximum Path Sum", diff:"Hard", cat:"Binary Tree",
-  lc:"https://leetcode.com/problems/binary-tree-maximum-path-sum/",
+  lc:"https://leetcode.com/problems/binary-tree-maximum-path-sum/?envType=problem-list-v2&envId=wk69juu6",
   rev:"12 min", pattern:"DFS — Max Gain with Global Max",
   sections:{
     explain:"Find the maximum sum of any path in a binary tree. A path is any sequence of nodes connected by edges, starting and ending anywhere.",
@@ -2542,7 +2542,7 @@ def rightSideView(self, root):
 
 "binary-tree-cameras": {
   num:85, title:"Binary Tree Cameras", diff:"Hard", cat:"Binary Tree",
-  lc:"https://leetcode.com/problems/binary-tree-cameras/",
+  lc:"https://leetcode.com/problems/binary-tree-cameras/?envType=problem-list-v2&envId=wk69juu6",
   rev:"15 min", pattern:"Greedy Post-Order DFS (3 States)",
   sections:{
     explain:"Place cameras on tree nodes (minimum count) to monitor every node. A camera covers itself, its parent, and its immediate children.",
@@ -2584,7 +2584,7 @@ def rightSideView(self, root):
 
 "number-of-islands": {
   num:86, title:"Number of Islands", diff:"Medium", cat:"Graphs",
-  lc:"https://leetcode.com/problems/number-of-islands/",
+  lc:"https://leetcode.com/problems/number-of-islands/?envType=problem-list-v2&envId=wk69juu6",
   rev:"8 min", pattern:"DFS/BFS Flood Fill",
   sections:{
     explain:"Given a 2D grid of '1's (land) and '0's (water), count the number of islands. An island is surrounded by water and formed by connecting adjacent land cells horizontally/vertically.",
@@ -2623,7 +2623,7 @@ def rightSideView(self, root):
 
 "clone-graph": {
   num:87, title:"Clone Graph", diff:"Medium", cat:"Graphs",
-  lc:"https://leetcode.com/problems/clone-graph/",
+  lc:"https://leetcode.com/problems/clone-graph/?envType=problem-list-v2&envId=wk69juu6",
   rev:"8 min", pattern:"DFS + HashMap Old→New Node",
   sections:{
     explain:"Given a reference to a node in a connected undirected graph, return a deep copy. Each node has val (int) and neighbors (list of nodes).",
@@ -2656,7 +2656,7 @@ def rightSideView(self, root):
 
 "pacific-atlantic-water-flow": {
   num:88, title:"Pacific Atlantic Water Flow", diff:"Medium", cat:"Graphs",
-  lc:"https://leetcode.com/problems/pacific-atlantic-water-flow/",
+  lc:"https://leetcode.com/problems/pacific-atlantic-water-flow/?envType=problem-list-v2&envId=wk69juu6",
   rev:"10 min", pattern:"Reverse BFS from Both Oceans",
   sections:{
     explain:"Water flows from a cell to adjacent cells with equal or smaller height, then to oceans. Pacific borders top/left; Atlantic borders bottom/right. Return all cells that can flow to both oceans.",
@@ -2701,7 +2701,7 @@ def pacificAtlantic(self, heights):
 
 "surrounded-regions": {
   num:89, title:"Surrounded Regions", diff:"Medium", cat:"Graphs",
-  lc:"https://leetcode.com/problems/surrounded-regions/",
+  lc:"https://leetcode.com/problems/surrounded-regions/?envType=problem-list-v2&envId=wk69juu6",
   rev:"8 min", pattern:"DFS from Border O's",
   sections:{
     explain:"Capture all regions surrounded by X's: flip all 'O's to 'X', except those connected to a border 'O'.",
@@ -2740,7 +2740,7 @@ def pacificAtlantic(self, heights):
 
 "course-schedule": {
   num:90, title:"Course Schedule", diff:"Medium", cat:"Graphs",
-  lc:"https://leetcode.com/problems/course-schedule/",
+  lc:"https://leetcode.com/problems/course-schedule/?envType=problem-list-v2&envId=wk69juu6",
   rev:"10 min", pattern:"Cycle Detection in Directed Graph (DFS / Kahn's)",
   sections:{
     explain:"Given numCourses and prerequisites [a, b] meaning 'to take a, must first take b', determine if it's possible to finish all courses (no cycle in the dependency graph).",
@@ -2779,7 +2779,7 @@ def pacificAtlantic(self, heights):
 
 "course-schedule-ii": {
   num:91, title:"Course Schedule II", diff:"Medium", cat:"Graphs",
-  lc:"https://leetcode.com/problems/course-schedule-ii/",
+  lc:"https://leetcode.com/problems/course-schedule-ii/?envType=problem-list-v2&envId=wk69juu6",
   rev:"10 min", pattern:"Topological Sort (DFS Post-Order)",
   sections:{
     explain:"Return a valid ordering to finish all courses, or empty array if impossible (cycle exists).",
@@ -2824,7 +2824,7 @@ def pacificAtlantic(self, heights):
 
 "redundant-connection": {
   num:92, title:"Redundant Connection", diff:"Medium", cat:"Graphs",
-  lc:"https://leetcode.com/problems/redundant-connection/",
+  lc:"https://leetcode.com/problems/redundant-connection/?envType=problem-list-v2&envId=wk69juu6",
   rev:"8 min", pattern:"Union Find",
   sections:{
     explain:"A tree with n nodes has n-1 edges. Given n edges forming a graph, find the last edge that creates a cycle (the redundant connection).",
@@ -2867,7 +2867,7 @@ def pacificAtlantic(self, heights):
 
 "graph-valid-tree": {
   num:93, title:"Graph Valid Tree", diff:"Medium", cat:"Graphs",
-  lc:"https://leetcode.com/problems/graph-valid-tree/",
+  lc:"https://leetcode.com/problems/graph-valid-tree/?envType=problem-list-v2&envId=wk69juu6",
   rev:"8 min", pattern:"Union Find or DFS (No Cycle + Connected)",
   sections:{
     explain:"Given n nodes (labeled 0..n-1) and a list of undirected edges, determine if they form a valid tree. A valid tree has exactly n-1 edges and is fully connected (no cycles, no disconnected parts).",
@@ -2904,7 +2904,7 @@ def pacificAtlantic(self, heights):
 
 "number-of-connected-components-in-an-undirected-graph": {
   num:94, title:"Number of Connected Components in an Undirected Graph", diff:"Medium", cat:"Graphs",
-  lc:"https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/",
+  lc:"https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/?envType=problem-list-v2&envId=wk69juu6",
   rev:"8 min", pattern:"Union Find or DFS Count",
   sections:{
     explain:"Given n nodes and a list of undirected edges, return the number of connected components.",
@@ -2946,7 +2946,7 @@ def pacificAtlantic(self, heights):
 
 "rotting-oranges": {
   num:95, title:"Rotting Oranges", diff:"Medium", cat:"Graphs",
-  lc:"https://leetcode.com/problems/rotting-oranges/",
+  lc:"https://leetcode.com/problems/rotting-oranges/?envType=problem-list-v2&envId=wk69juu6",
   rev:"8 min", pattern:"Multi-Source BFS",
   sections:{
     explain:"Grid of 0 (empty), 1 (fresh orange), 2 (rotten orange). Every minute, fresh oranges adjacent to rotten ones become rotten. Return minimum minutes until no fresh oranges remain, or -1 if impossible.",
@@ -2993,7 +2993,7 @@ def orangesRotting(self, grid):
 
 "word-ladder": {
   num:96, title:"Word Ladder", diff:"Hard", cat:"Graphs",
-  lc:"https://leetcode.com/problems/word-ladder/",
+  lc:"https://leetcode.com/problems/word-ladder/?envType=problem-list-v2&envId=wk69juu6",
   rev:"12 min", pattern:"BFS on Implicit Graph",
   sections:{
     explain:"Given beginWord, endWord, and a wordList, find the length of the shortest transformation sequence from beginWord to endWord. Each step changes exactly one letter; each intermediate word must be in wordList.",
@@ -3037,7 +3037,7 @@ def ladderLength(self, beginWord, endWord, wordList):
 
 "kth-largest-element-in-an-array": {
   num:97, title:"Kth Largest Element in an Array", diff:"Medium", cat:"Heap / Priority Queue",
-  lc:"https://leetcode.com/problems/kth-largest-element-in-an-array/",
+  lc:"https://leetcode.com/problems/kth-largest-element-in-an-array/?envType=problem-list-v2&envId=wk69juu6",
   rev:"8 min", pattern:"Min-Heap of Size K",
   sections:{
     explain:"Find the kth largest element in an unsorted array (not the kth distinct element).",
@@ -3069,7 +3069,7 @@ def findKthLargest(self, nums, k):
 
 "last-stone-weight": {
   num:98, title:"Last Stone Weight", diff:"Easy", cat:"Heap / Priority Queue",
-  lc:"https://leetcode.com/problems/last-stone-weight/",
+  lc:"https://leetcode.com/problems/last-stone-weight/?envType=problem-list-v2&envId=wk69juu6",
   rev:"5 min", pattern:"Max-Heap Simulation",
   sections:{
     explain:"Stones with weights. Each turn, smash the two heaviest: if equal both destroyed; otherwise heavier remains with weight = diff. Return weight of last stone (or 0 if none).",
@@ -3102,7 +3102,7 @@ def lastStoneWeight(self, stones):
 
 "k-closest-points-to-origin": {
   num:99, title:"K Closest Points to Origin", diff:"Medium", cat:"Heap / Priority Queue",
-  lc:"https://leetcode.com/problems/k-closest-points-to-origin/",
+  lc:"https://leetcode.com/problems/k-closest-points-to-origin/?envType=problem-list-v2&envId=wk69juu6",
   rev:"6 min", pattern:"Max-Heap of Size K",
   sections:{
     explain:"Return the k closest points to the origin (0,0) from a list of points. Distance is Euclidean but you can use squared distance to avoid sqrt.",
@@ -3136,7 +3136,7 @@ def kClosest(self, points, k):
 
 "find-median-from-data-stream": {
   num:100, title:"Find Median from Data Stream", diff:"Hard", cat:"Heap / Priority Queue",
-  lc:"https://leetcode.com/problems/find-median-from-data-stream/",
+  lc:"https://leetcode.com/problems/find-median-from-data-stream/?envType=problem-list-v2&envId=wk69juu6",
   rev:"12 min", pattern:"Two Heaps (Max-Heap + Min-Heap)",
   sections:{
     explain:"Design a data structure that supports addNum(num) and findMedian(). Median of a running stream must be O(log n) add and O(1) find.",
@@ -3184,7 +3184,7 @@ class MedianFinder:
 
 "binary-search": {
   num:101, title:"Binary Search", diff:"Easy", cat:"Binary Search",
-  lc:"https://leetcode.com/problems/binary-search/",
+  lc:"https://leetcode.com/problems/binary-search/?envType=problem-list-v2&envId=wk69juu6",
   rev:"5 min", pattern:"Classic Binary Search Template",
   sections:{
     explain:"Given a sorted array of distinct integers and a target, return the index of target, or -1 if not found.",
@@ -3215,7 +3215,7 @@ class MedianFinder:
 
 "search-a-2d-matrix": {
   num:102, title:"Search a 2D Matrix", diff:"Medium", cat:"Binary Search",
-  lc:"https://leetcode.com/problems/search-a-2d-matrix/",
+  lc:"https://leetcode.com/problems/search-a-2d-matrix/?envType=problem-list-v2&envId=wk69juu6",
   rev:"6 min", pattern:"Flatten-index Binary Search",
   sections:{
     explain:"An m×n matrix where each row is sorted and the first integer of each row is greater than the last of the previous row. Search for a target.",
@@ -3245,7 +3245,7 @@ class MedianFinder:
 
 "koko-eating-bananas": {
   num:103, title:"Koko Eating Bananas", diff:"Medium", cat:"Binary Search",
-  lc:"https://leetcode.com/problems/koko-eating-bananas/",
+  lc:"https://leetcode.com/problems/koko-eating-bananas/?envType=problem-list-v2&envId=wk69juu6",
   rev:"8 min", pattern:"Binary Search on Answer",
   sections:{
     explain:"Koko eats piles of bananas at speed k bananas/hour. Guards return in h hours. Find minimum k such that she can finish all piles.",
@@ -3279,7 +3279,7 @@ def minEatingSpeed(self, piles, h):
 
 "find-minimum-in-rotated-sorted-array": {
   num:104, title:"Find Minimum in Rotated Sorted Array", diff:"Medium", cat:"Binary Search",
-  lc:"https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/",
+  lc:"https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/?envType=problem-list-v2&envId=wk69juu6",
   rev:"7 min", pattern:"Binary Search on Rotation Pivot",
   sections:{
     explain:"A sorted array was rotated at some pivot. Find the minimum element. All elements are distinct.",
@@ -3311,7 +3311,7 @@ def minEatingSpeed(self, piles, h):
 
 "search-in-rotated-sorted-array": {
   num:105, title:"Search in Rotated Sorted Array", diff:"Medium", cat:"Binary Search",
-  lc:"https://leetcode.com/problems/search-in-rotated-sorted-array/",
+  lc:"https://leetcode.com/problems/search-in-rotated-sorted-array/?envType=problem-list-v2&envId=wk69juu6",
   rev:"8 min", pattern:"Binary Search with Sorted-Half Check",
   sections:{
     explain:"Search for target in a rotated sorted array with distinct elements. Return index or -1.",
@@ -3347,7 +3347,7 @@ def minEatingSpeed(self, piles, h):
 
 "find-peak-element": {
   num:106, title:"Find Peak Element", diff:"Medium", cat:"Binary Search",
-  lc:"https://leetcode.com/problems/find-peak-element/",
+  lc:"https://leetcode.com/problems/find-peak-element/?envType=problem-list-v2&envId=wk69juu6",
   rev:"7 min", pattern:"Binary Search — Move Toward Uphill Side",
   sections:{
     explain:"A peak element is greater than its neighbors. Return the index of any peak. nums[-1] and nums[n] are treated as -infinity.",
@@ -3378,7 +3378,7 @@ def minEatingSpeed(self, piles, h):
 
 "word-search": {
   num:107, title:"Word Search", diff:"Medium", cat:"Backtracking",
-  lc:"https://leetcode.com/problems/word-search/",
+  lc:"https://leetcode.com/problems/word-search/?envType=problem-list-v2&envId=wk69juu6",
   rev:"10 min", pattern:"DFS Backtracking on Grid",
   sections:{
     explain:"Given a 2D character board and a word, return true if the word exists as adjacent (horizontal/vertical) cells. Each cell may only be used once per path.",
@@ -3416,7 +3416,7 @@ def minEatingSpeed(self, piles, h):
 
 "permutations": {
   num:108, title:"Permutations", diff:"Medium", cat:"Backtracking",
-  lc:"https://leetcode.com/problems/permutations/",
+  lc:"https://leetcode.com/problems/permutations/?envType=problem-list-v2&envId=wk69juu6",
   rev:"8 min", pattern:"Backtracking — Choose / Explore / Unchoose",
   sections:{
     explain:"Given an array of distinct integers, return all possible permutations.",
@@ -3452,7 +3452,7 @@ def minEatingSpeed(self, piles, h):
 
 "subsets": {
   num:109, title:"Subsets", diff:"Medium", cat:"Backtracking",
-  lc:"https://leetcode.com/problems/subsets/",
+  lc:"https://leetcode.com/problems/subsets/?envType=problem-list-v2&envId=wk69juu6",
   rev:"7 min", pattern:"Backtracking — Include / Exclude with Start Index",
   sections:{
     explain:"Given an array of unique integers, return all possible subsets (the power set).",
@@ -3485,7 +3485,7 @@ def minEatingSpeed(self, piles, h):
 
 "combination-sum": {
   num:110, title:"Combination Sum", diff:"Medium", cat:"Backtracking",
-  lc:"https://leetcode.com/problems/combination-sum/",
+  lc:"https://leetcode.com/problems/combination-sum/?envType=problem-list-v2&envId=wk69juu6",
   rev:"8 min", pattern:"Backtracking with Reuse + Pruning",
   sections:{
     explain:"Given candidates (distinct integers) and a target, return all combinations that sum to target. Each candidate can be used unlimited times.",
@@ -3521,7 +3521,7 @@ def minEatingSpeed(self, piles, h):
 
 "generate-parentheses": {
   num:111, title:"Generate Parentheses", diff:"Medium", cat:"Backtracking",
-  lc:"https://leetcode.com/problems/generate-parentheses/",
+  lc:"https://leetcode.com/problems/generate-parentheses/?envType=problem-list-v2&envId=wk69juu6",
   rev:"8 min", pattern:"Backtracking with Open/Close Counts",
   sections:{
     explain:"Given n pairs of parentheses, generate all combinations of well-formed parentheses.",
@@ -3553,7 +3553,7 @@ def minEatingSpeed(self, piles, h):
 
 "letter-combinations-of-a-phone-number": {
   num:112, title:"Letter Combinations of a Phone Number", diff:"Medium", cat:"Backtracking",
-  lc:"https://leetcode.com/problems/letter-combinations-of-a-phone-number/",
+  lc:"https://leetcode.com/problems/letter-combinations-of-a-phone-number/?envType=problem-list-v2&envId=wk69juu6",
   rev:"7 min", pattern:"Backtracking — Digit-by-Digit Expansion",
   sections:{
     explain:"Given a string of digits (2-9), return all possible letter combinations using phone button mappings.",
@@ -3585,7 +3585,7 @@ def minEatingSpeed(self, piles, h):
 
 "palindrome-partitioning": {
   num:113, title:"Palindrome Partitioning", diff:"Medium", cat:"Backtracking",
-  lc:"https://leetcode.com/problems/palindrome-partitioning/",
+  lc:"https://leetcode.com/problems/palindrome-partitioning/?envType=problem-list-v2&envId=wk69juu6",
   rev:"10 min", pattern:"Backtracking + Palindrome Check",
   sections:{
     explain:"Partition a string s such that every substring of the partition is a palindrome. Return all possible partitions.",
@@ -3627,7 +3627,7 @@ def minEatingSpeed(self, piles, h):
 
 "implement-trie-prefix-tree": {
   num:114, title:"Implement Trie (Prefix Tree)", diff:"Medium", cat:"Tries",
-  lc:"https://leetcode.com/problems/implement-trie-prefix-tree/",
+  lc:"https://leetcode.com/problems/implement-trie-prefix-tree/?envType=problem-list-v2&envId=wk69juu6",
   rev:"10 min", pattern:"Trie Node with Children Dict + End Flag",
   sections:{
     explain:"Implement a Trie with insert(word), search(word), and startsWith(prefix). search returns true if word is in trie exactly; startsWith returns true if any word has that prefix.",
@@ -3683,7 +3683,7 @@ class Trie:
 
 "design-add-and-search-words-data-structure": {
   num:115, title:"Design Add and Search Words Data Structure", diff:"Medium", cat:"Tries",
-  lc:"https://leetcode.com/problems/design-add-and-search-words-data-structure/",
+  lc:"https://leetcode.com/problems/design-add-and-search-words-data-structure/?envType=problem-list-v2&envId=wk69juu6",
   rev:"10 min", pattern:"Trie + DFS for Wildcard '.'",
   sections:{
     explain:"Design a data structure with addWord(word) and search(word). search supports '.' as a wildcard that matches any single letter.",
@@ -3723,7 +3723,7 @@ class Trie:
 
 "word-search-ii": {
   num:116, title:"Word Search II", diff:"Hard", cat:"Tries",
-  lc:"https://leetcode.com/problems/word-search-ii/",
+  lc:"https://leetcode.com/problems/word-search-ii/?envType=problem-list-v2&envId=wk69juu6",
   rev:"15 min", pattern:"Trie + DFS Backtracking on Grid",
   sections:{
     explain:"Given a 2D board and a list of words, return all words that exist in the board (adjacent cells, each cell used once per word).",
@@ -3775,7 +3775,7 @@ class Trie:
 
 "climbing-stairs": {
   num:117, title:"Climbing Stairs", diff:"Easy", cat:"Dynamic Programming",
-  lc:"https://leetcode.com/problems/climbing-stairs/",
+  lc:"https://leetcode.com/problems/climbing-stairs/?envType=problem-list-v2&envId=wk69juu6",
   rev:"5 min", pattern:"DP — Fibonacci Recurrence",
   sections:{
     explain:"You can climb 1 or 2 stairs at a time. How many distinct ways to reach the top of n stairs?",
@@ -3799,7 +3799,7 @@ class Trie:
 
 "coin-change": {
   num:118, title:"Coin Change", diff:"Medium", cat:"Dynamic Programming",
-  lc:"https://leetcode.com/problems/coin-change/",
+  lc:"https://leetcode.com/problems/coin-change/?envType=problem-list-v2&envId=wk69juu6",
   rev:"8 min", pattern:"DP — Unbounded Knapsack",
   sections:{
     explain:"Given coin denominations and an amount, return the minimum number of coins to make up that amount. Return -1 if impossible.",
@@ -3827,7 +3827,7 @@ class Trie:
 
 "longest-increasing-subsequence": {
   num:119, title:"Longest Increasing Subsequence", diff:"Medium", cat:"Dynamic Programming",
-  lc:"https://leetcode.com/problems/longest-increasing-subsequence/",
+  lc:"https://leetcode.com/problems/longest-increasing-subsequence/?envType=problem-list-v2&envId=wk69juu6",
   rev:"10 min", pattern:"DP O(n²) or Patience Sort O(n log n)",
   sections:{
     explain:"Return the length of the longest strictly increasing subsequence.",
@@ -3861,7 +3861,7 @@ class Trie:
 
 "partition-equal-subset-sum": {
   num:120, title:"Partition Equal Subset Sum", diff:"Medium", cat:"Dynamic Programming",
-  lc:"https://leetcode.com/problems/partition-equal-subset-sum/",
+  lc:"https://leetcode.com/problems/partition-equal-subset-sum/?envType=problem-list-v2&envId=wk69juu6",
   rev:"10 min", pattern:"0/1 Knapsack — Boolean DP",
   sections:{
     explain:"Determine if an array can be partitioned into two subsets with equal sum.",
@@ -3892,7 +3892,7 @@ class Trie:
 
 "longest-common-subsequence": {
   num:121, title:"Longest Common Subsequence", diff:"Medium", cat:"Dynamic Programming",
-  lc:"https://leetcode.com/problems/longest-common-subsequence/",
+  lc:"https://leetcode.com/problems/longest-common-subsequence/?envType=problem-list-v2&envId=wk69juu6",
   rev:"10 min", pattern:"2D DP Grid",
   sections:{
     explain:"Return the length of the longest common subsequence (LCS) of two strings. A subsequence doesn't need to be contiguous.",
@@ -3922,7 +3922,7 @@ class Trie:
 
 "word-break": {
   num:122, title:"Word Break", diff:"Medium", cat:"Dynamic Programming",
-  lc:"https://leetcode.com/problems/word-break/",
+  lc:"https://leetcode.com/problems/word-break/?envType=problem-list-v2&envId=wk69juu6",
   rev:"8 min", pattern:"DP — Boolean Reachability",
   sections:{
     explain:"Given a string s and a dictionary wordDict, return true if s can be segmented into space-separated dictionary words.",
@@ -3955,7 +3955,7 @@ class Trie:
 
 "combination-sum-iv": {
   num:123, title:"Combination Sum IV", diff:"Medium", cat:"Dynamic Programming",
-  lc:"https://leetcode.com/problems/combination-sum-iv/",
+  lc:"https://leetcode.com/problems/combination-sum-iv/?envType=problem-list-v2&envId=wk69juu6",
   rev:"7 min", pattern:"DP — Unbounded Knapsack (Order Matters)",
   sections:{
     explain:"Given distinct integers and a target, return the number of possible combinations that add up to target. Different orders count as different combinations.",
@@ -3983,7 +3983,7 @@ class Trie:
 
 "house-robber": {
   num:124, title:"House Robber", diff:"Medium", cat:"Dynamic Programming",
-  lc:"https://leetcode.com/problems/house-robber/",
+  lc:"https://leetcode.com/problems/house-robber/?envType=problem-list-v2&envId=wk69juu6",
   rev:"6 min", pattern:"DP — Skip or Take with No-Adjacent Constraint",
   sections:{
     explain:"Rob houses on a street without robbing adjacent ones. Maximize money robbed.",
@@ -4011,7 +4011,7 @@ class Trie:
 
 "house-robber-ii": {
   num:125, title:"House Robber II", diff:"Medium", cat:"Dynamic Programming",
-  lc:"https://leetcode.com/problems/house-robber-ii/",
+  lc:"https://leetcode.com/problems/house-robber-ii/?envType=problem-list-v2&envId=wk69juu6",
   rev:"7 min", pattern:"House Robber on Two Linear Sub-Arrays",
   sections:{
     explain:"Houses arranged in a circle. First and last houses are adjacent. Maximize robbery without robbing adjacent houses.",
@@ -4039,7 +4039,7 @@ class Trie:
 
 "decode-ways": {
   num:126, title:"Decode Ways", diff:"Medium", cat:"Dynamic Programming",
-  lc:"https://leetcode.com/problems/decode-ways/",
+  lc:"https://leetcode.com/problems/decode-ways/?envType=problem-list-v2&envId=wk69juu6",
   rev:"8 min", pattern:"DP — One/Two Character Decode",
   sections:{
     explain:"A string of digits encodes letters: '1'→'A', '2'→'B', ..., '26'→'Z'. Count the number of ways to decode a digit string.",
@@ -4074,7 +4074,7 @@ class Trie:
 
 "unique-paths": {
   num:127, title:"Unique Paths", diff:"Medium", cat:"Dynamic Programming",
-  lc:"https://leetcode.com/problems/unique-paths/",
+  lc:"https://leetcode.com/problems/unique-paths/?envType=problem-list-v2&envId=wk69juu6",
   rev:"6 min", pattern:"2D DP Grid",
   sections:{
     explain:"Robot on m×n grid moves only right or down. Count distinct paths from top-left to bottom-right.",
@@ -4103,7 +4103,7 @@ class Trie:
 
 "minimum-path-sum": {
   num:128, title:"Minimum Path Sum", diff:"Medium", cat:"Dynamic Programming",
-  lc:"https://leetcode.com/problems/minimum-path-sum/",
+  lc:"https://leetcode.com/problems/minimum-path-sum/?envType=problem-list-v2&envId=wk69juu6",
   rev:"7 min", pattern:"2D DP Grid — Min Cost",
   sections:{
     explain:"Find a path from top-left to bottom-right of a grid (moving only right or down) that minimizes the sum of all numbers along the path.",
@@ -4132,7 +4132,7 @@ class Trie:
 
 "longest-palindromic-substring": {
   num:129, title:"Longest Palindromic Substring", diff:"Medium", cat:"Dynamic Programming",
-  lc:"https://leetcode.com/problems/longest-palindromic-substring/",
+  lc:"https://leetcode.com/problems/longest-palindromic-substring/?envType=problem-list-v2&envId=wk69juu6",
   rev:"8 min", pattern:"Expand Around Center",
   sections:{
     explain:"Find the longest palindromic substring in a string.",
@@ -4170,7 +4170,7 @@ class Trie:
 
 "palindromic-substrings": {
   num:130, title:"Palindromic Substrings", diff:"Medium", cat:"Dynamic Programming",
-  lc:"https://leetcode.com/problems/palindromic-substrings/",
+  lc:"https://leetcode.com/problems/palindromic-substrings/?envType=problem-list-v2&envId=wk69juu6",
   rev:"7 min", pattern:"Expand Around Center — Count",
   sections:{
     explain:"Count the total number of palindromic substrings in a string.",
@@ -4202,7 +4202,7 @@ class Trie:
 
 "interleaving-string": {
   num:131, title:"Interleaving String", diff:"Hard", cat:"Dynamic Programming",
-  lc:"https://leetcode.com/problems/interleaving-string/",
+  lc:"https://leetcode.com/problems/interleaving-string/?envType=problem-list-v2&envId=wk69juu6",
   rev:"12 min", pattern:"2D DP — Two-String Merge",
   sections:{
     explain:"Given s1, s2, s3, determine if s3 is formed by an interleaving of s1 and s2 (characters from s1 and s2 maintain their relative order).",
@@ -4236,7 +4236,7 @@ class Trie:
 
 "edit-distance": {
   num:132, title:"Edit Distance", diff:"Medium", cat:"Dynamic Programming",
-  lc:"https://leetcode.com/problems/edit-distance/",
+  lc:"https://leetcode.com/problems/edit-distance/?envType=problem-list-v2&envId=wk69juu6",
   rev:"10 min", pattern:"2D DP — Three Operations",
   sections:{
     explain:"Return the minimum number of operations (insert, delete, replace) to convert word1 to word2.",
@@ -4270,7 +4270,7 @@ class Trie:
 
 "best-time-to-buy-and-sell-stock-with-cooldown": {
   num:133, title:"Best Time to Buy and Sell Stock with Cooldown", diff:"Medium", cat:"Dynamic Programming",
-  lc:"https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/",
+  lc:"https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/?envType=problem-list-v2&envId=wk69juu6",
   rev:"10 min", pattern:"State Machine DP",
   sections:{
     explain:"Maximize profit buying/selling stock with a cooldown: after selling you cannot buy the next day.",
@@ -4300,7 +4300,7 @@ class Trie:
 
 "coin-change-ii": {
   num:134, title:"Coin Change II", diff:"Medium", cat:"Dynamic Programming",
-  lc:"https://leetcode.com/problems/coin-change-ii/",
+  lc:"https://leetcode.com/problems/coin-change-ii/?envType=problem-list-v2&envId=wk69juu6",
   rev:"8 min", pattern:"DP — Unbounded Knapsack (Combinations, Order Doesn't Matter)",
   sections:{
     explain:"Return the number of combinations (not permutations) of coins that sum to amount.",
@@ -4327,7 +4327,7 @@ class Trie:
 
 "target-sum": {
   num:135, title:"Target Sum", diff:"Medium", cat:"Dynamic Programming",
-  lc:"https://leetcode.com/problems/target-sum/",
+  lc:"https://leetcode.com/problems/target-sum/?envType=problem-list-v2&envId=wk69juu6",
   rev:"8 min", pattern:"DP — 0/1 Knapsack Count",
   sections:{
     explain:"Assign + or - to each number. Count ways to make the total equal to target.",
@@ -4359,7 +4359,7 @@ class Trie:
 
 "burst-balloons": {
   num:136, title:"Burst Balloons", diff:"Hard", cat:"Dynamic Programming",
-  lc:"https://leetcode.com/problems/burst-balloons/",
+  lc:"https://leetcode.com/problems/burst-balloons/?envType=problem-list-v2&envId=wk69juu6",
   rev:"15 min", pattern:"Interval DP — Last Balloon to Burst",
   sections:{
     explain:"Burst all balloons. Bursting balloon i gives nums[i-1]*nums[i]*nums[i+1] coins. Maximize total coins.",
@@ -4395,7 +4395,7 @@ class Trie:
 
 "regular-expression-matching": {
   num:137, title:"Regular Expression Matching", diff:"Hard", cat:"Dynamic Programming",
-  lc:"https://leetcode.com/problems/regular-expression-matching/",
+  lc:"https://leetcode.com/problems/regular-expression-matching/?envType=problem-list-v2&envId=wk69juu6",
   rev:"15 min", pattern:"2D DP — Pattern Matching with Wildcards",
   sections:{
     explain:"Implement regex matching with '.' (matches any char) and '*' (matches zero or more of preceding element).",
@@ -4438,7 +4438,7 @@ class Trie:
 
 "maximum-subarray": {
   num:138, title:"Maximum Subarray", diff:"Medium", cat:"Greedy",
-  lc:"https://leetcode.com/problems/maximum-subarray/",
+  lc:"https://leetcode.com/problems/maximum-subarray/?envType=problem-list-v2&envId=wk69juu6",
   rev:"6 min", pattern:"Kadane's Algorithm",
   sections:{
     explain:"Find the contiguous subarray with the largest sum.",
@@ -4467,7 +4467,7 @@ class Trie:
 
 "partition-labels": {
   num:139, title:"Partition Labels", diff:"Medium", cat:"Greedy",
-  lc:"https://leetcode.com/problems/partition-labels/",
+  lc:"https://leetcode.com/problems/partition-labels/?envType=problem-list-v2&envId=wk69juu6",
   rev:"7 min", pattern:"Greedy — Extend Partition to Last Occurrence",
   sections:{
     explain:"Partition string s into as many parts as possible so each letter appears in at most one part. Return a list of part sizes.",
@@ -4498,7 +4498,7 @@ class Trie:
 
 "task-scheduler": {
   num:140, title:"Task Scheduler", diff:"Medium", cat:"Greedy",
-  lc:"https://leetcode.com/problems/task-scheduler/",
+  lc:"https://leetcode.com/problems/task-scheduler/?envType=problem-list-v2&envId=wk69juu6",
   rev:"10 min", pattern:"Greedy — Most Frequent Task First",
   sections:{
     explain:"Given tasks and a cooldown n (same task can't repeat within n intervals), return minimum time units to finish all tasks. Idle time fills gaps.",
@@ -4529,7 +4529,7 @@ def leastInterval(self, tasks, n):
 
 "merge-triplets-to-form-target-triplet": {
   num:141, title:"Merge Triplets to Form Target Triplet", diff:"Medium", cat:"Greedy",
-  lc:"https://leetcode.com/problems/merge-triplets-to-form-target-triplet/",
+  lc:"https://leetcode.com/problems/merge-triplets-to-form-target-triplet/?envType=problem-list-v2&envId=wk69juu6",
   rev:"7 min", pattern:"Greedy — Filter Then Check Coverage",
   sections:{
     explain:"Merge triplets by taking element-wise max. Return true if you can reach the target triplet [a,b,c] by merging a subset of triplets.",
@@ -4558,7 +4558,7 @@ def leastInterval(self, tasks, n):
 
 "powx-n": {
   num:142, title:"Pow(x, n)", diff:"Medium", cat:"Math / Geometry",
-  lc:"https://leetcode.com/problems/powx-n/",
+  lc:"https://leetcode.com/problems/powx-n/?envType=problem-list-v2&envId=wk69juu6",
   rev:"7 min", pattern:"Fast Power (Binary Exponentiation)",
   sections:{
     explain:"Implement pow(x, n) — x raised to the power n. n can be negative.",
@@ -4592,7 +4592,7 @@ def leastInterval(self, tasks, n):
 
 "multiply-strings": {
   num:143, title:"Multiply Strings", diff:"Medium", cat:"Math / Geometry",
-  lc:"https://leetcode.com/problems/multiply-strings/",
+  lc:"https://leetcode.com/problems/multiply-strings/?envType=problem-list-v2&envId=wk69juu6",
   rev:"10 min", pattern:"Grade-School Multiplication with Position Mapping",
   sections:{
     explain:"Multiply two non-negative integers represented as strings. Do not use built-in big-integer multiplication.",
@@ -4624,7 +4624,7 @@ def leastInterval(self, tasks, n):
 
 "detect-squares": {
   num:144, title:"Detect Squares", diff:"Medium", cat:"Math / Geometry",
-  lc:"https://leetcode.com/problems/detect-squares/",
+  lc:"https://leetcode.com/problems/detect-squares/?envType=problem-list-v2&envId=wk69juu6",
   rev:"10 min", pattern:"Hash Map — Count Points, Enumerate Diagonals",
   sections:{
     explain:"Design a data structure to add points and count axis-aligned squares with a given query point as one corner.",
@@ -4671,7 +4671,7 @@ class DetectSquares:
 
 "max-points-on-a-line": {
   num:145, title:"Max Points on a Line", diff:"Hard", cat:"Math / Geometry",
-  lc:"https://leetcode.com/problems/max-points-on-a-line/",
+  lc:"https://leetcode.com/problems/max-points-on-a-line/?envType=problem-list-v2&envId=wk69juu6",
   rev:"12 min", pattern:"Hash Map — Slope Counting per Anchor",
   sections:{
     explain:"Given a list of points on a 2D plane, return the maximum number of points that lie on the same straight line.",
@@ -4711,7 +4711,7 @@ def maxPoints(self, points):
 
 "rectangle-area": {
   num:146, title:"Rectangle Area", diff:"Medium", cat:"Math / Geometry",
-  lc:"https://leetcode.com/problems/rectangle-area/",
+  lc:"https://leetcode.com/problems/rectangle-area/?envType=problem-list-v2&envId=wk69juu6",
   rev:"7 min", pattern:"Inclusion-Exclusion for Overlap Area",
   sections:{
     explain:"Find the total area covered by two axis-aligned rectangles. Rectangles may overlap.",
@@ -4738,7 +4738,7 @@ def maxPoints(self, points):
 
 "maximal-square": {
   num:147, title:"Maximal Square", diff:"Medium", cat:"Math / Geometry",
-  lc:"https://leetcode.com/problems/maximal-square/",
+  lc:"https://leetcode.com/problems/maximal-square/?envType=problem-list-v2&envId=wk69juu6",
   rev:"10 min", pattern:"DP — Square Size from Three Neighbors",
   sections:{
     explain:"Given a binary matrix of '0' and '1', find the largest square containing only '1's and return its area.",
@@ -4775,7 +4775,7 @@ def maxPoints(self, points):
 
 "merge-k-sorted-lists": {
   num:148, title:"Merge K Sorted Lists", diff:"Hard", cat:"Linked List",
-  lc:"https://leetcode.com/problems/merge-k-sorted-lists/",
+  lc:"https://leetcode.com/problems/merge-k-sorted-lists/?envType=problem-list-v2&envId=wk69juu6",
   rev:"10 min", pattern:"Min-Heap / Divide and Conquer",
   sections:{
     explain:"Merge k sorted linked lists into one sorted linked list.",
@@ -4814,7 +4814,7 @@ def mergeKLists(self, lists):
 
 "top-k-frequent-elements": {
   num:149, title:"Top K Frequent Elements", diff:"Medium", cat:"Heap / Priority Queue",
-  lc:"https://leetcode.com/problems/top-k-frequent-elements/",
+  lc:"https://leetcode.com/problems/top-k-frequent-elements/?envType=problem-list-v2&envId=wk69juu6",
   rev:"7 min", pattern:"Heap or Bucket Sort",
   sections:{
     explain:"Given an integer array, return the k most frequent elements. Answer can be in any order.",
@@ -4852,7 +4852,7 @@ def topKFrequent(self, nums, k):
 
 "maximum-product-subarray": {
   num:150, title:"Maximum Product Subarray", diff:"Medium", cat:"Dynamic Programming",
-  lc:"https://leetcode.com/problems/maximum-product-subarray/",
+  lc:"https://leetcode.com/problems/maximum-product-subarray/?envType=problem-list-v2&envId=wk69juu6",
   rev:"8 min", pattern:"Track Both Max and Min Products",
   sections:{
     explain:"Find the contiguous subarray with the largest product.",
@@ -4883,6 +4883,1586 @@ def topKFrequent(self, nums, k):
       edgeCase:"Single element: return it. All negatives with even count: product of all. Zero in array: splits into independent subarrays."
     },
     similar:{"DP":["Maximum Subarray","Minimum Product Subarray","Product of Array Except Self"]}
+  }
+},
+
+/* ════════════════ TOP EXTRAS (high-frequency, not in LC150) ════════════════ */
+
+"meeting-rooms-ii": {
+  num:151, title:"Meeting Rooms II", diff:"Medium", cat:"Top Extras",
+  lc:"https://leetcode.com/problems/meeting-rooms-ii/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"8 min", pattern:"Intervals + Min-Heap (or Sweep Line)",
+  sections:{
+    explain:"Given a list of meeting intervals [start, end], find the minimum number of conference rooms required so all meetings can run simultaneously.",
+    example:{input:"intervals=[[0,30],[5,10],[15,20]]", output:"2", why:"[0,30] overlaps with [5,10] and [15,20] so needs 2 rooms"},
+    intuition:"Sort meetings by start time. Use a min-heap of end times (one entry per room in use). For each new meeting: if the earliest ending room is free (heap top <= start), reuse it (pop and push new end). Otherwise allocate a new room (just push). Heap size = rooms needed.",
+    tricks:[
+      {name:"Min-heap of end times", detail:"heap[0] is the earliest room to become free. If heap[0] <= meeting.start, reuse that room. Otherwise add a new room. heapq.heappushpop saves a pop+push when reusing."},
+      {name:"Sweep line alternative", detail:"Create +1 events at each start, -1 events at each end. Sort all events (ties: end before start). Track running sum; max is answer."}
+    ],
+    code:`import heapq
+def minMeetingRooms(self, intervals):
+    if not intervals: return 0
+    intervals.sort(key=lambda x: x[0])
+    heap = []                            # min-heap of end times
+    for start, end in intervals:
+        if heap and heap[0] <= start:
+            heapq.heapreplace(heap, end) # reuse earliest-free room
+        else:
+            heapq.heappush(heap, end)    # new room needed
+    return len(heap)`,
+    tc:"O(n log n)", sc:"O(n)",
+    walkthrough:{
+      steps:[
+        {label:"intervals=[[0,30],[5,10],[15,20]] sorted", detail:"[0,30]: heap empty → push 30. [5,10]: heap[0]=30>5 → push 10. heap=[10,30]. [15,20]: heap[0]=10<=15 → replace 10 with 20. heap=[20,30]."},
+        {label:"Return len(heap)=2", detail:"Two rooms needed."}
+      ],
+      edgeCase:"No overlaps: heap size stays 1. All same start time: heap grows to n."
+    },
+    similar:{"Intervals":["Merge Intervals","Non-overlapping Intervals","Employee Free Time"]}
+  }
+},
+
+"serialize-and-deserialize-binary-tree": {
+  num:152, title:"Serialize and Deserialize Binary Tree", diff:"Hard", cat:"Top Extras",
+  lc:"https://leetcode.com/problems/serialize-and-deserialize-binary-tree/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"12 min", pattern:"BFS Level-Order or DFS Preorder Encoding",
+  sections:{
+    explain:"Design an algorithm to serialize (tree → string) and deserialize (string → tree) a binary tree. No constraints on format.",
+    example:{input:"root=[1,2,3,null,null,4,5]", output:"Serialize to string, deserialize back to same tree"},
+    intuition:"Preorder DFS: serialize by recording node values with a null marker (e.g., 'N') for missing children. Deserialize by splitting on delimiter and reconstructing recursively using a pointer/queue into the token list.",
+    tricks:[
+      {name:"Preorder with null markers", detail:"Serialize: 1,2,N,N,3,4,N,N,5,N,N. Deserialize: consume tokens left-to-right. 'N' → return None. Otherwise create node, recurse left, recurse right."},
+      {name:"Use a deque for O(1) pops from front", detail:"deque(tokens). popleft() is O(1) vs list.pop(0) which is O(n)."}
+    ],
+    code:`from collections import deque
+class Codec:
+    def serialize(self, root):
+        res = []
+        def dfs(node):
+            if not node: res.append('N'); return
+            res.append(str(node.val))
+            dfs(node.left); dfs(node.right)
+        dfs(root)
+        return ','.join(res)
+
+    def deserialize(self, data):
+        tokens = deque(data.split(','))
+        def dfs():
+            val = tokens.popleft()
+            if val == 'N': return None
+            node = TreeNode(int(val))
+            node.left  = dfs()
+            node.right = dfs()
+            return node
+        return dfs()`,
+    tc:"O(n)", sc:"O(n)",
+    walkthrough:{
+      steps:[
+        {label:"Tree [1,2,3,null,null,4,5]", detail:"Preorder: 1→2→N→N→3→4→N→N→5→N→N. Serialized: '1,2,N,N,3,4,N,N,5,N,N'."},
+        {label:"Deserialize", detail:"Pop 1→node(1). Pop 2→node(2). Pop N→left=None. Pop N→right=None. Back to node(1): right=pop 3→node(3). Continue for 4,5."}
+      ],
+      edgeCase:"Empty tree: serializes to 'N'. Single node: '5,N,N'."
+    },
+    similar:{"BFS/DFS":["Construct Binary Tree from Preorder/Inorder","Serialize and Deserialize BST","Clone Graph"]}
+  }
+},
+
+"alien-dictionary": {
+  num:153, title:"Alien Dictionary", diff:"Hard", cat:"Top Extras",
+  lc:"https://leetcode.com/problems/alien-dictionary/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"15 min", pattern:"Topological Sort on Character Graph",
+  sections:{
+    explain:"Given a sorted list of words in an alien language, derive the order of characters in that alphabet. Return any valid ordering, or '' if it's impossible.",
+    example:{input:"words=['wrt','wrf','er','ett','rftt']", output:"'wertf'"},
+    intuition:"Compare adjacent words to find ordering constraints: the first differing character gives an edge (char_a → char_b means a comes before b). Build a directed graph and run topological sort (Kahn's BFS). If a cycle exists, return ''.",
+    tricks:[
+      {name:"Compare adjacent pairs only", detail:"words[i] vs words[i+1]: find first position where chars differ. That gives one directed edge. Ignore the rest of both words."},
+      {name:"Prefix anomaly = invalid", detail:"If words[i] is a prefix of words[i-1] (e.g., ['abc','ab']), it's impossible — return '' immediately."},
+      {name:"Kahn's BFS for cycle detection", detail:"Compute in-degrees. Process 0-in-degree nodes first. If not all chars processed = cycle = invalid."}
+    ],
+    code:`from collections import defaultdict, deque
+def alienOrder(self, words):
+    adj = defaultdict(set)
+    in_degree = {c: 0 for w in words for c in w}
+    for i in range(len(words) - 1):
+        w1, w2 = words[i], words[i+1]
+        min_len = min(len(w1), len(w2))
+        if len(w1) > len(w2) and w1[:min_len] == w2[:min_len]:
+            return ''                    # prefix violation
+        for j in range(min_len):
+            if w1[j] != w2[j]:
+                if w2[j] not in adj[w1[j]]:
+                    adj[w1[j]].add(w2[j])
+                    in_degree[w2[j]] += 1
+                break
+    queue = deque(c for c in in_degree if in_degree[c] == 0)
+    res = []
+    while queue:
+        c = queue.popleft(); res.append(c)
+        for nb in adj[c]:
+            in_degree[nb] -= 1
+            if in_degree[nb] == 0: queue.append(nb)
+    return ''.join(res) if len(res) == len(in_degree) else ''`,
+    tc:"O(C) C=total characters", sc:"O(1) — at most 26 chars",
+    walkthrough:{
+      steps:[
+        {label:"wrt vs wrf", detail:"First diff at pos 2: t→f. Edge t→f."},
+        {label:"wrf vs er", detail:"First diff at pos 0: w→e. Edge w→e."},
+        {label:"er vs ett", detail:"First diff at pos 1: r→t. Edge r→t."},
+        {label:"ett vs rftt", detail:"First diff at pos 0: e→r. Edge e→r."},
+        {label:"Topo sort", detail:"in_degree: w=0,e=1,r=1,t=1,f=1. Queue=[w]. Process w→e, then e→r, then r→t, then t→f. Result: wertf."}
+      ],
+      edgeCase:"Duplicate words: no edges extracted. Prefix violation: return '' immediately."
+    },
+    similar:{"Topological Sort":["Course Schedule II","Sequence Reconstruction","Minimum Height Trees"]}
+  }
+},
+
+"sliding-window-maximum": {
+  num:154, title:"Sliding Window Maximum", diff:"Hard", cat:"Top Extras",
+  lc:"https://leetcode.com/problems/sliding-window-maximum/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"10 min", pattern:"Monotonic Deque",
+  sections:{
+    explain:"Given an array and window size k, return the maximum of each sliding window.",
+    example:{input:"nums=[1,3,-1,-3,5,3,6,7], k=3", output:"[3,3,5,5,6,7]"},
+    intuition:"Maintain a deque of indices in decreasing order of values (monotone decreasing). For each element: pop from the back any indices with smaller values (they can never be the maximum). Pop from the front if the index is outside the current window. Front of deque is always the maximum of the window.",
+    tricks:[
+      {name:"Deque stores indices, not values", detail:"Storing indices lets you check if front is out of the current window (i - deque[0] >= k). Pop it when out of window."},
+      {name:"Pop smaller values from back", detail:"Before adding i, pop all j from back where nums[j] <= nums[i] — those can never be the max while i is in the window."}
+    ],
+    code:`from collections import deque
+def maxSlidingWindow(self, nums, k):
+    dq = deque()   # indices, decreasing order of values
+    res = []
+    for i, n in enumerate(nums):
+        # Remove elements outside window
+        while dq and dq[0] <= i - k:
+            dq.popleft()
+        # Remove smaller elements from back
+        while dq and nums[dq[-1]] <= n:
+            dq.pop()
+        dq.append(i)
+        if i >= k - 1:              # window is full
+            res.append(nums[dq[0]])
+    return res`,
+    tc:"O(n)", sc:"O(k)",
+    walkthrough:{
+      steps:[
+        {label:"nums=[1,3,-1,-3,5,3,6,7],k=3", detail:"i=0(1):dq=[0]. i=1(3):pop 0(1<3),dq=[1]. i=2(-1):dq=[1,2]. Window full: res=[3]. i=3(-3):dq=[1,2,3],front=1,i-k=0 ok. res=[3,3]. i=4(5):pop all,dq=[4],res=[3,3,5]. i=5(3):dq=[4,5],res=[3,3,5,5]. i=6(6):pop 5(3<6),dq=[4,6]. But wait 4<=6-3=3? 4>3. res=[3,3,5,5,6]. i=7(7):pop,dq=[7],res=[3,3,5,5,6,7]."}
+      ],
+      edgeCase:"k=1: every element is its own window max. k=n: answer is single max of array."
+    },
+    similar:{"Monotonic Deque":["Minimum Window Substring","Jump Game VI","Constrained Subsequence Sum"]}
+  }
+},
+
+"accounts-merge": {
+  num:155, title:"Accounts Merge", diff:"Medium", cat:"Top Extras",
+  lc:"https://leetcode.com/problems/accounts-merge/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"12 min", pattern:"Union Find on Emails",
+  sections:{
+    explain:"Each account is [name, email1, email2, ...]. Accounts belonging to the same person share at least one email. Merge accounts belonging to the same person.",
+    example:{input:"accounts=[['John','j@m','j@t'],['John','j@g','j@m'],['Mary','m@m']]", output:"[['John','j@g','j@m','j@t'],['Mary','m@m']]"},
+    intuition:"Model emails as nodes in a graph. Two emails in the same account are connected. Use Union Find: for each account, union all emails together (pivot on the first email). Then group all emails by their root, add the name, and sort.",
+    tricks:[
+      {name:"Email → root → group", detail:"email_to_name[email] = account name. After unioning, group by find(email). Collect names from email_to_name for each group."},
+      {name:"Union first email with all others", detail:"For account [name, e1, e2, e3]: union(e1,e2), union(e1,e3). All emails in the account converge to one root."}
+    ],
+    code:`from collections import defaultdict
+def accountsMerge(self, accounts):
+    parent = {}
+    def find(x):
+        parent.setdefault(x, x)
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]; x = parent[x]
+        return x
+    def union(a, b):
+        parent[find(a)] = find(b)
+    email_name = {}
+    for acc in accounts:
+        name = acc[0]
+        for email in acc[1:]:
+            email_name[email] = name
+            union(acc[1], email)          # pivot on first email
+    groups = defaultdict(list)
+    for email in email_name:
+        groups[find(email)].append(email)
+    return [[email_name[root]] + sorted(emails)
+            for root, emails in groups.items()]`,
+    tc:"O(n*alpha(n)) n=total emails", sc:"O(n)",
+    walkthrough:{
+      steps:[
+        {label:"Account 1: john@m, john@t → union", detail:"parent[john@m]=john@m, union(john@m, john@t)."},
+        {label:"Account 2: john@g, john@m → union", detail:"union(john@g, john@m). Now john@g, john@m, john@t all share root."},
+        {label:"Group + sort", detail:"Root of john@m's group: [john@g, john@m, john@t] → sorted with name 'John'."}
+      ],
+      edgeCase:"Single email per account: no union needed, still grouped correctly. Same email in 3+ accounts: all chained together."
+    },
+    similar:{"Union Find":["Redundant Connection","Number of Connected Components","Largest Component Size by Common Factor"]}
+  }
+},
+
+"01-matrix": {
+  num:156, title:"01 Matrix", diff:"Medium", cat:"Top Extras",
+  lc:"https://leetcode.com/problems/01-matrix/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"8 min", pattern:"Multi-Source BFS from All Zeros",
+  sections:{
+    explain:"Given a binary matrix, return a matrix where each cell contains its distance to the nearest 0.",
+    example:{input:"mat=[[0,0,0],[0,1,0],[1,1,1]]", output:"[[0,0,0],[0,1,0],[1,2,1]]"},
+    intuition:"Multi-source BFS starting from ALL zero cells simultaneously. Initialize the queue with every 0 cell (distance 0). BFS outward: each 1-cell gets visited when BFS reaches it, and its distance is the current BFS level. This guarantees shortest distance because BFS explores by increasing distance.",
+    tricks:[
+      {name:"Start BFS from all 0s at once", detail:"Initialize queue with all zero cells. Set unvisited 1-cells to infinity or use a visited set. This avoids running a separate BFS from each 0 — instead one BFS pass covers everything in O(m*n)."},
+      {name:"DP alternative", detail:"Two passes: top-left to bottom-right, then bottom-right to top-left. dp[i][j] = min(adjacent dp values) + 1. Simpler but less intuitive."}
+    ],
+    code:`from collections import deque
+def updateMatrix(self, mat):
+    m, n = len(mat), len(mat[0])
+    dist = [[float('inf')] * n for _ in range(m)]
+    queue = deque()
+    for r in range(m):
+        for c in range(n):
+            if mat[r][c] == 0:
+                dist[r][c] = 0
+                queue.append((r, c))
+    while queue:
+        r, c = queue.popleft()
+        for dr, dc in [(1,0),(-1,0),(0,1),(0,-1)]:
+            nr, nc = r+dr, c+dc
+            if 0<=nr<m and 0<=nc<n and dist[nr][nc] > dist[r][c] + 1:
+                dist[nr][nc] = dist[r][c] + 1
+                queue.append((nr, nc))
+    return dist`,
+    tc:"O(m*n)", sc:"O(m*n)",
+    walkthrough:{
+      steps:[
+        {label:"All 0-cells enqueued at dist=0", detail:"(0,0),(0,1),(0,2),(1,0),(1,2) enqueued. dist initialized to 0 for these."},
+        {label:"BFS level 1", detail:"Process (1,0)→(2,0) gets dist=1. Process (1,2)→(2,2) gets dist=1."},
+        {label:"BFS level 2", detail:"Process (2,0)→(2,1) gets dist=2. All cells filled."}
+      ],
+      edgeCase:"All zeros: all distances are 0. Single non-zero surrounded by zeros: distance=1."
+    },
+    similar:{"BFS":["Rotting Oranges","Walls and Gates","Pacific Atlantic Water Flow"]}
+  }
+},
+
+"encode-and-decode-strings": {
+  num:157, title:"Encode and Decode Strings", diff:"Medium", cat:"Top Extras",
+  lc:"https://leetcode.com/problems/encode-and-decode-strings/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"8 min", pattern:"Length-Prefix Encoding",
+  sections:{
+    explain:"Design encode(strs) → single string and decode(s) → list of strings. Must handle any character including delimiters.",
+    example:{input:"strs=['hello','world']", output:"encode→'5#hello5#world', decode→['hello','world']"},
+    intuition:"Prefix each string with its length and a separator (e.g., '4#word'). On decode, read digits until '#', extract that many characters as the next string. Works for any characters since the length tells us exactly how many bytes to consume.",
+    tricks:[
+      {name:"Length-prefix avoids delimiter ambiguity", detail:"Any delimiter character (like '|' or ',') can appear in the strings themselves. Length-prefix sidesteps this — we always know exactly how many chars to read."},
+      {name:"Read length then slice", detail:"i = s.index('#', i); length = int(s[i_start:i]); word = s[i+1:i+1+length]; advance i."}
+    ],
+    code:`class Codec:
+    def encode(self, strs):
+        return ''.join(f'{len(s)}#{s}' for s in strs)
+
+    def decode(self, s):
+        res, i = [], 0
+        while i < len(s):
+            j = s.index('#', i)          # find next '#'
+            length = int(s[i:j])         # parse length
+            res.append(s[j+1:j+1+length])
+            i = j + 1 + length           # advance past word
+        return res`,
+    tc:"O(n) encode/decode", sc:"O(n)",
+    walkthrough:{
+      steps:[
+        {label:"encode(['hello','world'])", detail:"'5#hello' + '5#world' = '5#hello5#world'."},
+        {label:"decode('5#hello5#world')", detail:"i=0: j=1('#'), length=5, word='hello', i=7. i=7: j=8('#'), length=5, word='world', i=14. Return ['hello','world']."}
+      ],
+      edgeCase:"Empty string in list: encodes as '0#'. String containing '#': length prefix handles it — we only look for '#' at the length separator position."
+    },
+    similar:{"String Design":["Serialize and Deserialize Binary Tree","Design HashMap","Implement strStr"]}
+  }
+},
+
+"time-based-key-value-store": {
+  num:158, title:"Time Based Key-Value Store", diff:"Medium", cat:"Top Extras",
+  lc:"https://leetcode.com/problems/time-based-key-value-store/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"8 min", pattern:"Hash Map + Binary Search on Timestamps",
+  sections:{
+    explain:"Design a time-based key-value store. set(key, value, timestamp) stores with a timestamp. get(key, timestamp) returns the value with the largest timestamp <= given timestamp.",
+    example:{input:"set('foo','bar',1); set('foo','bar2',4); get('foo',3)→'bar'; get('foo',5)→'bar2'"},
+    intuition:"Store each key mapped to a sorted list of (timestamp, value) pairs. Timestamps are guaranteed strictly increasing for the same key, so the list is always sorted. For get, binary search for the largest timestamp <= query timestamp.",
+    tricks:[
+      {name:"bisect_right on timestamp list", detail:"timestamps = [t for t,v in store[key]]. idx = bisect_right(timestamps, query_ts) - 1. If idx >= 0, return store[key][idx][1]."},
+      {name:"Separate timestamp and value lists", detail:"Keeping two parallel lists (timestamps[], values[]) for each key makes bisect cleaner than searching a list of tuples."}
+    ],
+    code:`from collections import defaultdict
+import bisect
+class TimeMap:
+    def __init__(self):
+        self.store = defaultdict(list)   # key → [(timestamp, value)]
+
+    def set(self, key, value, timestamp):
+        self.store[key].append((timestamp, value))
+
+    def get(self, key, timestamp):
+        if key not in self.store: return ''
+        pairs = self.store[key]
+        # Binary search for largest timestamp <= given
+        lo, hi = 0, len(pairs) - 1
+        res = ''
+        while lo <= hi:
+            mid = (lo + hi) // 2
+            if pairs[mid][0] <= timestamp:
+                res = pairs[mid][1]     # candidate answer
+                lo = mid + 1            # look for later match
+            else:
+                hi = mid - 1
+        return res`,
+    tc:"O(log n) get, O(1) set", sc:"O(n)",
+    walkthrough:{
+      steps:[
+        {label:"set('foo','bar',1); set('foo','bar2',4)", detail:"store['foo']=[(1,'bar'),(4,'bar2')]."},
+        {label:"get('foo',3)", detail:"Binary search: mid=0(ts=1<=3)→res='bar',lo=1. mid=1(ts=4>3)→hi=0. lo>hi. Return 'bar'."},
+        {label:"get('foo',5)", detail:"mid=0(1<=5)→res='bar',lo=1. mid=1(4<=5)→res='bar2',lo=2. lo>hi. Return 'bar2'."}
+      ],
+      edgeCase:"No entries for key: return ''. All timestamps > query: return ''."
+    },
+    similar:{"Binary Search":["Range Sum Query","Search a 2D Matrix","Find First and Last Position"]}
+  }
+},
+
+"counting-bits": {
+  num:159, title:"Counting Bits", diff:"Easy", cat:"Top Extras",
+  lc:"https://leetcode.com/problems/counting-bits/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"5 min", pattern:"DP with Bit Trick",
+  sections:{
+    explain:"Return an array ans where ans[i] is the number of 1-bits in the binary representation of i, for all 0 <= i <= n.",
+    example:{input:"n=5", output:"[0,1,1,2,1,2]", why:"0→0,1→1,2→10,3→11,4→100,5→101"},
+    intuition:"dp[i] = dp[i >> 1] + (i & 1). Shifting right by 1 drops the least significant bit (halves the number). The count of 1-bits in i = count in (i/2) plus whether i's last bit is set. This builds the entire array in O(n).",
+    tricks:[
+      {name:"i >> 1 is i with last bit removed", detail:"dp[i] = dp[i//2] + (i%2). Any number i has the same bits as i//2 except for the last bit."},
+      {name:"Alternative: i & (i-1) trick", detail:"dp[i] = dp[i & (i-1)] + 1. i & (i-1) clears the lowest set bit. So dp[i] = dp[i with one fewer 1-bit] + 1."}
+    ],
+    code:`def countBits(self, n):
+    dp = [0] * (n + 1)
+    for i in range(1, n + 1):
+        dp[i] = dp[i >> 1] + (i & 1)
+    return dp`,
+    tc:"O(n)", sc:"O(n)",
+    walkthrough:{
+      steps:[
+        {label:"i=1(1): dp[0]+(1&1)=0+1=1", detail:"dp=[0,1,...]."},
+        {label:"i=2(10): dp[1]+(2&1)=1+0=1", detail:"dp=[0,1,1,...]."},
+        {label:"i=3(11): dp[1]+(3&1)=1+1=2", detail:"dp=[0,1,1,2,...]."},
+        {label:"i=4(100): dp[2]+(4&1)=1+0=1", detail:"dp=[0,1,1,2,1,...]. i=5(101): dp[2]+1=2. Result=[0,1,1,2,1,2]."}
+      ],
+      edgeCase:"n=0: return [0]. Works for all n without special cases."
+    },
+    similar:{"Bit Manipulation":["Number of 1 Bits","Sum of Two Integers","Reverse Bits"]}
+  }
+},
+
+"find-all-anagrams-in-a-string": {
+  num:160, title:"Find All Anagrams in a String", diff:"Medium", cat:"Top Extras",
+  lc:"https://leetcode.com/problems/find-all-anagrams-in-a-string/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"8 min", pattern:"Fixed-Size Sliding Window + Frequency Map",
+  sections:{
+    explain:"Given strings s and p, return all start indices of p's anagrams in s. An anagram is any permutation of p.",
+    example:{input:"s='cbaebabacd', p='abc'", output:"[0,6]", why:"s[0..2]='cba' and s[6..8]='bac' are anagrams of 'abc'"},
+    intuition:"Fixed-size sliding window of length len(p). Maintain a frequency count of characters in the window. Compare to p's frequency count. When they match, the window is an anagram. Slide: add new character, remove outgoing character, update match count.",
+    tricks:[
+      {name:"Track 'matches' count instead of comparing full maps", detail:"matches = number of chars where window_count[c] == p_count[c]. When matches == 26, current window is an anagram. Increment/decrement matches as you slide."},
+      {name:"26-element array instead of Counter", detail:"count_s = [0]*26, count_p = [0]*26. Comparing arrays is O(26) = O(1) effectively."}
+    ],
+    code:`from collections import Counter
+def findAnagrams(self, s, p):
+    if len(p) > len(s): return []
+    p_count = Counter(p)
+    w_count = Counter(s[:len(p)])
+    res = [0] if w_count == p_count else []
+    for i in range(len(p), len(s)):
+        incoming = s[i]
+        outgoing = s[i - len(p)]
+        w_count[incoming] += 1
+        w_count[outgoing] -= 1
+        if w_count[outgoing] == 0:
+            del w_count[outgoing]      # keep counter clean
+        if w_count == p_count:
+            res.append(i - len(p) + 1)
+    return res`,
+    tc:"O(n)", sc:"O(1) — bounded alphabet",
+    walkthrough:{
+      steps:[
+        {label:"s='cbaebabacd', p='abc', window_size=3", detail:"Initial window 'cba': Counter={'c':1,'b':1,'a':1}==p_count → res=[0]."},
+        {label:"Slide i=3: add 'e', remove 'c'", detail:"w={'b':1,'a':1,'e':1}≠p. Slide i=4: add 'b', remove 'b'. w={'a':1,'e':1,'b':1}≠p."},
+        {label:"Slide to i=8: window='bac'", detail:"w={'b':1,'a':1,'c':1}==p_count → res=[0,6]."}
+      ],
+      edgeCase:"p longer than s: return []. No anagrams: return []. p has repeated chars: Counter handles correctly."
+    },
+    similar:{"Sliding Window":["Minimum Window Substring","Permutation in String","Longest Substring Without Repeating Characters"]}
+  }
+},
+
+/* ════════ BIT MANIPULATION ════════ */
+
+"single-number": {
+  num:161, title:"Single Number", diff:"Easy", cat:"Bit Manipulation",
+  lc:"https://leetcode.com/problems/single-number/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"4 min", pattern:"XOR All Elements",
+  sections:{
+    explain:"Every element appears twice except one. Find the element that appears only once.",
+    example:{input:"nums=[4,1,2,1,2]", output:"4"},
+    intuition:"XOR is self-inverse: a ^ a = 0, a ^ 0 = a. XOR all elements together — pairs cancel out, leaving the single element.",
+    tricks:[{name:"XOR cancels duplicates", detail:"a ^ a = 0, 0 ^ a = a. Order doesn't matter. Result = sole unique element. O(1) space."}],
+    code:`def singleNumber(self, nums):
+    res = 0
+    for n in nums:
+        res ^= n
+    return res`,
+    tc:"O(n)", sc:"O(1)",
+    walkthrough:{steps:[{label:"[4,1,2,1,2]",detail:"0^4=4, 4^1=5, 5^2=7, 7^1=6, 6^2=4. Return 4."}],edgeCase:"Single element array: returns that element."},
+    similar:{"Bit Manipulation":["Single Number II","Single Number III","Missing Number"]}
+  }
+},
+
+"number-of-1-bits": {
+  num:162, title:"Number of 1 Bits", diff:"Easy", cat:"Bit Manipulation",
+  lc:"https://leetcode.com/problems/number-of-1-bits/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"4 min", pattern:"n & (n-1) Clears Lowest Set Bit",
+  sections:{
+    explain:"Return the number of '1' bits in the binary representation of n (also known as the Hamming weight).",
+    example:{input:"n=11 (binary 1011)", output:"3"},
+    intuition:"n & (n-1) clears the lowest set bit. Repeat until n is 0 — the number of iterations equals the number of set bits.",
+    tricks:[{name:"n & (n-1) trick", detail:"Each operation removes exactly one 1-bit. Count iterations. Faster than checking each bit if n has few 1-bits."}],
+    code:`def hammingWeight(self, n):
+    count = 0
+    while n:
+        n &= n - 1    # clear lowest set bit
+        count += 1
+    return count`,
+    tc:"O(k) k=number of set bits", sc:"O(1)",
+    walkthrough:{steps:[{label:"n=1011",detail:"1011&1010=1010(+1). 1010&1001=1000(+1). 1000&0111=0000(+1). count=3."}],edgeCase:"n=0: while loop never runs, return 0."},
+    similar:{"Bit Manipulation":["Counting Bits","Reverse Bits","Power of Two"]}
+  }
+},
+
+"reverse-bits": {
+  num:163, title:"Reverse Bits", diff:"Easy", cat:"Bit Manipulation",
+  lc:"https://leetcode.com/problems/reverse-bits/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"5 min", pattern:"Bit-by-Bit Reversal",
+  sections:{
+    explain:"Reverse the bits of a given 32-bit unsigned integer.",
+    example:{input:"n=00000010100101000001111010011100", output:"964176192 (00111001011110000010100101000000)"},
+    intuition:"Loop 32 times. Each iteration: shift result left by 1, add the lowest bit of n (n & 1), then shift n right by 1. Result accumulates bits in reversed order.",
+    tricks:[{name:"Build result bit by bit", detail:"result = (result << 1) | (n & 1); n >>= 1. Repeat 32 times regardless of n."}],
+    code:`def reverseBits(self, n):
+    result = 0
+    for _ in range(32):
+        result = (result << 1) | (n & 1)
+        n >>= 1
+    return result`,
+    tc:"O(1) — always 32 iterations", sc:"O(1)",
+    walkthrough:{steps:[{label:"First few bits of n=...100",detail:"i=0: result=0|0=0,n>>1. i=1: result=0|0=0. i=2: result=1|1=1 (last bit of n was 1)."}],edgeCase:"n=0: result=0. n=2^32-1 (all 1s): result=2^32-1."},
+    similar:{"Bit Manipulation":["Number of 1 Bits","Counting Bits","Single Number"]}
+  }
+},
+
+"missing-number": {
+  num:164, title:"Missing Number", diff:"Easy", cat:"Bit Manipulation",
+  lc:"https://leetcode.com/problems/missing-number/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"4 min", pattern:"XOR or Gauss Sum",
+  sections:{
+    explain:"Given n distinct numbers in range [0,n], find the missing one.",
+    example:{input:"nums=[3,0,1]", output:"2"},
+    intuition:"XOR all indices 0..n with all values in nums. Pairs cancel (index i XOR value i = 0), leaving the missing index. Alternatively: expected sum = n*(n+1)/2, subtract actual sum.",
+    tricks:[{name:"XOR index with value", detail:"XOR(0..n) ^ XOR(nums). Each present number cancels with its index. Missing index remains."}],
+    code:`def missingNumber(self, nums):
+    res = len(nums)
+    for i, n in enumerate(nums):
+        res ^= i ^ n
+    return res`,
+    tc:"O(n)", sc:"O(1)",
+    walkthrough:{steps:[{label:"nums=[3,0,1], n=3",detail:"res=3. i=0,n=3: res^=0^3=0. i=1,n=0: res^=1^0=1. i=2,n=1: res^=2^1=2. Return 2."}],edgeCase:"Missing 0: XOR works. Missing n: also works."},
+    similar:{"Bit Manipulation":["Single Number","Find the Duplicate Number","Find Missing and Repeated Values"]}
+  }
+},
+
+"sum-of-two-integers": {
+  num:165, title:"Sum of Two Integers", diff:"Medium", cat:"Bit Manipulation",
+  lc:"https://leetcode.com/problems/sum-of-two-integers/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"6 min", pattern:"Bit Addition Without + Operator",
+  sections:{
+    explain:"Calculate the sum of two integers a and b without using + or -.",
+    example:{input:"a=1, b=2", output:"3"},
+    intuition:"XOR gives sum without carry. AND << 1 gives carry bits. Repeat until no carry. Python needs masking to 32 bits due to arbitrary precision integers.",
+    tricks:[{name:"XOR=sum, AND<<1=carry", detail:"a^b gives partial sum. (a&b)<<1 gives carry. Iterate: a=a^b, b=(a_old&b)<<1 until b=0."}],
+    code:`def getSum(self, a, b):
+    mask = 0xFFFFFFFF
+    while b & mask:
+        carry = (a & b) << 1
+        a = a ^ b
+        b = carry
+    return a if b == 0 else a & mask`,
+    tc:"O(1) — at most 32 iterations", sc:"O(1)",
+    walkthrough:{steps:[{label:"a=1(01),b=3(11)",detail:"carry=(01&11)<<1=010=2. a=01^11=10=2. b=2. carry=(10&10)<<1=100=4. a=10^10=0. b=4. carry=0. a=0^4=4. b=0. Return 4."}],edgeCase:"Negative numbers: Python mask to 0xFFFFFFFF, convert back if needed."},
+    similar:{"Bit Manipulation":["Add Binary","Counting Bits","Missing Number"]}
+  }
+},
+
+/* ════════ MONOTONIC STACK ════════ */
+
+"daily-temperatures": {
+  num:166, title:"Daily Temperatures", diff:"Medium", cat:"Monotonic Stack",
+  lc:"https://leetcode.com/problems/daily-temperatures/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"7 min", pattern:"Monotonic Decreasing Stack — Next Greater Element",
+  sections:{
+    explain:"Given daily temperatures, return an array where answer[i] is the number of days until a warmer temperature. 0 if no warmer day exists.",
+    example:{input:"temperatures=[73,74,75,71,69,72,76,73]", output:"[1,1,4,2,1,1,0,0]"},
+    intuition:"Use a monotonic decreasing stack of indices. For each day, while the stack top has a cooler temperature, pop it — we found its answer (current day - popped day). Push current index.",
+    tricks:[{name:"Stack stores indices, not temperatures", detail:"When we pop index j because temperatures[i] > temperatures[j], answer[j] = i - j. Current index minus popped index gives the gap."}],
+    code:`def dailyTemperatures(self, temperatures):
+    res = [0] * len(temperatures)
+    stack = []           # indices, decreasing temperatures
+    for i, t in enumerate(temperatures):
+        while stack and temperatures[stack[-1]] < t:
+            j = stack.pop()
+            res[j] = i - j
+        stack.append(i)
+    return res`,
+    tc:"O(n)", sc:"O(n)",
+    walkthrough:{steps:[
+      {label:"i=0(73),i=1(74)",detail:"74>73: pop 0, res[0]=1-0=1. Push 1. stack=[1]."},
+      {label:"i=2(75)",detail:"75>74: pop 1, res[1]=2-1=1. stack=[2]."},
+      {label:"i=3..5",detail:"71,69 push. i=5(72): pop 4(69,res[4]=1), pop 3(71,res[3]=2). stack=[2,5]."},
+      {label:"i=6(76)",detail:"Pop 5(res[5]=1), pop 2(res[2]=4). Push 6. stack=[6,7]. Remaining get 0."}
+    ],edgeCase:"Monotonically decreasing: all answers are 0. Last element: always 0."},
+    similar:{"Monotonic Stack":["Next Greater Element I","Sliding Window Maximum","Largest Rectangle in Histogram"]}
+  }
+},
+
+"largest-rectangle-in-histogram": {
+  num:167, title:"Largest Rectangle in Histogram", diff:"Hard", cat:"Monotonic Stack",
+  lc:"https://leetcode.com/problems/largest-rectangle-in-histogram/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"12 min", pattern:"Monotonic Increasing Stack — Width Expansion",
+  sections:{
+    explain:"Given bar heights of a histogram, find the area of the largest rectangle that fits within the histogram.",
+    example:{input:"heights=[2,1,5,6,2,3]", output:"10", why:"Rectangle of height 5 and width 2 (bars 2-3)"},
+    intuition:"Use a monotonic increasing stack of indices. When a bar shorter than the stack top is encountered, pop the top and compute area: height * (current index - new stack top - 1). The width extends leftward to the new stack top.",
+    tricks:[
+      {name:"Append 0 sentinel to flush stack at end", detail:"heights.append(0) triggers popping all remaining bars after the last element."},
+      {name:"Width = i - stack[-1] - 1 after pop", detail:"After popping index j, the left boundary is the new stack top (or -1 if empty). Width = i - left_boundary - 1."}
+    ],
+    code:`def largestRectangleArea(self, heights):
+    heights.append(0)           # sentinel to flush stack
+    stack = [-1]                # sentinel left boundary
+    max_area = 0
+    for i, h in enumerate(heights):
+        while stack[-1] != -1 and heights[stack[-1]] >= h:
+            height = heights[stack.pop()]
+            width  = i - stack[-1] - 1
+            max_area = max(max_area, height * width)
+        stack.append(i)
+    heights.pop()               # restore original
+    return max_area`,
+    tc:"O(n)", sc:"O(n)",
+    walkthrough:{steps:[
+      {label:"heights=[2,1,5,6,2,3,0]",detail:"Push 0(h=2),1(h=1)... i=2(h=5),i=3(h=6). Stack=[-1,1,2,3]."},
+      {label:"i=4(h=2)",detail:"Pop 3(h=6): area=6*(4-2-1)=6. Pop 2(h=5): area=5*(4-1-1)=10. Push 4. max=10."},
+      {label:"i=6(sentinel h=0)",detail:"Flush remaining: pop 5(h=3):area=3*(6-4-1)=3. Pop 4(h=2):area=2*(6-1-1)=8. Pop 1(h=1):area=1*(6-(-1)-1)=6. max stays 10."}
+    ],edgeCase:"All same height: entire width. Single bar: area=height."},
+    similar:{"Monotonic Stack":["Maximal Rectangle","Trapping Rain Water","Remove K Digits"]}
+  }
+},
+
+"car-fleet": {
+  num:168, title:"Car Fleet", diff:"Medium", cat:"Monotonic Stack",
+  lc:"https://leetcode.com/problems/car-fleet/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"8 min", pattern:"Sort + Monotonic Stack of Arrival Times",
+  sections:{
+    explain:"Cars drive toward a target. A slower car caught by a faster one forms a fleet. Return the number of fleets that reach the target.",
+    example:{input:"target=12, position=[10,8,0,5,3], speed=[2,4,1,1,3]", output:"3"},
+    intuition:"Sort cars by position descending (closest to target first). Compute time to reach target for each. Use a stack: if a car arrives no later than the car ahead (catches up), they form a fleet (don't push). Stack size = number of fleets.",
+    tricks:[{name:"Sort descending by position, compare arrival times", detail:"time = (target - pos) / speed. If time[i] <= stack top (car ahead), it joins that fleet (skip). Otherwise new fleet (push)."}],
+    code:`def carFleet(self, target, position, speed):
+    pairs = sorted(zip(position, speed), reverse=True)
+    stack = []
+    for pos, spd in pairs:
+        time = (target - pos) / spd
+        if not stack or time > stack[-1]:
+            stack.append(time)   # new fleet
+        # else: catches up → same fleet, don't push
+    return len(stack)`,
+    tc:"O(n log n)", sc:"O(n)",
+    walkthrough:{steps:[
+      {label:"Sorted pairs (desc pos): (10,2),(8,4),(5,1),(3,3),(0,1)",detail:""},
+      {label:"(10,2): time=1. stack=[1].",detail:"(8,4): time=1. 1<=1 → same fleet. (5,1): time=7. 7>1 → push. stack=[1,7]."},
+      {label:"(3,3): time=3. 3<=7 → same fleet. (0,1): time=12. 12>7 → push. stack=[1,7,12].",detail:"Return 3."}
+    ],edgeCase:"All cars same speed: each is its own fleet. Car already past target: constraint prevents this."},
+    similar:{"Monotonic Stack":["Daily Temperatures","Remove K Digits","Next Greater Element"]}
+  }
+},
+
+/* ════════ MORE LINKED LIST ════════ */
+
+"reorder-list": {
+  num:169, title:"Reorder List", diff:"Medium", cat:"More Linked List",
+  lc:"https://leetcode.com/problems/reorder-list/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"10 min", pattern:"Find Mid + Reverse Second Half + Merge",
+  sections:{
+    explain:"Reorder L0→L1→…→Ln to L0→Ln→L1→Ln-1→… in-place.",
+    example:{input:"head=[1,2,3,4,5]", output:"[1,5,2,4,3]"},
+    intuition:"Three steps: 1) Find middle with slow/fast pointers. 2) Reverse the second half. 3) Merge the two halves by alternating nodes.",
+    tricks:[{name:"Three-phase: mid → reverse → merge", detail:"Each phase is a classic LL operation. Finding mid: fast/slow. Reverse: standard iterative. Merge: pointer juggling."}],
+    code:`def reorderList(self, head):
+    # 1. Find middle
+    slow, fast = head, head.next
+    while fast and fast.next:
+        slow = slow.next; fast = fast.next.next
+    # 2. Reverse second half
+    prev, curr = None, slow.next
+    slow.next = None             # split
+    while curr:
+        tmp = curr.next; curr.next = prev
+        prev = curr; curr = tmp
+    # 3. Merge
+    l1, l2 = head, prev
+    while l2:
+        tmp1, tmp2 = l1.next, l2.next
+        l1.next = l2; l2.next = tmp1
+        l1, l2 = tmp1, tmp2`,
+    tc:"O(n)", sc:"O(1)",
+    walkthrough:{steps:[
+      {label:"[1,2,3,4,5]: mid=3, second half=[4,5]",detail:"Reverse second half: [5,4]."},
+      {label:"Merge [1,2,3] with [5,4]",detail:"1→5→2→4→3. Done."}
+    ],edgeCase:"Length 1 or 2: middle is head, second half is None or one node."},
+    similar:{"Linked List":["Sort List","Palindrome Linked List","Reverse Linked List"]}
+  }
+},
+
+"sort-list": {
+  num:170, title:"Sort List", diff:"Medium", cat:"More Linked List",
+  lc:"https://leetcode.com/problems/sort-list/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"10 min", pattern:"Merge Sort on Linked List",
+  sections:{
+    explain:"Sort a linked list in O(n log n) time and O(1) memory (bottom-up merge sort).",
+    example:{input:"head=[4,2,1,3]", output:"[1,2,3,4]"},
+    intuition:"Top-down merge sort: find middle (fast/slow), split, recursively sort each half, merge. O(n log n) time, O(log n) stack space. Bottom-up approach achieves O(1) space by merging sublists of size 1, 2, 4, …",
+    tricks:[{name:"Fast/slow for midpoint + merge sorted lists", detail:"Both midpoint-finding and merging are standard LL patterns. Recursion depth is O(log n) which is usually acceptable."}],
+    code:`def sortList(self, head):
+    if not head or not head.next: return head
+    # Find mid and split
+    slow, fast = head, head.next
+    while fast and fast.next:
+        slow = slow.next; fast = fast.next.next
+    mid = slow.next; slow.next = None
+    # Recurse and merge
+    left  = self.sortList(head)
+    right = self.sortList(mid)
+    dummy = curr = ListNode(0)
+    while left and right:
+        if left.val <= right.val:
+            curr.next = left; left = left.next
+        else:
+            curr.next = right; right = right.next
+        curr = curr.next
+    curr.next = left or right
+    return dummy.next`,
+    tc:"O(n log n)", sc:"O(log n) recursive stack",
+    walkthrough:{steps:[
+      {label:"[4,2,1,3]: split→[4,2] and [1,3]",detail:"Recurse: [4,2]→sorted=[2,4]. [1,3]→sorted=[1,3]."},
+      {label:"Merge [2,4] and [1,3]",detail:"1<2→1, 2<3→2, 3<4→3, 4→4. Result=[1,2,3,4]."}
+    ],edgeCase:"Already sorted: still O(n log n). Single node: return immediately."},
+    similar:{"Linked List":["Reorder List","Merge Two Sorted Lists","Merge K Sorted Lists"]}
+  }
+},
+
+"intersection-of-two-linked-lists": {
+  num:171, title:"Intersection of Two Linked Lists", diff:"Easy", cat:"More Linked List",
+  lc:"https://leetcode.com/problems/intersection-of-two-linked-lists/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"6 min", pattern:"Two Pointers — Path Length Equalization",
+  sections:{
+    explain:"Find the node at which two singly linked lists intersect. Return null if they don't intersect.",
+    example:{input:"listA=[4,1,8,4,5], listB=[5,6,1,8,4,5], intersect at node 8", output:"Node 8"},
+    intuition:"Two pointers start at headA and headB. When pointer A reaches end of A, redirect to headB. When B reaches end of B, redirect to headA. After at most len(A)+len(B) steps, they meet at the intersection (or both reach null).",
+    tricks:[{name:"Redirect to other head at end", detail:"Both pointers traverse lenA + lenB total nodes. They reach the intersection simultaneously because: pA travels lenA + (lenB - intersection_len) and pB travels lenB + (lenA - intersection_len) steps before meeting."}],
+    code:`def getIntersectionNode(self, headA, headB):
+    a, b = headA, headB
+    while a != b:
+        a = a.next if a else headB
+        b = b.next if b else headA
+    return a`,
+    tc:"O(m+n)", sc:"O(1)",
+    walkthrough:{steps:[{label:"pA and pB traverse then cross-over",detail:"If they intersect: they meet at intersection node. If not: both reach None simultaneously (a==b==None)."}],edgeCase:"No intersection: both pointers reach None at the same step."},
+    similar:{"Linked List":["Linked List Cycle II","Remove Nth Node From End","Floyd's Cycle"]}
+  }
+},
+
+/* ════════ MORE TREES ════════ */
+
+"path-sum-ii": {
+  num:172, title:"Path Sum II", diff:"Medium", cat:"More Trees",
+  lc:"https://leetcode.com/problems/path-sum-ii/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"7 min", pattern:"DFS — Collect All Root-to-Leaf Paths",
+  sections:{
+    explain:"Return all root-to-leaf paths where the sum of node values equals targetSum.",
+    example:{input:"root=[5,4,8,11,null,13,4,7,2,null,null,5,1], targetSum=22", output:"[[5,4,11,2],[5,8,4,5]]"},
+    intuition:"DFS with backtracking. Maintain the current path. At each leaf, check if remaining sum equals node value. If yes, add a copy of path to results. Backtrack by removing the last node on return.",
+    tricks:[{name:"Append copy of path at leaf", detail:"res.append(path[:]) — slice creates a copy. Without [:], all results would reference the same mutable list."}],
+    code:`def pathSum(self, root, targetSum):
+    res, path = [], []
+    def dfs(node, remaining):
+        if not node: return
+        path.append(node.val)
+        if not node.left and not node.right and remaining == node.val:
+            res.append(path[:])   # copy
+        dfs(node.left,  remaining - node.val)
+        dfs(node.right, remaining - node.val)
+        path.pop()                # backtrack
+    dfs(root, targetSum)
+    return res`,
+    tc:"O(n^2) copying paths", sc:"O(n)",
+    walkthrough:{steps:[{label:"DFS from root 5, remaining=22",detail:"Path [5], rem=17. Go left to 4, rem=13. Left to 11, rem=2. Left to 7: not leaf target. Right to 2: leaf, rem=2==2 → add [5,4,11,2]."}],edgeCase:"No valid path: return []. Single node equals target: return [[node.val]]."},
+    similar:{"DFS":["Path Sum","Path Sum III","Root to Leaf Numbers"]}
+  }
+},
+
+"sum-root-to-leaf-numbers": {
+  num:173, title:"Sum Root to Leaf Numbers", diff:"Medium", cat:"More Trees",
+  lc:"https://leetcode.com/problems/sum-root-to-leaf-numbers/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"6 min", pattern:"DFS — Accumulate Number Along Path",
+  sections:{
+    explain:"Each root-to-leaf path represents a number (digits concatenated). Return the sum of all such numbers.",
+    example:{input:"root=[1,2,3]", output:"25", why:"Path 1→2 = 12, path 1→3 = 13. 12+13=25"},
+    intuition:"DFS passing the current accumulated number down. At each node: curr = curr*10 + node.val. At each leaf: return curr. Sum all leaf values.",
+    tricks:[{name:"curr = curr*10 + node.val", detail:"Appending a digit: multiply current by 10 and add new digit. Natural way to build multi-digit numbers during DFS."}],
+    code:`def sumNumbers(self, root):
+    def dfs(node, curr):
+        if not node: return 0
+        curr = curr * 10 + node.val
+        if not node.left and not node.right:
+            return curr           # leaf: return the number
+        return dfs(node.left, curr) + dfs(node.right, curr)
+    return dfs(root, 0)`,
+    tc:"O(n)", sc:"O(h)",
+    walkthrough:{steps:[{label:"root=[1,2,3]",detail:"dfs(1,0): curr=1. dfs(2,1): curr=12, leaf → return 12. dfs(3,1): curr=13, leaf → return 13. Total: 25."}],edgeCase:"Single node: returns node.val. Unbalanced tree: sums all root-to-leaf paths."},
+    similar:{"DFS":["Path Sum II","Binary Tree Paths","Count Complete Tree Nodes"]}
+  }
+},
+
+"flatten-binary-tree-to-linked-list": {
+  num:174, title:"Flatten Binary Tree to Linked List", diff:"Medium", cat:"More Trees",
+  lc:"https://leetcode.com/problems/flatten-binary-tree-to-linked-list/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"8 min", pattern:"DFS Post-Order or Morris Traversal",
+  sections:{
+    explain:"Flatten a binary tree in-place into a linked list using preorder traversal (right pointers, left pointers set to null).",
+    example:{input:"root=[1,2,5,3,4,null,6]", output:"1→2→3→4→5→6 (right pointers only)"},
+    intuition:"Post-order DFS: flatten left and right subtrees first, then reconnect. After flattening: set root.right = flattened_left, find the tail of the left list, attach flattened_right there. Set root.left = None.",
+    tricks:[
+      {name:"Recursive post-order", detail:"Flatten left, flatten right. Store right. Move flattened left to right. Find tail of left list. Connect right. Set left=None."},
+      {name:"Morris traversal O(1) space", detail:"For each node with a left subtree: find the rightmost node of left subtree, point it to root.right. Move left subtree to right. Advance."}
+    ],
+    code:`def flatten(self, root):
+    def dfs(node):
+        if not node: return None      # returns tail of flattened list
+        if not node.left and not node.right: return node
+        left_tail  = dfs(node.left)
+        right_tail = dfs(node.right)
+        if left_tail:
+            left_tail.next = node.right   # won't work: use .right
+            # actually:
+        # Morris approach (cleaner):
+        if node.left:
+            # Find rightmost of left subtree
+            curr = node.left
+            while curr.right: curr = curr.right
+            curr.right = node.right
+            node.right = node.left
+            node.left = None
+        flatten(node.right)
+    # Iterative Morris
+    curr = root
+    while curr:
+        if curr.left:
+            pre = curr.left
+            while pre.right: pre = pre.right
+            pre.right = curr.right
+            curr.right = curr.left
+            curr.left = None
+        curr = curr.right`,
+    tc:"O(n)", sc:"O(1) Morris",
+    walkthrough:{steps:[
+      {label:"node=1: left=2",detail:"Find rightmost of 2's subtree: node 4. Connect 4.right=5 (1's right). Move 2 to right of 1. 1.left=None."},
+      {label:"Advance to node=2",detail:"2.left=3. Rightmost of 3 = 3 (no right). 3.right=4. Move 3 to 2.right. Etc."}
+    ],edgeCase:"No left child: just advance right. Already flat: no changes."},
+    similar:{"DFS":["Reorder List","Convert BST to Sorted Doubly Linked List","Binary Tree Inorder Traversal"]}
+  }
+},
+
+"all-nodes-distance-k-in-binary-tree": {
+  num:175, title:"All Nodes Distance K in Binary Tree", diff:"Medium", cat:"More Trees",
+  lc:"https://leetcode.com/problems/all-nodes-distance-k-in-binary-tree/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"10 min", pattern:"Convert Tree to Graph + BFS",
+  sections:{
+    explain:"Find all nodes at distance k from a target node in a binary tree.",
+    example:{input:"root=[3,5,1,6,2,0,8], target=5, k=2", output:"[7,4,1]"},
+    intuition:"Build an undirected adjacency list from the tree (add parent edges). Then BFS from target for k levels. Any node at BFS level k is at distance k.",
+    tricks:[{name:"Add parent pointers via DFS, then BFS", detail:"DFS to build graph = {node: [left, right, parent]}. BFS from target with visited set. After k levels, collect all current nodes."}],
+    code:`from collections import defaultdict, deque
+def distanceK(self, root, target, k):
+    graph = defaultdict(list)
+    def build(node, parent):
+        if not node: return
+        if parent: graph[node].append(parent); graph[parent].append(node)
+        build(node.left, node); build(node.right, node)
+    build(root, None)
+    queue = deque([target])
+    visited = {target}
+    dist = 0
+    while queue and dist < k:
+        for _ in range(len(queue)):
+            node = queue.popleft()
+            for nb in graph[node]:
+                if nb not in visited:
+                    visited.add(nb); queue.append(nb)
+        dist += 1
+    return [node.val for node in queue]`,
+    tc:"O(n)", sc:"O(n)",
+    walkthrough:{steps:[{label:"target=5, k=2",detail:"BFS level 1 from 5: [6,2,3]. BFS level 2: from 6(none new), from 2:[7,4], from 3:[1]. Return [7.val,4.val,1.val]."}],edgeCase:"k=0: return [target.val]. Target is root: BFS finds all nodes at distance k."},
+    similar:{"BFS":["Binary Tree Level Order Traversal","Rotting Oranges","Shortest Path in Binary Matrix"]}
+  }
+},
+
+"populating-next-right-pointers-in-each-node": {
+  num:176, title:"Populating Next Right Pointers in Each Node", diff:"Medium", cat:"More Trees",
+  lc:"https://leetcode.com/problems/populating-next-right-pointers-in-each-node/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"7 min", pattern:"BFS Level Order or O(1) Space with next Pointers",
+  sections:{
+    explain:"Perfect binary tree. Populate each node's next pointer to the next right node on the same level. If no such node, set to null.",
+    example:{input:"root=[1,2,3,4,5,6,7]", output:"next pointers connect same-level nodes"},
+    intuition:"O(1) space approach: use the already-set next pointers of the current level to traverse and set next pointers for children. For each node on current level: node.left.next = node.right; if node.next exists: node.right.next = node.next.left.",
+    tricks:[{name:"Use current level's next pointers to link children", detail:"Start at leftmost node of each level. Link children using established next pointers. Advance to leftmost child of next level."}],
+    code:`def connect(self, root):
+    if not root: return root
+    leftmost = root
+    while leftmost.left:          # while not at leaf level
+        curr = leftmost
+        while curr:               # traverse current level
+            curr.left.next = curr.right
+            if curr.next:
+                curr.right.next = curr.next.left
+            curr = curr.next
+        leftmost = leftmost.left  # next level
+    return root`,
+    tc:"O(n)", sc:"O(1)",
+    walkthrough:{steps:[{label:"Level 1: root=1",detail:"1.left(2).next=1.right(3). No curr.next. leftmost=2."},
+      {label:"Level 2: curr=2",detail:"2.left(4).next=2.right(5). 2.next=3 → 5.next=3.left(6). curr=3: 3.left(6).next=3.right(7). 3.next=None."}
+    ],edgeCase:"Only root: while loop doesn't run (no left child). Not perfect binary tree: use general BFS approach."},
+    similar:{"BFS":["Binary Tree Level Order Traversal","Binary Tree Right Side View","Populating Next Right Pointers II"]}
+  }
+},
+
+/* ════════ ADVANCED GRAPHS ════════ */
+
+"minimum-cost-to-connect-all-points": {
+  num:177, title:"Minimum Cost to Connect All Points", diff:"Medium", cat:"Advanced Graphs",
+  lc:"https://leetcode.com/problems/min-cost-to-connect-all-points/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"10 min", pattern:"Prim's Algorithm (Minimum Spanning Tree)",
+  sections:{
+    explain:"Connect all points with minimum total Manhattan distance. Return the minimum cost (MST weight).",
+    example:{input:"points=[[0,0],[2,2],[3,10],[5,2],[7,0]]", output:"20"},
+    intuition:"Minimum Spanning Tree problem. Prim's algorithm: start from any node, greedily add the cheapest edge connecting an unvisited node to the current tree. Use a min-heap of (cost, node).",
+    tricks:[
+      {name:"Prim's with lazy heap", detail:"Push (0, 0) to start. For each popped (cost, node): if visited, skip. Mark visited, add cost to total. Push all edges from this node to heap."},
+      {name:"Manhattan distance = |x1-x2| + |y1-y2|", detail:"No Euclidean distance — use Manhattan. Precompute all pairwise distances (only n² edges in a complete graph)."}
+    ],
+    code:`import heapq
+def minCostConnectPoints(self, points):
+    n = len(points)
+    visited = set()
+    heap = [(0, 0)]       # (cost, node_index)
+    total = 0
+    while len(visited) < n:
+        cost, i = heapq.heappop(heap)
+        if i in visited: continue
+        visited.add(i); total += cost
+        x1, y1 = points[i]
+        for j in range(n):
+            if j not in visited:
+                x2, y2 = points[j]
+                heapq.heappush(heap, (abs(x1-x2)+abs(y1-y2), j))
+    return total`,
+    tc:"O(n^2 log n)", sc:"O(n^2)",
+    walkthrough:{steps:[{label:"Start node 0, cost 0",detail:"Visit 0. Push distances to all other nodes. Pop cheapest, visit it, push its distances. Repeat until all n nodes visited."}],edgeCase:"Single point: return 0. Two points: return their Manhattan distance."},
+    similar:{"Graphs":["Redundant Connection","Network Delay Time","Kruskal's MST"]}
+  }
+},
+
+"network-delay-time": {
+  num:178, title:"Network Delay Time", diff:"Medium", cat:"Advanced Graphs",
+  lc:"https://leetcode.com/problems/network-delay-time/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"10 min", pattern:"Dijkstra's Shortest Path",
+  sections:{
+    explain:"Given a directed weighted graph and source node k, find the time for all nodes to receive a signal. Return -1 if not all reachable.",
+    example:{input:"times=[[2,1,1],[2,3,1],[3,4,1]], n=4, k=2", output:"2"},
+    intuition:"Single-source shortest path from k. Dijkstra's: min-heap of (dist, node). Relax neighbors when popped. After all reachable nodes processed, max dist = time for last node. If any node unreached, return -1.",
+    tricks:[{name:"Dijkstra + max of shortest paths", detail:"Find shortest path from k to every node. Answer = max distance. If any node has dist=inf, return -1."}],
+    code:`import heapq
+from collections import defaultdict
+def networkDelayTime(self, times, n, k):
+    graph = defaultdict(list)
+    for u, v, w in times:
+        graph[u].append((v, w))
+    dist = {i: float('inf') for i in range(1, n+1)}
+    dist[k] = 0
+    heap = [(0, k)]
+    while heap:
+        d, u = heapq.heappop(heap)
+        if d > dist[u]: continue
+        for v, w in graph[u]:
+            if dist[u] + w < dist[v]:
+                dist[v] = dist[u] + w
+                heapq.heappush(heap, (dist[v], v))
+    max_dist = max(dist.values())
+    return max_dist if max_dist < float('inf') else -1`,
+    tc:"O(E log V)", sc:"O(V+E)",
+    walkthrough:{steps:[{label:"k=2: dist={1:inf,2:0,3:inf,4:inf}",detail:"Pop (0,2). Relax 1: dist[1]=1, Relax 3: dist[3]=1. Pop (1,1) and (1,3). Relax 4: dist[4]=2. Max=2."}],edgeCase:"k not connected to all nodes: return -1. Self-loops: handled by d>dist[u] check."},
+    similar:{"Graphs":["Cheapest Flights Within K Stops","Path With Minimum Effort","Minimum Cost to Connect Points"]}
+  }
+},
+
+"cheapest-flights-within-k-stops": {
+  num:179, title:"Cheapest Flights Within K Stops", diff:"Medium", cat:"Advanced Graphs",
+  lc:"https://leetcode.com/problems/cheapest-flights-within-k-stops/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"12 min", pattern:"Bellman-Ford with K Relaxations",
+  sections:{
+    explain:"Find cheapest path from src to dst with at most k stops (k+1 edges). Return -1 if impossible.",
+    example:{input:"n=4, flights=[[0,1,100],[1,2,100],[2,0,100],[1,3,600],[2,3,200]], src=0, dst=3, k=1", output:"700"},
+    intuition:"Modified Bellman-Ford: relax all edges exactly k+1 times (k stops = k+1 edges). Use a copy of distances from the PREVIOUS iteration to prevent chaining multiple relaxations in one round.",
+    tricks:[
+      {name:"Use prev_dist (copy) during each relaxation round", detail:"Without prev_dist, a single round could chain relaxations: 0→1→2→3 all in one pass. Limit to one edge per round by reading from prev_dist."},
+      {name:"BFS/modified Dijkstra with stops constraint", detail:"Alternatively: heap of (cost, node, stops_remaining). Skip if stops exhausted."}
+    ],
+    code:`def findCheapestPrice(self, n, flights, src, dst, k):
+    INF = float('inf')
+    dist = [INF] * n
+    dist[src] = 0
+    for _ in range(k + 1):           # k+1 edges = k stops
+        prev = dist[:]               # snapshot before round
+        for u, v, w in flights:
+            if prev[u] + w < dist[v]:
+                dist[v] = prev[u] + w
+    return dist[dst] if dist[dst] < INF else -1`,
+    tc:"O(k * E)", sc:"O(n)",
+    walkthrough:{steps:[
+      {label:"k=1: 2 relaxation rounds",detail:"Round 1 (prev=[0,inf,inf,inf,inf]): 0→1: dist[1]=100. 1→2: no (prev[1]=inf). 1→3: no. Round 2 (prev=[0,100,inf,inf]): 1→2: dist[2]=200. 1→3: dist[3]=700."},
+      {label:"Return dist[3]=700",detail:""}
+    ],edgeCase:"k=0: only direct flights from src. No path within k stops: return -1."},
+    similar:{"Graphs":["Network Delay Time","Minimum Cost to Connect Points","Path with Maximum Probability"]}
+  }
+},
+
+"is-graph-bipartite": {
+  num:180, title:"Is Graph Bipartite?", diff:"Medium", cat:"Advanced Graphs",
+  lc:"https://leetcode.com/problems/is-graph-bipartite/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"8 min", pattern:"BFS / DFS 2-Coloring",
+  sections:{
+    explain:"Return true if the given undirected graph is bipartite (nodes can be split into two groups with all edges between groups, not within).",
+    example:{input:"graph=[[1,3],[0,2],[1,3],[0,2]]", output:"true"},
+    intuition:"2-color the graph using BFS/DFS. Assign alternating colors to neighbors. If a neighbor has the same color as the current node, the graph is not bipartite.",
+    tricks:[{name:"Color array: 0=uncolored, 1 and -1 are the two groups", detail:"Color each node. For each neighbor: if same color → not bipartite. If uncolored → assign opposite color and continue."}],
+    code:`from collections import deque
+def isBipartite(self, graph):
+    color = [0] * len(graph)
+    for start in range(len(graph)):
+        if color[start] != 0: continue
+        queue = deque([start])
+        color[start] = 1
+        while queue:
+            node = queue.popleft()
+            for nb in graph[node]:
+                if color[nb] == 0:
+                    color[nb] = -color[node]
+                    queue.append(nb)
+                elif color[nb] == color[node]:
+                    return False
+    return True`,
+    tc:"O(V+E)", sc:"O(V)",
+    walkthrough:{steps:[{label:"graph=[[1,3],[0,2],[1,3],[0,2]]",detail:"Color[0]=1. Neighbors 1,3 get -1. Neighbors of 1: 0(1),2(0→-1). Neighbors of 3: 0(1),2(-1). All consistent. Return True."}],edgeCase:"Disconnected graph: outer loop handles each component. Self-loop: not bipartite."},
+    similar:{"Graphs":["Possible Bipartition","Graph Coloring","Flower Planting with No Adjacent"]}
+  }
+},
+
+"number-of-provinces": {
+  num:181, title:"Number of Provinces", diff:"Medium", cat:"Advanced Graphs",
+  lc:"https://leetcode.com/problems/number-of-provinces/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"6 min", pattern:"Union Find / DFS on Adjacency Matrix",
+  sections:{
+    explain:"Given an n×n adjacency matrix where isConnected[i][j]=1 means cities i and j are directly connected, return the number of provinces (connected components).",
+    example:{input:"isConnected=[[1,1,0],[1,1,0],[0,0,1]]", output:"2"},
+    intuition:"Standard connected components problem. DFS/BFS from each unvisited city, marking all reachable cities. Count how many DFS calls needed. Alternatively Union Find: union connected cities, count distinct roots.",
+    tricks:[{name:"DFS from each unvisited node", detail:"visited = set(). For each city not yet visited: DFS to mark all reachable. count++. Same as Number of Islands but on adjacency matrix."}],
+    code:`def findCircleNum(self, isConnected):
+    n = len(isConnected)
+    visited = set()
+    def dfs(i):
+        for j in range(n):
+            if isConnected[i][j] == 1 and j not in visited:
+                visited.add(j); dfs(j)
+    count = 0
+    for i in range(n):
+        if i not in visited:
+            visited.add(i); dfs(i); count += 1
+    return count`,
+    tc:"O(n^2)", sc:"O(n)",
+    walkthrough:{steps:[{label:"n=3, matrix=[[1,1,0],[1,1,0],[0,0,1]]",detail:"i=0: not visited. DFS(0): visits 0,1. count=1. i=1: visited, skip. i=2: DFS(2): visits 2. count=2. Return 2."}],edgeCase:"All connected: return 1. No connections (diagonal only): return n."},
+    similar:{"Graphs":["Number of Islands","Redundant Connection","Accounts Merge"]}
+  }
+},
+
+/* ════════ ADVANCED DP ════════ */
+
+"minimum-cost-for-tickets": {
+  num:182, title:"Minimum Cost For Tickets", diff:"Medium", cat:"Advanced DP",
+  lc:"https://leetcode.com/problems/minimum-cost-for-tickets/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"8 min", pattern:"DP — Skip Non-Travel Days",
+  sections:{
+    explain:"Travel on specific days of the year. Tickets last 1, 7, or 30 days with costs[0], costs[1], costs[2]. Minimum cost to cover all travel days.",
+    example:{input:"days=[1,4,6,7,8,20], costs=[2,7,15]", output:"11"},
+    intuition:"dp[i] = min cost to cover all travel days up to day i. On non-travel days: dp[i] = dp[i-1] (no cost). On travel days: choose min of 1-day ticket (dp[i-1]+costs[0]), 7-day (dp[max(0,i-7)]+costs[1]), 30-day (dp[max(0,i-30)]+costs[2]).",
+    tricks:[{name:"dp over day numbers, skip non-travel days", detail:"Iterate days 1..365. If day not in travel_days set: dp[i]=dp[i-1]. Else take min of 3 ticket options looking back 1,7,30 days."}],
+    code:`def mincostTickets(self, days, costs):
+    travel = set(days)
+    dp = [0] * 366
+    for i in range(1, 366):
+        if i not in travel:
+            dp[i] = dp[i-1]
+        else:
+            dp[i] = min(
+                dp[i-1]            + costs[0],
+                dp[max(0,i-7)]     + costs[1],
+                dp[max(0,i-30)]    + costs[2]
+            )
+    return dp[365]`,
+    tc:"O(365) = O(1)", sc:"O(365) = O(1)",
+    walkthrough:{steps:[{label:"days=[1,4,6,7,8,20], costs=[2,7,15]",detail:"dp[1]=min(0+2,0+7,0+15)=2. dp[2..3]=2 (non-travel). dp[4]=min(2+2,0+7,0+15)=4. dp[5]=4. dp[6]=min(4+2,dp[-1]+7,0+15)=6. dp[7]=min(6+2,dp[0]+7,0+15)=7. dp[8]=min(7+2,dp[1]+7,0+15)=9. ...dp[20]=11."}],edgeCase:"Single travel day: min(costs). All days: dp builds up across full year."},
+    similar:{"DP":["Coin Change","House Robber","Climbing Stairs"]}
+  }
+},
+
+"best-time-to-buy-and-sell-stock-iii": {
+  num:183, title:"Best Time to Buy and Sell Stock III", diff:"Hard", cat:"Advanced DP",
+  lc:"https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"12 min", pattern:"DP State Machine — At Most 2 Transactions",
+  sections:{
+    explain:"Maximize profit with at most 2 transactions. You must sell before buying again.",
+    example:{input:"prices=[3,3,5,0,0,3,1,4]", output:"6", why:"Buy@0,sell@3(+3) + buy@1,sell@4(+3)"},
+    intuition:"Track 4 states: buy1 (first buy), sell1 (first sell), buy2 (second buy), sell2 (second sell). Transitions: buy1=max(buy1,-price), sell1=max(sell1,buy1+price), buy2=max(buy2,sell1-price), sell2=max(sell2,buy2+price).",
+    tricks:[{name:"4-state DP updated in one pass", detail:"buy1,sell1,buy2,sell2 represent best profit at each transaction stage. Update all 4 states for each price. Final answer = sell2."}],
+    code:`def maxProfit(self, prices):
+    buy1 = buy2 = float('-inf')
+    sell1 = sell2 = 0
+    for p in prices:
+        buy1  = max(buy1,  -p)          # best profit after 1st buy
+        sell1 = max(sell1, buy1 + p)    # best profit after 1st sell
+        buy2  = max(buy2,  sell1 - p)   # best profit after 2nd buy
+        sell2 = max(sell2, buy2 + p)    # best profit after 2nd sell
+    return sell2`,
+    tc:"O(n)", sc:"O(1)",
+    walkthrough:{steps:[{label:"prices=[3,0,3,1,4]",detail:"p=3: buy1=-3,sell1=0,buy2=0-3=-3,sell2=0. p=0: buy1=0,sell1=0,buy2=0. p=3: sell1=3,buy2=3-3=0,sell2=3. p=1: buy2=3-1=2,sell2=3. p=4: sell2=max(3,2+4)=6. Return 6."}],edgeCase:"Monotonically decreasing: return 0. One good period: one transaction suffices."},
+    similar:{"DP":["Best Time I","Best Time II","Best Time IV","Best Time with Cooldown"]}
+  }
+},
+
+"distinct-subsequences": {
+  num:184, title:"Distinct Subsequences", diff:"Hard", cat:"Advanced DP",
+  lc:"https://leetcode.com/problems/distinct-subsequences/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"12 min", pattern:"2D DP — Count Subsequences",
+  sections:{
+    explain:"Given strings s and t, return the number of distinct subsequences of s that equal t.",
+    example:{input:"s='rabbbit', t='rabbit'", output:"3", why:"Three ways to choose the 3 b's from 'rabbbit'"},
+    intuition:"dp[i][j] = number of ways t[:j] appears as a subsequence in s[:i]. If s[i-1]==t[j-1]: dp[i][j] = dp[i-1][j-1] + dp[i-1][j] (use or skip s[i]). Else: dp[i][j] = dp[i-1][j] (must skip s[i]).",
+    tricks:[{name:"Match or skip current char", detail:"When chars match: we can use s[i] to match t[j] (dp[i-1][j-1] ways) or skip s[i] entirely (dp[i-1][j] ways). Sum both."}],
+    code:`def numDistinct(self, s, t):
+    m, n = len(s), len(t)
+    dp = [[0]*(n+1) for _ in range(m+1)]
+    for i in range(m+1): dp[i][0] = 1   # empty t: 1 way
+    for i in range(1, m+1):
+        for j in range(1, n+1):
+            dp[i][j] = dp[i-1][j]       # skip s[i]
+            if s[i-1] == t[j-1]:
+                dp[i][j] += dp[i-1][j-1]
+    return dp[m][n]`,
+    tc:"O(m*n)", sc:"O(m*n)",
+    walkthrough:{steps:[{label:"s='rabbbit',t='rabbit'",detail:"dp[i][0]=1 for all i. When s[i]=='r'==t[0]: dp[i][1]+=dp[i-1][0]. Three 'b' chars align with t's two 'b's — leads to dp[7][6]=3."}],edgeCase:"t='': always 1 subsequence (empty). t longer than s: dp[m][n]=0."},
+    similar:{"DP":["Longest Common Subsequence","Edit Distance","Interleaving String"]}
+  }
+},
+
+"longest-palindromic-subsequence": {
+  num:185, title:"Longest Palindromic Subsequence", diff:"Medium", cat:"Advanced DP",
+  lc:"https://leetcode.com/problems/longest-palindromic-subsequence/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"8 min", pattern:"LCS of String and Its Reverse",
+  sections:{
+    explain:"Return the length of the longest palindromic subsequence in a string.",
+    example:{input:"s='bbbab'", output:"4", why:"'bbbb' is the longest palindromic subsequence"},
+    intuition:"A palindromic subsequence reads the same forwards and backwards. LPS(s) = LCS(s, reverse(s)). Or: dp[i][j] = LPS of s[i..j]. If s[i]==s[j]: dp[i][j]=dp[i+1][j-1]+2. Else: dp[i][j]=max(dp[i+1][j], dp[i][j-1]).",
+    tricks:[{name:"LCS(s, reversed s) = LPS(s)", detail:"The longest common subsequence of s and its reverse is exactly the longest palindromic subsequence. Reuse the LCS solution."}],
+    code:`def longestPalindromeSubseq(self, s):
+    return self.lcs(s, s[::-1])
+
+def lcs(self, s1, s2):
+    n = len(s1)
+    dp = [[0]*(n+1) for _ in range(n+1)]
+    for i in range(1, n+1):
+        for j in range(1, n+1):
+            if s1[i-1] == s2[j-1]:
+                dp[i][j] = dp[i-1][j-1] + 1
+            else:
+                dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+    return dp[n][n]`,
+    tc:"O(n^2)", sc:"O(n^2)",
+    walkthrough:{steps:[{label:"s='bbbab', rev='babbb'",detail:"LCS('bbbab','babbb')=4. The 4 b's form the LPS 'bbbb'."}],edgeCase:"Single char: LPS=1. Already palindrome: LPS=len(s)."},
+    similar:{"DP":["Longest Common Subsequence","Palindromic Substrings","Minimum Insertions to Make String Palindrome"]}
+  }
+},
+
+"stone-game": {
+  num:186, title:"Stone Game", diff:"Medium", cat:"Advanced DP",
+  lc:"https://leetcode.com/problems/stone-game/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"7 min", pattern:"DP Minimax (or Math Insight)",
+  sections:{
+    explain:"Alex and Lee take turns picking from either end of a stone pile array. Alex goes first. Return true if Alex wins (gets more stones).",
+    example:{input:"piles=[5,3,4,5]", output:"true"},
+    intuition:"Math insight: Alex always wins when piles count is even (can always guarantee winning). DP approach: dp[i][j] = max score difference (current player - other) for piles[i..j]. dp[i][j] = max(piles[i]-dp[i+1][j], piles[j]-dp[i][j-1]).",
+    tricks:[
+      {name:"Always return True (math insight)", detail:"With even number of piles, the first player can always guarantee winning by always picking from 'odd-indexed' or 'even-indexed' piles — whichever sum is larger. So return True always!"},
+      {name:"DP for generalization", detail:"dp[i][j] = max advantage for current player on piles[i..j]. Useful when question requires actual score difference."}
+    ],
+    code:`def stoneGame(self, piles):
+    return True   # Alex always wins with even number of piles
+
+# DP version (for follow-ups):
+# dp[i][j] = max score difference for current player in piles[i..j]
+# dp[i][j] = max(piles[i] - dp[i+1][j], piles[j] - dp[i][j-1])
+# Return dp[0][n-1] > 0`,
+    tc:"O(1) math / O(n^2) DP", sc:"O(1) / O(n^2)",
+    walkthrough:{steps:[{label:"piles=[5,3,4,5]",detail:"Sum of odd-indexed piles: 5+5=10. Sum of even-indexed: 3+4=7. Alex picks 10 (can choose strategy). Alex wins."}],edgeCase:"Any even-count pile array: Alex always wins."},
+    similar:{"DP":["Predict the Winner","Stone Game II","Nim Game"]}
+  }
+},
+
+/* ════════ MORE ARRAYS ════════ */
+
+"find-the-duplicate-number": {
+  num:187, title:"Find the Duplicate Number", diff:"Medium", cat:"More Arrays",
+  lc:"https://leetcode.com/problems/find-the-duplicate-number/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"8 min", pattern:"Floyd's Cycle Detection on Index Graph",
+  sections:{
+    explain:"Given array of n+1 integers in range [1,n], find the one duplicate. Must use O(1) extra space; cannot modify the array.",
+    example:{input:"nums=[1,3,4,2,2]", output:"2"},
+    intuition:"Treat the array as a linked list: index i points to nums[i]. The duplicate value creates a cycle. Apply Floyd's cycle detection (tortoise and hare): find cycle entry point = duplicate.",
+    tricks:[{name:"Index as linked list → Floyd's", detail:"slow=nums[slow], fast=nums[nums[fast]]. After meeting: reset slow to 0, advance both by 1 step. They meet at cycle start = duplicate."}],
+    code:`def findDuplicate(self, nums):
+    slow, fast = 0, 0
+    # Phase 1: detect cycle
+    while True:
+        slow = nums[slow]
+        fast = nums[nums[fast]]
+        if slow == fast: break
+    # Phase 2: find cycle entry (duplicate)
+    slow = 0
+    while slow != fast:
+        slow = nums[slow]
+        fast = nums[fast]
+    return slow`,
+    tc:"O(n)", sc:"O(1)",
+    walkthrough:{steps:[{label:"nums=[1,3,4,2,2]",detail:"Treat as: 0→1→3→2→4→2 (cycle at 2). Phase 1: slow,fast meet at 2. Phase 2: reset slow=0. slow:0→1→3→2. fast:2→4→2. Meet at 2. Return 2."}],edgeCase:"Duplicate appears more than twice: still works, cycle still detected."},
+    similar:{"Linked List":["Linked List Cycle II","Missing Number","First Missing Positive"]}
+  }
+},
+
+"subarray-sum-equals-k": {
+  num:188, title:"Subarray Sum Equals K", diff:"Medium", cat:"More Arrays",
+  lc:"https://leetcode.com/problems/subarray-sum-equals-k/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"7 min", pattern:"Prefix Sum + Hash Map",
+  sections:{
+    explain:"Return the total number of contiguous subarrays whose sum equals k.",
+    example:{input:"nums=[1,1,1], k=2", output:"2"},
+    intuition:"prefix_sum[i] - prefix_sum[j] = k means subarray nums[j..i] sums to k. For each index i, count how many previous prefix sums equal current_sum - k. Use a hash map of prefix sum frequencies.",
+    tricks:[{name:"count[prefix_sum - k] = number of valid subarrays ending at i", detail:"Map prefix_sum → count. Initialize {0:1} for empty prefix. For each element: total += count.get(curr_sum - k, 0); count[curr_sum] += 1."}],
+    code:`from collections import defaultdict
+def subarraySum(self, nums, k):
+    count = defaultdict(int)
+    count[0] = 1        # empty prefix
+    curr_sum = 0
+    total = 0
+    for n in nums:
+        curr_sum += n
+        total += count[curr_sum - k]
+        count[curr_sum] += 1
+    return total`,
+    tc:"O(n)", sc:"O(n)",
+    walkthrough:{steps:[{label:"nums=[1,2,3], k=3",detail:"curr=0:{0:1}. n=1:curr=1,count[1-3]=count[-2]=0,total=0,{0:1,1:1}. n=2:curr=3,count[0]=1,total=1,{3:1}. n=3:curr=6,count[3]=1,total=2. Return 2."}],edgeCase:"k=0: counts subarrays summing to 0. Negative numbers: works correctly."},
+    similar:{"Prefix Sum":["Continuous Subarray Sum","Longest Subarray with Sum K","Count of Range Sum"]}
+  }
+},
+
+"move-zeroes": {
+  num:189, title:"Move Zeroes", diff:"Easy", cat:"More Arrays",
+  lc:"https://leetcode.com/problems/move-zeroes/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"4 min", pattern:"Two Pointers — Write Pointer",
+  sections:{
+    explain:"Move all 0s to the end in-place while maintaining relative order of non-zero elements.",
+    example:{input:"nums=[0,1,0,3,12]", output:"[1,3,12,0,0]"},
+    intuition:"Write pointer k: scan array, when non-zero found write to nums[k] and advance k. After loop, fill indices k..n-1 with zeros.",
+    tricks:[{name:"Write pointer + zero fill", detail:"Same pattern as Remove Element but instead of shrinking the array we fill the tail with zeros. Single pass variant: swap nums[i] and nums[k]."}],
+    code:`def moveZeroes(self, nums):
+    k = 0
+    for n in nums:
+        if n != 0:
+            nums[k] = n; k += 1
+    for i in range(k, len(nums)):
+        nums[i] = 0`,
+    tc:"O(n)", sc:"O(1)",
+    walkthrough:{steps:[{label:"[0,1,0,3,12]",detail:"n=0:skip. n=1:nums[0]=1,k=1. n=0:skip. n=3:nums[1]=3,k=2. n=12:nums[2]=12,k=3. Fill [3,4] with 0: [1,3,12,0,0]."}],edgeCase:"All zeros: k stays 0, fill all. No zeros: k=n, fill nothing."},
+    similar:{"Two Pointers":["Remove Element","Remove Duplicates","Sort Colors"]}
+  }
+},
+
+"first-missing-positive": {
+  num:190, title:"First Missing Positive", diff:"Hard", cat:"More Arrays",
+  lc:"https://leetcode.com/problems/first-missing-positive/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"10 min", pattern:"Index as Hash — Place Each Number at Its Index",
+  sections:{
+    explain:"Find the smallest missing positive integer. Must be O(n) time and O(1) space.",
+    example:{input:"nums=[3,4,-1,1]", output:"2"},
+    intuition:"The answer must be in [1, n+1]. Use the array itself as a hash: place each number x in range [1,n] at index x-1 by swapping. After, the first index where nums[i] != i+1 is the answer.",
+    tricks:[{name:"Cyclic sort: swap nums[i] to its correct position", detail:"While nums[i] is in [1,n] and nums[i] != nums[nums[i]-1]: swap. After, first i where nums[i]!=i+1: answer is i+1."}],
+    code:`def firstMissingPositive(self, nums):
+    n = len(nums)
+    for i in range(n):
+        while 1 <= nums[i] <= n and nums[nums[i]-1] != nums[i]:
+            j = nums[i] - 1
+            nums[i], nums[j] = nums[j], nums[i]
+    for i in range(n):
+        if nums[i] != i + 1:
+            return i + 1
+    return n + 1`,
+    tc:"O(n)", sc:"O(1)",
+    walkthrough:{steps:[{label:"nums=[3,4,-1,1]",detail:"i=0: nums[0]=3→pos 2. swap→[-1,4,3,1]. nums[0]=-1,skip. i=1: nums[1]=4→pos3. swap→[-1,1,3,4]. nums[1]=1→pos0. swap→[1,-1,3,4]. i=2:3=3 ok. i=3:4=4 ok. Scan: i=1,nums[1]=-1≠2 → return 2."}],edgeCase:"[1,2,3,...,n]: all correct → return n+1. [2,2,2]: duplicates handled by while condition."},
+    similar:{"Array":["Missing Number","Find the Duplicate Number","Cyclic Sort"]}
+  }
+},
+
+"next-permutation": {
+  num:191, title:"Next Permutation", diff:"Medium", cat:"More Arrays",
+  lc:"https://leetcode.com/problems/next-permutation/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"8 min", pattern:"Find Rightmost Descent + Swap + Reverse",
+  sections:{
+    explain:"Rearrange numbers into the next lexicographically greater permutation in-place. If no such arrangement, rearrange to the lowest possible order (sorted ascending).",
+    example:{input:"nums=[1,2,3]", output:"[1,3,2]"},
+    intuition:"Find the rightmost index i where nums[i] < nums[i+1] (descending break). Find the smallest value to the right of i that is larger than nums[i], swap them. Then reverse everything to the right of i (to get the smallest arrangement).",
+    tricks:[{name:"Three-step: find descent → swap with next larger → reverse suffix", detail:"Step 1: scan right to left for first nums[i]<nums[i+1]. Step 2: scan right to left for first nums[j]>nums[i], swap i,j. Step 3: reverse nums[i+1:]. If no descent: reverse all."}],
+    code:`def nextPermutation(self, nums):
+    n, i = len(nums), len(nums) - 2
+    # Step 1: find rightmost descent
+    while i >= 0 and nums[i] >= nums[i+1]:
+        i -= 1
+    if i >= 0:
+        # Step 2: swap with next larger
+        j = n - 1
+        while nums[j] <= nums[i]:
+            j -= 1
+        nums[i], nums[j] = nums[j], nums[i]
+    # Step 3: reverse suffix
+    left, right = i + 1, n - 1
+    while left < right:
+        nums[left], nums[right] = nums[right], nums[left]
+        left += 1; right -= 1`,
+    tc:"O(n)", sc:"O(1)",
+    walkthrough:{steps:[
+      {label:"nums=[1,2,3]: i=1 (2<3)",detail:"j=2 (3>2). Swap: [1,3,2]. Reverse [2:]: nothing. Result [1,3,2]."},
+      {label:"nums=[3,2,1]: no descent",detail:"i=-1. Reverse all: [1,2,3]."}
+    ],edgeCase:"Descending array: reverse to ascending (smallest permutation)."},
+    similar:{"Array":["Previous Permutation","Permutation Sequence","Find All Permutations"]}
+  }
+},
+
+"median-of-two-sorted-arrays": {
+  num:192, title:"Median of Two Sorted Arrays", diff:"Hard", cat:"More Arrays",
+  lc:"https://leetcode.com/problems/median-of-two-sorted-arrays/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"15 min", pattern:"Binary Search on Partition Index",
+  sections:{
+    explain:"Find the median of two sorted arrays in O(log(m+n)) time.",
+    example:{input:"nums1=[1,3], nums2=[2]", output:"2.0"},
+    intuition:"Binary search on the partition point in the smaller array. Find i in nums1 such that: nums1[i-1] <= nums2[j] AND nums2[j-1] <= nums1[i], where j = (m+n+1)//2 - i. Then median is determined by the boundary elements.",
+    tricks:[
+      {name:"Binary search on smaller array", detail:"Always binary search on the shorter array for O(log(min(m,n))). The partition in the larger array is determined by total_half - i."},
+      {name:"Use -inf/+inf for boundary handling", detail:"nums1[i-1] doesn't exist when i=0 (use -inf). nums1[i] doesn't exist when i=len(nums1) (use +inf)."}
+    ],
+    code:`def findMedianSortedArrays(self, nums1, nums2):
+    A, B = nums1, nums2
+    if len(A) > len(B): A, B = B, A     # ensure A is smaller
+    m, n = len(A), len(B)
+    half = (m + n + 1) // 2
+    lo, hi = 0, m
+    while lo <= hi:
+        i = (lo + hi) // 2
+        j = half - i
+        maxA = A[i-1] if i > 0 else float('-inf')
+        minA = A[i]   if i < m else float('inf')
+        maxB = B[j-1] if j > 0 else float('-inf')
+        minB = B[j]   if j < n else float('inf')
+        if maxA <= minB and maxB <= minA:
+            if (m + n) % 2: return float(max(maxA, maxB))
+            return (max(maxA, maxB) + min(minA, minB)) / 2
+        elif maxA > minB: hi = i - 1
+        else:             lo = i + 1`,
+    tc:"O(log(min(m,n)))", sc:"O(1)",
+    walkthrough:{steps:[{label:"A=[1,3], B=[2], half=2",detail:"i=1, j=1. maxA=1,minA=3,maxB=2,minB=inf. 1<=inf✓, 2<=3✓. Odd total: return max(1,2)=2.0."}],edgeCase:"One array empty: median of other. Both length 1: median is average. Very different lengths: binary search on smaller."},
+    similar:{"Binary Search":["K-th Smallest Element in Sorted Matrix","Find K-th Smallest Pair Distance"]}
+  }
+},
+
+/* ════════ MORE DESIGN / BACKTRACKING ════════ */
+
+"subsets-ii": {
+  num:193, title:"Subsets II", diff:"Medium", cat:"More Design",
+  lc:"https://leetcode.com/problems/subsets-ii/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"7 min", pattern:"Backtracking — Skip Duplicates After Sort",
+  sections:{
+    explain:"Given an integer array that may contain duplicates, return all possible subsets without duplicates.",
+    example:{input:"nums=[1,2,2]", output:"[[],[1],[1,2],[1,2,2],[2],[2,2]]"},
+    intuition:"Sort nums. Standard subsets backtracking with one extra rule: skip duplicates at the same recursion level. If nums[i] == nums[i-1] and i > start (meaning we already used this value at this level), skip.",
+    tricks:[{name:"Skip if nums[i]==nums[i-1] and i>start", detail:"Sorting groups duplicates together. At each recursion level, the first occurrence is explored. Subsequent same values at the same level are skipped to avoid duplicate subsets."}],
+    code:`def subsetsWithDup(self, nums):
+    nums.sort()
+    res = []
+    def backtrack(start, current):
+        res.append(current[:])
+        for i in range(start, len(nums)):
+            if i > start and nums[i] == nums[i-1]:
+                continue                  # skip duplicate
+            current.append(nums[i])
+            backtrack(i + 1, current)
+            current.pop()
+    backtrack(0, [])
+    return res`,
+    tc:"O(n * 2^n)", sc:"O(n)",
+    walkthrough:{steps:[{label:"nums=[1,2,2]",detail:"[]. i=0(1):[1]. i=1(2):[1,2]. i=2(2):[1,2,2]. Back to [1]: i=2,nums[2]=2==nums[1]=2,i>start=1 → skip. Back to []. i=1(2):[2]. i=2(2):[2,2]. Back:[]. Done."}],edgeCase:"All same values: only one subset of each length. No duplicates: same as Subsets I."},
+    similar:{"Backtracking":["Subsets","Permutations II","Combination Sum II"]}
+  }
+},
+
+"combination-sum-iii": {
+  num:194, title:"Combination Sum III", diff:"Medium", cat:"More Design",
+  lc:"https://leetcode.com/problems/combination-sum-iii/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"7 min", pattern:"Backtracking — k Numbers from 1-9 Summing to n",
+  sections:{
+    explain:"Find all combinations of k numbers from 1-9 that sum to n. Each number used at most once.",
+    example:{input:"k=3, n=7", output:"[[1,2,4]]"},
+    intuition:"Backtracking from 1 to 9. At each step, choose a number, recurse with k-1 and reduced target. Stop when k==0 and target==0 (found), or number > target, or k numbers chosen.",
+    tricks:[{name:"Start from prev+1 to avoid reuse", detail:"backtrack(start, k, remaining). For i in range(start, 10): avoids using same number twice, and start increases to avoid going backward."}],
+    code:`def combinationSum3(self, k, n):
+    res = []
+    def backtrack(start, k, remaining, current):
+        if k == 0 and remaining == 0:
+            res.append(current[:]); return
+        if k == 0 or remaining <= 0: return
+        for i in range(start, 10):
+            if i > remaining: break    # pruning
+            current.append(i)
+            backtrack(i + 1, k - 1, remaining - i, current)
+            current.pop()
+    backtrack(1, k, n, [])
+    return res`,
+    tc:"O(C(9,k) * k)", sc:"O(k)",
+    walkthrough:{steps:[{label:"k=3, n=7",detail:"Try 1: backtrack(2,2,6). Try 1,2: backtrack(3,1,4). Try 1,2,3: remaining=1≠0. Try 1,2,4: remaining=0,k=0 → add [1,2,4]. Try 1,3: backtrack(4,1,3). Try 1,3,3: reuse not allowed. Try 1,3,... all > 3 remaining. Try 2,... etc."}],edgeCase:"n too large or k=0: no combinations. Single valid combo."},
+    similar:{"Backtracking":["Combination Sum","Combinations","Subsets II"]}
+  }
+},
+
+"design-hashmap": {
+  num:195, title:"Design HashMap", diff:"Easy", cat:"More Design",
+  lc:"https://leetcode.com/problems/design-hashmap/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"8 min", pattern:"Array of Buckets + Chaining",
+  sections:{
+    explain:"Design a HashMap without using any built-in hash table libraries. Implement put(key, value), get(key), remove(key).",
+    example:{input:"put(1,1); put(2,2); get(1)→1; remove(2); get(2)→-1"},
+    intuition:"Use an array of buckets. Hash function: key % num_buckets. Each bucket is a list of (key, value) pairs (chaining for collision handling). For get/remove: scan the bucket for the key.",
+    tricks:[{name:"1000 buckets with chaining", detail:"num_buckets=1000. bucket[key%1000] contains a list of (k,v) pairs. O(n/1000) per operation on average. Setting bucket size large enough keeps chains short."}],
+    code:`class MyHashMap:
+    def __init__(self):
+        self.size = 1000
+        self.buckets = [[] for _ in range(self.size)]
+
+    def _hash(self, key): return key % self.size
+
+    def put(self, key, value):
+        h = self._hash(key)
+        for i, (k, v) in enumerate(self.buckets[h]):
+            if k == key:
+                self.buckets[h][i] = (key, value); return
+        self.buckets[h].append((key, value))
+
+    def get(self, key):
+        for k, v in self.buckets[self._hash(key)]:
+            if k == key: return v
+        return -1
+
+    def remove(self, key):
+        h = self._hash(key)
+        self.buckets[h] = [(k,v) for k,v in self.buckets[h] if k != key]`,
+    tc:"O(n/k) average", sc:"O(n+k)",
+    walkthrough:{steps:[{label:"put(1,1): bucket[1]=[(1,1)]",detail:"put(2,2): bucket[2]=[(2,2)]. get(1): scan bucket[1]→1. remove(2): bucket[2]=[]. get(2): empty bucket→-1."}],edgeCase:"Same key put twice: update in-place. remove nonexistent: no-op."},
+    similar:{"Design":["Design HashSet","LRU Cache","Design Twitter"]}
+  }
+},
+
+"maximum-frequency-stack": {
+  num:196, title:"Maximum Frequency Stack", diff:"Hard", cat:"More Design",
+  lc:"https://leetcode.com/problems/maximum-frequency-stack/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"12 min", pattern:"Freq Map + Group Stack",
+  sections:{
+    explain:"Design a stack-like data structure push(x) and pop() that removes the most frequent element. Ties broken by recency.",
+    example:{input:"push(5,7,5,7,4,5); pop()→5; pop()→7; pop()→5; pop()→4"},
+    intuition:"Maintain: freq[x] = frequency of x. max_freq = current maximum frequency. group[f] = stack of elements with frequency f. On push: freq[x]++, push to group[freq[x]], update max_freq. On pop: pop from group[max_freq], freq[x]--, if group[max_freq] empty: max_freq--.)",
+    tricks:[{name:"group[freq] is a stack (list)", detail:"Push element to group[freq[x]] = its freq-bucket. Pop from group[max_freq] — naturally gets the most recently pushed element at that frequency (stack LIFO)."}],
+    code:`from collections import defaultdict
+class FreqStack:
+    def __init__(self):
+        self.freq  = defaultdict(int)
+        self.group = defaultdict(list)
+        self.max_freq = 0
+
+    def push(self, val):
+        self.freq[val] += 1
+        f = self.freq[val]
+        self.max_freq = max(self.max_freq, f)
+        self.group[f].append(val)
+
+    def pop(self):
+        val = self.group[self.max_freq].pop()
+        self.freq[val] -= 1
+        if not self.group[self.max_freq]:
+            self.max_freq -= 1
+        return val`,
+    tc:"O(1) push and pop", sc:"O(n)",
+    walkthrough:{steps:[
+      {label:"push(5,7,5,7,4,5)",detail:"After: freq={5:3,7:2,4:1}. group={1:[5,7,4],2:[5,7],3:[5]}. max_freq=3."},
+      {label:"pop()→5",detail:"group[3].pop()=5. freq[5]=2. group[3] empty→max_freq=2."},
+      {label:"pop()→7",detail:"group[2].pop()=7. freq[7]=1. group[2] has [5]→max_freq stays 2. Wait: group[2]=[5,7], pop→7. group[2]=[5]. max_freq=2."}
+    ],edgeCase:"All same element: all go to increasing frequency stacks. Single element: max_freq=1."},
+    similar:{"Design":["LRU Cache","All O(1) Data Structure","Design Twitter"]}
+  }
+},
+
+"random-pick-with-weight": {
+  num:197, title:"Random Pick with Weight", diff:"Medium", cat:"More Design",
+  lc:"https://leetcode.com/problems/random-pick-with-weight/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"7 min", pattern:"Prefix Sum + Binary Search",
+  sections:{
+    explain:"Given an array of positive weights, implement pickIndex() that returns an index with probability proportional to its weight.",
+    example:{input:"w=[1,3]", output:"pickIndex() returns 0 with prob 0.25, 1 with prob 0.75"},
+    intuition:"Build prefix sum array. Total sum = prefix[-1]. Generate a random number in [1, total]. Binary search for the leftmost prefix sum >= random number — that's the picked index.",
+    tricks:[{name:"Prefix sum turns weights into ranges", detail:"w=[1,3] → prefix=[1,4]. Random in [1,4]: if ≤1→index 0 (prob 1/4); if ≤4→index 1 (prob 3/4). bisect_left on prefix sum finds the index."}],
+    code:`import bisect, random
+class Solution:
+    def __init__(self, w):
+        self.prefix = []
+        total = 0
+        for weight in w:
+            total += weight
+            self.prefix.append(total)
+        self.total = total
+
+    def pickIndex(self):
+        target = random.randint(1, self.total)
+        return bisect.bisect_left(self.prefix, target)`,
+    tc:"O(n) init, O(log n) pick", sc:"O(n)",
+    walkthrough:{steps:[{label:"w=[1,3]: prefix=[1,4], total=4",detail:"target=random(1,4). If target=1: bisect_left([1,4],1)=0. If target=2,3,4: bisect_left([1,4],t)=1. Correct probabilities."}],edgeCase:"Single weight: always returns 0. Very large weights: works with any integer sizes."},
+    similar:{"Binary Search":["Find Random Point in Non-overlapping Rectangles","Implement Rand10 Using Rand7"]}
+  }
+},
+
+/* ════════ MATH AND EXTRAS ════════ */
+
+"majority-element-ii": {
+  num:198, title:"Majority Element II", diff:"Medium", cat:"Math and Extras",
+  lc:"https://leetcode.com/problems/majority-element-ii/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"8 min", pattern:"Boyer-Moore Extended Voting (2 Candidates)",
+  sections:{
+    explain:"Find all elements appearing more than n/3 times. At most two such elements can exist.",
+    example:{input:"nums=[3,2,3]", output:"[3]"},
+    intuition:"Extend Boyer-Moore: maintain two candidates and two counts. For each element: if matches candidate, increment count; else if count is 0, replace candidate; else decrement both counts. Then verify both candidates appear > n/3 times.",
+    tricks:[{name:"At most 2 majority (>n/3) elements exist", detail:"Three elements each >n/3 would exceed n total. So at most 2. Maintain 2 candidates with counts — same cancel mechanism as n/2 majority but extended."}],
+    code:`def majorityElement(self, nums):
+    cand1 = cand2 = None
+    cnt1  = cnt2  = 0
+    for n in nums:
+        if n == cand1:         cnt1 += 1
+        elif n == cand2:       cnt2 += 1
+        elif cnt1 == 0:        cand1, cnt1 = n, 1
+        elif cnt2 == 0:        cand2, cnt2 = n, 1
+        else:                  cnt1 -= 1; cnt2 -= 1
+    # Verify
+    return [c for c in (cand1, cand2)
+            if c is not None and nums.count(c) > len(nums) // 3]`,
+    tc:"O(n)", sc:"O(1)",
+    walkthrough:{steps:[{label:"nums=[1,1,1,3,3,2,2,2]",detail:"cand1=1,cand2=None. n=1:cnt1=3. n=3:cand2=3,cnt2=1. n=2:cnt1-=1=2,cnt2-=1=0. n=2:cand2=2,cnt2=1. n=2:cnt2=2. Verify: 1 appears 3>8/3≈2.67✓, 2 appears 3✓. Return [1,2]."}],edgeCase:"No majority: return []. Single element array: return it if it appears >n/3 times."},
+    similar:{"Array":["Majority Element","Find the Celebrity","Find All Duplicates"]}
+  }
+},
+
+"pascals-triangle": {
+  num:199, title:"Pascal's Triangle", diff:"Easy", cat:"Math and Extras",
+  lc:"https://leetcode.com/problems/pascals-triangle/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"4 min", pattern:"Row-by-Row Construction",
+  sections:{
+    explain:"Generate the first numRows rows of Pascal's triangle.",
+    example:{input:"numRows=5", output:"[[1],[1,1],[1,2,1],[1,3,3,1],[1,4,6,4,1]]"},
+    intuition:"Each row starts and ends with 1. Each inner element = sum of two elements above it (prev[j-1] + prev[j]). Build each row from the previous.",
+    tricks:[{name:"row[j] = prev[j-1] + prev[j]", detail:"Start each row with [1]. For j in 1..len(prev)-1: row[j] = prev[j-1]+prev[j]. Append [1]. Alternatively: use [1]+[prev[j-1]+prev[j] for j in 1..n-1]+[1]."}],
+    code:`def generate(self, numRows):
+    res = [[1]]
+    for _ in range(numRows - 1):
+        prev = res[-1]
+        row  = [1] + [prev[j-1]+prev[j] for j in range(1,len(prev))] + [1]
+        res.append(row)
+    return res`,
+    tc:"O(numRows^2)", sc:"O(numRows^2)",
+    walkthrough:{steps:[{label:"numRows=4",detail:"[1]. [1,1]. [1,1+1,1]=[1,2,1]. [1,1+2,2+1,1]=[1,3,3,1]."}],edgeCase:"numRows=1: return [[1]]. Each row is symmetric."},
+    similar:{"Math":["Pascal's Triangle II","Triangle","Unique Paths"]}
+  }
+},
+
+"continuous-subarray-sum": {
+  num:200, title:"Continuous Subarray Sum", diff:"Medium", cat:"Math and Extras",
+  lc:"https://leetcode.com/problems/continuous-subarray-sum/?envType=problem-list-v2&envId=wk69juu6",
+  rev:"8 min", pattern:"Prefix Sum Modulo + Hash Map",
+  sections:{
+    explain:"Return true if there exists a subarray of length >= 2 whose sum is a multiple of k.",
+    example:{input:"nums=[23,2,4,6,7], k=6", output:"true", why:"[2,4] sums to 6"},
+    intuition:"If prefix_sum[i] % k == prefix_sum[j] % k, then sum(nums[j+1..i]) is divisible by k. Use a hash map: remainder → first index where this remainder appeared. If same remainder seen again at i > map[rem]+1, found answer.",
+    tricks:[
+      {name:"Store remainder's first index", detail:"prefix_rem = {0: -1}. For each i: curr_rem = (curr_rem + nums[i]) % k. If in map and i - map[curr_rem] >= 2: return True. Otherwise map[curr_rem] = i (only if not already set)."},
+      {name:"Initialize {0: -1}", detail:"Handles the case where the whole prefix from index 0 is divisible by k (subarray starts at index 0)."}
+    ],
+    code:`def checkSubarraySum(self, nums, k):
+    prefix_rem = {0: -1}   # remainder → first index
+    curr_rem = 0
+    for i, n in enumerate(nums):
+        curr_rem = (curr_rem + n) % k
+        if curr_rem in prefix_rem:
+            if i - prefix_rem[curr_rem] >= 2:
+                return True
+        else:
+            prefix_rem[curr_rem] = i   # only store first occurrence
+    return False`,
+    tc:"O(n)", sc:"O(min(n,k))",
+    walkthrough:{steps:[
+      {label:"nums=[23,2,4,6,7], k=6",detail:"i=0(23): rem=5. map={0:-1,5:0}. i=1(2): rem=1. map={...,1:1}. i=2(4): rem=5. 5 in map! i-map[5]=2-0=2>=2 → return True."}
+    ],edgeCase:"k=0: check if any subarray sums to 0 (handle k=0 separately, use regular prefix sum). Subarray must have length >= 2."},
+    similar:{"Prefix Sum":["Subarray Sum Equals K","Maximum Size Subarray Sum Equals k","Check If Array Pairs Are Divisible by k"]}
   }
 }
 

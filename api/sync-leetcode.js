@@ -1,17 +1,17 @@
 /**
  * GET /api/sync-leetcode
  *
- * Fetches the authenticated user's accepted LeetCode submissions and
- * marks matching problems as solved in solved-state.json.
+ * Logs in to LeetCode with stored credentials, fetches accepted submissions,
+ * and marks matching problems as solved in solved-state.json.
  *
- * Requires env var: LEETCODE_SESSION
- * Get it from: leetcode.com → DevTools → Application → Cookies → LEETCODE_SESSION
+ * Requires env vars: LEETCODE_EMAIL, LEETCODE_PASSWORD
  */
 
 const fs   = require('fs');
 const path = require('path');
 const https = require('https');
 const { parseAcceptedSlugs, mergeSolvedState } = require('../lib/lc-sync');
+const { loginLeetCode } = require('../lib/lc-auth');
 
 const SOLVED_FILE = path.join(process.cwd(), 'solved-state.json');
 
@@ -35,7 +35,7 @@ function fetchLeetCodeProblems(session) {
     };
     const req = https.request(options, res => {
       if (res.statusCode === 403 || res.statusCode === 401) {
-        return reject(new Error(`Auth failed (${res.statusCode}) — LEETCODE_SESSION may be expired`));
+        return reject(new Error(`Auth failed (${res.statusCode}) — check LEETCODE_EMAIL / LEETCODE_PASSWORD`));
       }
       let body = '';
       res.on('data', chunk => { body += chunk; });
@@ -57,15 +57,17 @@ module.exports = async (req, res) => {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const session = process.env.LEETCODE_SESSION;
-  if (!session) {
+  const email    = process.env.LEETCODE_EMAIL;
+  const password = process.env.LEETCODE_PASSWORD;
+  if (!email || !password) {
     return res.status(400).json({
-      error: 'LEETCODE_SESSION not set',
-      help: 'Local: LEETCODE_SESSION=<token> npm start | Vercel: vercel env add LEETCODE_SESSION. Get token: leetcode.com → DevTools → Application → Cookies → LEETCODE_SESSION',
+      error: 'LEETCODE_EMAIL or LEETCODE_PASSWORD not set',
+      help: 'Add both env vars in Vercel dashboard (or .env for local dev)',
     });
   }
 
   try {
+    const session  = await loginLeetCode(email, password);
     const data     = await fetchLeetCodeProblems(session);
     const accepted = parseAcceptedSlugs(data);
     const current  = readSolved();

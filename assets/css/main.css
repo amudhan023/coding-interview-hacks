@@ -1004,19 +1004,12 @@ p code, li code {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 20px;
-  height: 20px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
-  background: var(--bg-code);
   color: var(--text-muted);
   text-decoration: none;
-  transition: all var(--transition);
+  transition: color var(--transition);
 }
 .lc150-detail-btn:hover {
-  border-color: var(--accent);
   color: var(--accent);
-  background: var(--accent-subtle);
 }
 
 /* Checkbox wrapper */

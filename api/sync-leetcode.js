@@ -1,17 +1,19 @@
 /**
- * POST /api/sync-leetcode
+ * GET  /api/sync-leetcode → { autoAuth: bool }
+ * POST /api/sync-leetcode → sync accepted problems
  *
- * Accepts { session: "LEETCODE_SESSION_TOKEN" } in the request body.
- * The session token comes from the user's browser (stored in localStorage),
- * so LeetCode sees a real user session rather than a server-side auto-login.
- *
- * Falls back to LEETCODE_SESSION env var if no session in body.
+ * Session priority (POST):
+ *   1. session in request body (user-pasted or localStorage)
+ *   2. LEETCODE_EMAIL + LEETCODE_PASSWORD env vars (auto-login, works on local)
+ *   3. LEETCODE_SESSION env var (static fallback)
+ *   4. Return 400 { needsSession: true } so the browser shows the paste modal
  */
 
 const fs   = require('fs');
 const path = require('path');
 const https = require('https');
 const { parseAcceptedSlugs, mergeSolvedState } = require('../lib/lc-sync');
+const { loginLeetCode } = require('../lib/lc-auth');
 
 const SOLVED_FILE = path.join(process.cwd(), 'solved-state.json');
 
@@ -61,24 +63,37 @@ async function parseBody(req) {
   });
 }
 
+const hasCredentials = !!(process.env.LEETCODE_EMAIL && process.env.LEETCODE_PASSWORD);
+
 module.exports = async (req, res) => {
   res.setHeader('Content-Type', 'application/json');
 
-  if (req.method !== 'POST' && req.method !== 'GET') {
+  // GET → tell the browser whether auto-auth is available
+  if (req.method === 'GET') {
+    return res.status(200).json({ autoAuth: hasCredentials });
+  }
+
+  if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  // Session: from POST body, or fallback env var
-  let session = process.env.LEETCODE_SESSION || '';
-  if (req.method === 'POST') {
-    const body = await parseBody(req);
-    if (body.session) session = body.session;
+  const body = await parseBody(req);
+
+  // Session resolution: body → credentials auto-login → static env var
+  let session = body.session || process.env.LEETCODE_SESSION || '';
+
+  if (!session && hasCredentials) {
+    try {
+      session = await loginLeetCode(process.env.LEETCODE_EMAIL, process.env.LEETCODE_PASSWORD);
+    } catch (authErr) {
+      // Cloudflare may block auto-login from cloud IPs — fall through to needsSession
+    }
   }
 
   if (!session) {
     return res.status(400).json({
-      error: 'No LeetCode session provided',
-      help: 'Click "Sync LeetCode" and paste your LEETCODE_SESSION cookie when prompted.',
+      error: 'No LeetCode session available',
+      needsSession: true,
     });
   }
 

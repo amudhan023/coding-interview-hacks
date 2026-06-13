@@ -25,6 +25,7 @@ const LC150 = (() => {
   };
 
   const SESSION_KEY = 'lc-session';
+  let autoAuth = false; // set to true when server has credentials configured
 
   /* ── Derive slug from an <a> href ──────────────────────────────────── */
   function slugFromHref(href) {
@@ -290,7 +291,12 @@ const LC150 = (() => {
       const data = await res.json();
 
       if (!res.ok) {
-        // Session expired or invalid — clear it so next click re-prompts
+        if (data.needsSession) {
+          // Server has no credentials and no session — ask user to paste one
+          if (btn) { btn.classList.remove('is-syncing'); btn.textContent = 'Sync LeetCode'; }
+          showSessionModal(token => { storeSession(token); doSync(token); });
+          return;
+        }
         if (res.status === 401 || (data.error || '').toLowerCase().includes('auth')) {
           clearStoredSession();
           showToast('Session expired — please paste a new LEETCODE_SESSION token.', 'error');
@@ -322,11 +328,16 @@ const LC150 = (() => {
   }
 
   async function syncFromLeetCode() {
+    if (autoAuth) {
+      // Server has credentials — let it handle auth, no modal needed
+      await doSync('');
+      return;
+    }
     const session = getStoredSession();
     if (session) {
       await doSync(session);
     } else {
-      showSessionModal(token => doSync(token));
+      showSessionModal(token => { storeSession(token); doSync(token); });
     }
   }
 
@@ -341,6 +352,12 @@ const LC150 = (() => {
 
   /* ── Main init ──────────────────────────────────────────────────────── */
   async function init() {
+    // Check if server can auto-authenticate (credentials in .env)
+    try {
+      const r = await fetch('/api/sync-leetcode', { cache: 'no-store' });
+      if (r.ok) { const d = await r.json(); autoAuth = !!d.autoAuth; }
+    } catch { /* server not running — autoAuth stays false */ }
+
     await loadSolvedState();
     document.querySelectorAll('.lc150-list li').forEach(enhanceRow);
     updateProgress();

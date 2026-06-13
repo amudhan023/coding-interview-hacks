@@ -952,22 +952,21 @@ p code, li code {
 }
 .lc150-list .lc150-title-link:hover { color: var(--accent); }
 
-/* Details button */
+/* Details icon button */
 .lc150-detail-btn {
   flex-shrink: 0;
   margin-top: 1px;
-  padding: 2px 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border);
   background: var(--bg-code);
   color: var(--text-muted);
-  font-size: 0.68rem;
-  font-weight: 600;
   text-decoration: none;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
   transition: all var(--transition);
-  white-space: nowrap;
 }
 .lc150-detail-btn:hover {
   border-color: var(--accent);

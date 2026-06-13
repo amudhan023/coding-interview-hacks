@@ -106,8 +106,8 @@ const LC150 = (() => {
     const detailLink = document.createElement('a');
     detailLink.href = detailUrl(slug);
     detailLink.className = 'lc150-detail-btn';
-    detailLink.textContent = 'Details';
     detailLink.title = 'Open explanation page';
+    detailLink.innerHTML = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>';
 
     // Checkbox
     const label = document.createElement('label');

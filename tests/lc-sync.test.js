@@ -126,7 +126,19 @@ test('diffProblems — all known returns empty diff', () => {
 // ─── categoryForProblem ───────────────────────────────────────────────────────
 
 test('categoryForProblem — maps Array tag to Array / String', () => {
-  assert.equal(categoryForProblem(['Array', 'Dynamic Programming']), 'Array / String');
+  assert.equal(categoryForProblem(['Array']), 'Array / String');
+});
+
+test('categoryForProblem — DP beats Array when both present', () => {
+  assert.equal(categoryForProblem(['Array', 'Dynamic Programming']), 'Dynamic Programming');
+});
+
+test('categoryForProblem — Backtracking beats Array when both present', () => {
+  assert.equal(categoryForProblem(['Array', 'Backtracking']), 'Backtracking');
+});
+
+test('categoryForProblem — Two Pointers beats Array when both present', () => {
+  assert.equal(categoryForProblem(['Array', 'Two Pointers']), 'Two Pointers');
 });
 
 test('categoryForProblem — maps Hash Table to Hashmap', () => {

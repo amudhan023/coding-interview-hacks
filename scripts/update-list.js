@@ -148,7 +148,7 @@ async function main() {
     /* Find the category <details> block by its name span */
     const catEscaped = cat.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const re = new RegExp(
-      `(<span class="lc150-cat__name">${catEscaped}<\\/span>[\\s\\S]*?<ol class="lc150-list">)(\\s*)(<\\/ol>)`,
+      `(<span class="lc150-cat__name">${catEscaped}<\\/span>[\\s\\S]*?<ol class="lc150-list">)([\\s\\S]*?)(<\\/ol>)`,
       'g'
     );
 

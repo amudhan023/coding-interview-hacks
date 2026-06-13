@@ -98,8 +98,9 @@ const LC150 = (() => {
     lcLink.setAttribute('rel', 'noopener noreferrer');
     lcLink.classList.add('lc150-title-link');
 
-    // Build badge span (move existing badge to end)
-    const badge = li.querySelector('.badge');
+    // Capture badge and freq-pill before clearing innerHTML
+    const badge    = li.querySelector('.badge');
+    const freqPill = li.querySelector('.freq-pill');
 
     // Details link
     const detailLink = document.createElement('a');
@@ -128,11 +129,12 @@ const LC150 = (() => {
     checkmark.className = 'lc150-checkmark';
     label.appendChild(checkmark);
 
-    // Rebuild row content: [title] [details btn] [badge] [checkbox]
+    // Rebuild row content: [title] [details btn] [badge] [freq-pill] [checkbox]
     li.innerHTML = '';
     li.appendChild(lcLink);
     li.appendChild(detailLink);
-    if (badge) li.appendChild(badge);
+    if (badge)    li.appendChild(badge);
+    if (freqPill) li.appendChild(freqPill);
     li.appendChild(label);
 
     // Apply saved state

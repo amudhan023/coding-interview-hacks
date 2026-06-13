@@ -18,6 +18,7 @@ const express = require('express');
 const fs      = require('fs');
 const path    = require('path');
 const { parseAcceptedSlugs, parseProblemList, diffProblems, categoryForProblem, mergeSolvedState } = require('./lib/lc-sync');
+const { loginLeetCode } = require('./lib/lc-auth');
 
 const app         = express();
 const PORT        = process.env.PORT || 3000;
@@ -66,34 +67,51 @@ app.delete('/api/solved/:slug', (req, res) => {
   res.json({ ok: true });
 });
 
-/* ── API: GET /api/sync-leetcode ───────────────────────────── */
-app.get('/api/sync-leetcode', async (req, res) => {
-  const session = process.env.LEETCODE_SESSION;
+/* ── Helper: fetch accepted slugs from LeetCode ────────────── */
+async function fetchAccepted(session) {
+  const response = await fetch('https://leetcode.com/api/problems/all/', {
+    headers: {
+      'Cookie':     `LEETCODE_SESSION=${session}`,
+      'User-Agent': 'Mozilla/5.0 (compatible; interview-hacks/1.0)',
+      'Referer':    'https://leetcode.com/',
+      'Accept':     'application/json',
+    },
+  });
+  if (response.status === 403 || response.status === 401) {
+    const err = new Error(`Auth failed (${response.status})`);
+    err.status = 401;
+    throw err;
+  }
+  if (!response.ok) throw new Error(`LeetCode returned ${response.status}`);
+  return response.json();
+}
+
+const hasCredentials = !!(process.env.LEETCODE_EMAIL && process.env.LEETCODE_PASSWORD);
+
+/* ── API: GET /api/sync-leetcode → { autoAuth } ────────────── */
+app.get('/api/sync-leetcode', (req, res) => {
+  res.json({ autoAuth: hasCredentials });
+});
+
+/* ── API: POST /api/sync-leetcode ──────────────────────────── */
+app.post('/api/sync-leetcode', async (req, res) => {
+  // Session priority: body → credentials auto-login → static env var
+  let session = (req.body && req.body.session) || process.env.LEETCODE_SESSION || '';
+
+  if (!session && hasCredentials) {
+    try {
+      session = await loginLeetCode(process.env.LEETCODE_EMAIL, process.env.LEETCODE_PASSWORD);
+    } catch (authErr) {
+      return res.status(401).json({ error: authErr.message, needsSession: true });
+    }
+  }
+
   if (!session) {
-    return res.status(400).json({
-      error: 'LEETCODE_SESSION not set',
-      help: 'Run: LEETCODE_SESSION=<token> npm start\nGet token: leetcode.com → DevTools → Application → Cookies → LEETCODE_SESSION',
-    });
+    return res.status(400).json({ error: 'No LeetCode session available', needsSession: true });
   }
 
   try {
-    const response = await fetch('https://leetcode.com/api/problems/all/', {
-      headers: {
-        'Cookie':     `LEETCODE_SESSION=${session}`,
-        'User-Agent': 'Mozilla/5.0 (compatible; interview-hacks/1.0)',
-        'Referer':    'https://leetcode.com/',
-        'Accept':     'application/json',
-      },
-    });
-
-    if (response.status === 403 || response.status === 401) {
-      return res.status(401).json({ error: `Auth failed (${response.status}) — LEETCODE_SESSION may be expired` });
-    }
-    if (!response.ok) {
-      return res.status(502).json({ error: `LeetCode returned ${response.status}` });
-    }
-
-    const data     = await response.json();
+    const data     = await fetchAccepted(session);
     const accepted = parseAcceptedSlugs(data);
     const current  = readSolved();
     const { merged, newlySolved, total } = mergeSolvedState(current, accepted, null);
@@ -103,7 +121,8 @@ app.get('/api/sync-leetcode', async (req, res) => {
     const solvedInList = Object.values(merged).filter(Boolean).length;
     res.json({ ok: true, total, newlySolved, solvedInList, state: merged });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    const status = err.status === 401 ? 401 : 502;
+    res.status(status).json({ error: err.message });
   }
 });
 

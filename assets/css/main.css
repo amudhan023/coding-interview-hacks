@@ -870,6 +870,51 @@ p code, li code {
 .toast.show         { opacity: 1; transform: translateY(0); }
 .toast.toast--error { background: var(--danger); color: white; max-width: 340px; white-space: pre-wrap; }
 
+/* ── Session modal ───────────────────────────────────────────── */
+#lc-session-modal { position: fixed; inset: 0; z-index: 1000; display: flex; align-items: center; justify-content: center; }
+#lc-session-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,.55); backdrop-filter: blur(2px); }
+#lc-session-dialog {
+  position: relative;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem 2rem;
+  max-width: 480px;
+  width: calc(100% - 2rem);
+  box-shadow: var(--shadow-lg);
+  z-index: 1;
+}
+#lc-session-dialog h3 { margin: 0 0 0.6rem; font-size: 1.1rem; color: var(--text-primary); }
+#lc-session-dialog p  { margin: 0 0 0.9rem; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; }
+#lc-session-dialog ol { margin: 0 0 1rem; padding-left: 1.25rem; font-size: 0.83rem; color: var(--text-secondary); line-height: 1.7; }
+#lc-session-dialog code { background: var(--bg-code); padding: 1px 5px; border-radius: 4px; font-size: 0.8rem; }
+#lc-session-input {
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-size: 0.78rem;
+  font-family: var(--font-mono);
+  padding: 0.5rem 0.6rem;
+  resize: vertical;
+  margin-bottom: 1rem;
+}
+#lc-session-input:focus { outline: none; border-color: var(--accent); }
+#lc-session-actions { display: flex; gap: 0.6rem; justify-content: flex-end; }
+#lc-session-cancel {
+  padding: 0.45rem 1rem; border-radius: var(--radius-sm);
+  border: 1px solid var(--border); background: transparent;
+  color: var(--text-secondary); font-size: 0.83rem; cursor: pointer;
+}
+#lc-session-save {
+  padding: 0.45rem 1.1rem; border-radius: var(--radius-sm);
+  border: none; background: var(--accent); color: white;
+  font-size: 0.83rem; font-weight: 600; cursor: pointer;
+}
+#lc-session-save:hover { filter: brightness(1.1); }
+
 /* ── Responsive ─────────────────────────────────────────────── */
 @media (max-width: 1024px) {
   .page-layout { grid-template-columns: 1fr; }

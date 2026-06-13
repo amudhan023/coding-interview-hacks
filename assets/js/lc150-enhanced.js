@@ -24,13 +24,13 @@ const LC150 = (() => {
     // all LC150 categories now use /leetcode/top-interview-150/<slug>
   };
 
+  const SESSION_KEY = 'lc-session';
+
   /* ── Derive slug from an <a> href ──────────────────────────────────── */
   function slugFromHref(href) {
     if (!href) return null;
-    // LeetCode URL: https://leetcode.com/problems/two-sum/
     const lcMatch = href.match(/leetcode\.com\/problems\/([^/]+)/);
     if (lcMatch) return lcMatch[1];
-    // Internal: problems/two-sum.html
     const intMatch = href.match(/problems\/([^/]+)\.html/);
     if (intMatch) return intMatch[1];
     return null;
@@ -54,15 +54,12 @@ const LC150 = (() => {
         return;
       }
     } catch { /* server not running */ }
-    // Fallback: localStorage
     try { solvedState = JSON.parse(localStorage.getItem(LOCAL_KEY) || '{}'); } catch {}
   }
 
   async function saveSolvedState(slug, solved) {
     solvedState[slug] = solved;
-    // Optimistically save to localStorage as backup
     try { localStorage.setItem(LOCAL_KEY, JSON.stringify(solvedState)); } catch {}
-    // Try server
     try {
       await fetch('/api/solved', {
         method: 'POST',
@@ -89,7 +86,6 @@ const LC150 = (() => {
 
     li.dataset.slug = slug;
 
-    // Ensure the LC link always points to leetcode.com (rewrite internal page links)
     const existingHref = lcLink.getAttribute('href') || '';
     if (!existingHref.includes('leetcode.com')) {
       lcLink.href = 'https://leetcode.com/problems/' + slug + '/';
@@ -98,16 +94,15 @@ const LC150 = (() => {
     lcLink.setAttribute('rel', 'noopener noreferrer');
     lcLink.classList.add('lc150-title-link');
 
-    // Capture badge and freq-pill before clearing innerHTML
     const badge    = li.querySelector('.badge');
     const freqPill = li.querySelector('.freq-pill');
 
-    // Details link
+    // Details link — external-link icon (opens explanation page)
     const detailLink = document.createElement('a');
     detailLink.href = detailUrl(slug);
     detailLink.className = 'lc150-detail-btn';
     detailLink.title = 'Open explanation page';
-    detailLink.innerHTML = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>';
+    detailLink.innerHTML = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>';
 
     // Checkbox
     const label = document.createElement('label');
@@ -129,7 +124,6 @@ const LC150 = (() => {
     checkmark.className = 'lc150-checkmark';
     label.appendChild(checkmark);
 
-    // Rebuild row content: [title] [details btn] [badge] [freq-pill] [checkbox]
     li.innerHTML = '';
     li.appendChild(lcLink);
     li.appendChild(detailLink);
@@ -137,7 +131,6 @@ const LC150 = (() => {
     if (freqPill) li.appendChild(freqPill);
     li.appendChild(label);
 
-    // Apply saved state
     applyRowStyle(li, !!solvedState[slug]);
   }
 
@@ -152,17 +145,13 @@ const LC150 = (() => {
       total  += catTotal;
       solved += catSolved;
 
-      // Update category count badge if present
       const countEl = cat.querySelector('.lc150-cat__count');
       if (countEl) {
-        countEl.textContent = catSolved
-          ? catSolved + '/' + catTotal
-          : catTotal;
+        countEl.textContent = catSolved ? catSolved + '/' + catTotal : catTotal;
         countEl.classList.toggle('lc150-cat__count--progress', catSolved > 0);
       }
     });
 
-    // Update total stats strip
     const solvedEl = document.getElementById('lc150-solved-count');
     const barEl    = document.getElementById('lc150-progress-bar');
     const pctEl    = document.getElementById('lc150-pct');
@@ -177,10 +166,10 @@ const LC150 = (() => {
     document.querySelectorAll('.lc150-cat').forEach(cat => {
       const catName = cat.querySelector('.lc150-cat__name')?.textContent.trim() || '';
       cat.querySelectorAll('[data-slug]').forEach(row => {
-        const slug    = row.dataset.slug;
-        const title   = row.querySelector('.lc150-title-link')?.textContent.trim() || slug;
-        const badge   = row.querySelector('.badge')?.textContent.trim() || '';
-        const diff    = badge === 'E' ? 'easy' : badge === 'M' ? 'medium' : 'hard';
+        const slug  = row.dataset.slug;
+        const title = row.querySelector('.lc150-title-link')?.textContent.trim() || slug;
+        const badge = row.querySelector('.badge')?.textContent.trim() || '';
+        const diff  = badge === 'E' ? 'easy' : badge === 'M' ? 'medium' : 'hard';
         map[slug] = { title, diff, cat: catName };
       });
     });
@@ -227,23 +216,90 @@ const LC150 = (() => {
     return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 
+  /* ── Session modal (paste LEETCODE_SESSION once, stored in localStorage) */
+  function getStoredSession() {
+    try { return localStorage.getItem(SESSION_KEY) || ''; } catch { return ''; }
+  }
+
+  function storeSession(token) {
+    try { localStorage.setItem(SESSION_KEY, token.trim()); } catch {}
+  }
+
+  function clearStoredSession() {
+    try { localStorage.removeItem(SESSION_KEY); } catch {}
+  }
+
+  function showSessionModal(onSubmit) {
+    // Remove any existing modal
+    const old = document.getElementById('lc-session-modal');
+    if (old) old.remove();
+
+    const modal = document.createElement('div');
+    modal.id = 'lc-session-modal';
+    modal.innerHTML = `
+      <div id="lc-session-backdrop"></div>
+      <div id="lc-session-dialog" role="dialog" aria-modal="true" aria-labelledby="lc-session-title">
+        <h3 id="lc-session-title">Connect LeetCode</h3>
+        <p>Paste your <code>LEETCODE_SESSION</code> cookie below. It's stored only in this browser and never sent to any third party.</p>
+        <ol>
+          <li>Go to <a href="https://leetcode.com" target="_blank" rel="noopener">leetcode.com</a> (stay logged in)</li>
+          <li>Open DevTools → <strong>Application → Cookies → leetcode.com</strong></li>
+          <li>Copy the value of <strong>LEETCODE_SESSION</strong> and paste below</li>
+        </ol>
+        <textarea id="lc-session-input" rows="3" placeholder="eyJhbGciOi…"></textarea>
+        <div id="lc-session-actions">
+          <button id="lc-session-cancel">Cancel</button>
+          <button id="lc-session-save">Save &amp; Sync</button>
+        </div>
+      </div>`;
+    document.body.appendChild(modal);
+
+    const input  = document.getElementById('lc-session-input');
+    const saveBtn = document.getElementById('lc-session-save');
+    const cancelBtn = document.getElementById('lc-session-cancel');
+    const backdrop  = document.getElementById('lc-session-backdrop');
+
+    const close = () => modal.remove();
+
+    cancelBtn.addEventListener('click', close);
+    backdrop.addEventListener('click', close);
+
+    saveBtn.addEventListener('click', () => {
+      const token = input.value.trim();
+      if (!token) { input.focus(); return; }
+      storeSession(token);
+      close();
+      onSubmit(token);
+    });
+
+    input.focus();
+  }
+
   /* ── Sync from LeetCode ─────────────────────────────────────────────── */
-  async function syncFromLeetCode() {
+  async function doSync(session) {
     const btn = document.getElementById('lc150-sync-btn');
-    if (btn) { btn.classList.add('is-syncing'); btn.innerHTML = btn.innerHTML.replace('Sync LeetCode', 'Syncing…'); }
+    if (btn) { btn.classList.add('is-syncing'); btn.textContent = 'Syncing…'; }
 
     try {
-      const res  = await fetch('/api/sync-leetcode', { cache: 'no-store' });
+      const res  = await fetch('/api/sync-leetcode', {
+        method: 'POST',
+        cache: 'no-store',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ session }),
+      });
       const data = await res.json();
 
       if (!res.ok) {
-        const msg = data.error || `HTTP ${res.status}`;
-        const help = data.help ? '\n\n' + data.help : '';
-        showToast('Sync failed: ' + msg + help, 'error');
+        // Session expired or invalid — clear it so next click re-prompts
+        if (res.status === 401 || (data.error || '').toLowerCase().includes('auth')) {
+          clearStoredSession();
+          showToast('Session expired — please paste a new LEETCODE_SESSION token.', 'error');
+        } else {
+          showToast('Sync failed: ' + (data.error || `HTTP ${res.status}`), 'error');
+        }
         return;
       }
 
-      // Merge into local solvedState and re-apply to DOM
       if (data.state) {
         solvedState = data.state;
         try { localStorage.setItem(LOCAL_KEY, JSON.stringify(solvedState)); } catch {}
@@ -261,7 +317,16 @@ const LC150 = (() => {
     } catch (err) {
       showToast('Sync error: ' + err.message, 'error');
     } finally {
-      if (btn) { btn.classList.remove('is-syncing'); btn.innerHTML = btn.innerHTML.replace('Syncing…', 'Sync LeetCode'); }
+      if (btn) { btn.classList.remove('is-syncing'); btn.textContent = 'Sync LeetCode'; }
+    }
+  }
+
+  async function syncFromLeetCode() {
+    const session = getStoredSession();
+    if (session) {
+      await doSync(session);
+    } else {
+      showSessionModal(token => doSync(token));
     }
   }
 
@@ -277,17 +342,9 @@ const LC150 = (() => {
   /* ── Main init ──────────────────────────────────────────────────────── */
   async function init() {
     await loadSolvedState();
-
-    // Enhance all rows in the LC150 section
     document.querySelectorAll('.lc150-list li').forEach(enhanceRow);
-
-    // Update progress display
     updateProgress();
-
-    // Inject progress bar into stats strip if it exists
     injectProgressBar();
-
-    // Render My Solved section
     renderSolvedSummary();
   }
 
@@ -311,7 +368,6 @@ const LC150 = (() => {
   return { init, syncFromLeetCode };
 })();
 
-/* ── Auto-init when DOM is ready ─────────────────────────────────────── */
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', LC150.init);
 } else {

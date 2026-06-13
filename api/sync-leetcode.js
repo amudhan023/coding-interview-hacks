@@ -1,17 +1,17 @@
 /**
- * GET /api/sync-leetcode
+ * POST /api/sync-leetcode
  *
- * Logs in to LeetCode with stored credentials, fetches accepted submissions,
- * and marks matching problems as solved in solved-state.json.
+ * Accepts { session: "LEETCODE_SESSION_TOKEN" } in the request body.
+ * The session token comes from the user's browser (stored in localStorage),
+ * so LeetCode sees a real user session rather than a server-side auto-login.
  *
- * Requires env vars: LEETCODE_EMAIL, LEETCODE_PASSWORD
+ * Falls back to LEETCODE_SESSION env var if no session in body.
  */
 
 const fs   = require('fs');
 const path = require('path');
 const https = require('https');
 const { parseAcceptedSlugs, mergeSolvedState } = require('../lib/lc-sync');
-const { loginLeetCode } = require('../lib/lc-auth');
 
 const SOLVED_FILE = path.join(process.cwd(), 'solved-state.json');
 
@@ -35,7 +35,7 @@ function fetchLeetCodeProblems(session) {
     };
     const req = https.request(options, res => {
       if (res.statusCode === 403 || res.statusCode === 401) {
-        return reject(new Error(`Auth failed (${res.statusCode}) — check LEETCODE_EMAIL / LEETCODE_PASSWORD`));
+        return reject(Object.assign(new Error(`Session expired or invalid (${res.statusCode})`), { status: 401 }));
       }
       let body = '';
       res.on('data', chunk => { body += chunk; });
@@ -50,24 +50,39 @@ function fetchLeetCodeProblems(session) {
   });
 }
 
+async function parseBody(req) {
+  return new Promise(resolve => {
+    let raw = '';
+    req.on('data', c => { raw += c; });
+    req.on('end', () => {
+      try { resolve(JSON.parse(raw)); }
+      catch { resolve({}); }
+    });
+  });
+}
+
 module.exports = async (req, res) => {
   res.setHeader('Content-Type', 'application/json');
 
-  if (req.method !== 'GET') {
+  if (req.method !== 'POST' && req.method !== 'GET') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const email    = process.env.LEETCODE_EMAIL;
-  const password = process.env.LEETCODE_PASSWORD;
-  if (!email || !password) {
+  // Session: from POST body, or fallback env var
+  let session = process.env.LEETCODE_SESSION || '';
+  if (req.method === 'POST') {
+    const body = await parseBody(req);
+    if (body.session) session = body.session;
+  }
+
+  if (!session) {
     return res.status(400).json({
-      error: 'LEETCODE_EMAIL or LEETCODE_PASSWORD not set',
-      help: 'Add both env vars in Vercel dashboard (or .env for local dev)',
+      error: 'No LeetCode session provided',
+      help: 'Click "Sync LeetCode" and paste your LEETCODE_SESSION cookie when prompted.',
     });
   }
 
   try {
-    const session  = await loginLeetCode(email, password);
     const data     = await fetchLeetCodeProblems(session);
     const accepted = parseAcceptedSlugs(data);
     const current  = readSolved();
@@ -82,6 +97,7 @@ module.exports = async (req, res) => {
     const solvedInList = Object.values(merged).filter(Boolean).length;
     res.status(200).json({ ok: true, total, newlySolved, solvedInList, state: merged });
   } catch (err) {
-    res.status(502).json({ error: err.message });
+    const status = err.status === 401 ? 401 : 502;
+    res.status(status).json({ error: err.message });
   }
 };

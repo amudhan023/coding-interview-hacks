@@ -3,17 +3,21 @@
  *
  * Provides:
  *   1. Static file serving for the entire site
- *   2. GET  /api/solved        → returns solved-state.json
- *   3. POST /api/solved        → merges + saves solved-state.json
- *   4. GET  /leetcode/top-interview-150/:slug → serves the SPA template
+ *   2. GET  /api/solved              → returns solved-state.json
+ *   3. POST /api/solved              → merges + saves solved-state.json
+ *   4. GET  /api/sync-leetcode       → fetch accepted submissions, update solved state
+ *   5. GET  /api/sync-list           → diff Apr2026 list against known slugs
+ *   6. GET  /leetcode/top-interview-150/:slug → serves the SPA template
  *
  * Start: node server.js   (or: npm start)
+ * Env:   LEETCODE_SESSION=<token> npm start
  * URL:   http://localhost:3000
  */
 
 const express = require('express');
 const fs      = require('fs');
 const path    = require('path');
+const { parseAcceptedSlugs, parseProblemList, diffProblems, categoryForProblem, mergeSolvedState } = require('./lib/lc-sync');
 
 const app         = express();
 const PORT        = process.env.PORT || 3000;
@@ -60,6 +64,94 @@ app.delete('/api/solved/:slug', (req, res) => {
   delete current[req.params.slug];
   fs.writeFileSync(SOLVED_FILE, JSON.stringify(current, null, 2));
   res.json({ ok: true });
+});
+
+/* ── API: GET /api/sync-leetcode ───────────────────────────── */
+app.get('/api/sync-leetcode', async (req, res) => {
+  const session = process.env.LEETCODE_SESSION;
+  if (!session) {
+    return res.status(400).json({
+      error: 'LEETCODE_SESSION not set',
+      help: 'Run: LEETCODE_SESSION=<token> npm start\nGet token: leetcode.com → DevTools → Application → Cookies → LEETCODE_SESSION',
+    });
+  }
+
+  try {
+    const response = await fetch('https://leetcode.com/api/problems/all/', {
+      headers: {
+        'Cookie':     `LEETCODE_SESSION=${session}`,
+        'User-Agent': 'Mozilla/5.0 (compatible; interview-hacks/1.0)',
+        'Referer':    'https://leetcode.com/',
+        'Accept':     'application/json',
+      },
+    });
+
+    if (response.status === 403 || response.status === 401) {
+      return res.status(401).json({ error: `Auth failed (${response.status}) — LEETCODE_SESSION may be expired` });
+    }
+    if (!response.ok) {
+      return res.status(502).json({ error: `LeetCode returned ${response.status}` });
+    }
+
+    const data     = await response.json();
+    const accepted = parseAcceptedSlugs(data);
+    const current  = readSolved();
+    const { merged, newlySolved, total } = mergeSolvedState(current, accepted, null);
+
+    fs.writeFileSync(SOLVED_FILE, JSON.stringify(merged, null, 2));
+
+    const solvedInList = Object.values(merged).filter(Boolean).length;
+    res.json({ ok: true, total, newlySolved, solvedInList, state: merged });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+/* ── API: GET /api/sync-list ────────────────────────────────── */
+app.get('/api/sync-list', async (req, res) => {
+  const knownParam  = req.query.known || '';
+  const knownSlugs  = new Set(knownParam.split(',').map(s => s.trim()).filter(Boolean));
+  const session     = process.env.LEETCODE_SESSION || null;
+
+  const GQL_QUERY = `
+    query problemsetQuestionList($categorySlug:String,$limit:Int,$skip:Int,$filters:QuestionListFilterInput){
+      problemsetQuestionList:questionList(categorySlug:$categorySlug,limit:$limit,skip:$skip,filters:$filters){
+        total:totalNum
+        questions:data{frontendQuestionId:questionFrontendId title titleSlug difficulty topicTags{name slug} freqBar status}
+      }
+    }`;
+
+  try {
+    const headers = {
+      'Content-Type': 'application/json',
+      'User-Agent':   'Mozilla/5.0 (compatible; interview-hacks/1.0)',
+      'Referer':      'https://leetcode.com/',
+    };
+    if (session) headers['Cookie'] = `LEETCODE_SESSION=${session}`;
+
+    const gqlRes = await fetch('https://leetcode.com/graphql', {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({
+        query: GQL_QUERY,
+        variables: { categorySlug: '', skip: 0, limit: 500, filters: { listId: 'wk69juu6' } },
+      }),
+    });
+
+    const data     = await gqlRes.json();
+    const problems = parseProblemList(data);
+
+    if (!problems.length) {
+      return res.status(502).json({ error: 'No problems returned from LeetCode' });
+    }
+
+    const missing = knownSlugs.size > 0 ? diffProblems(problems, knownSlugs) : [];
+    const withCategory = missing.map(p => ({ ...p, category: categoryForProblem(p.topicTags) }));
+
+    res.json({ ok: true, total: problems.length, missing: missing.length, missingProblems: withCategory, allProblems: problems });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 /* ── Detail pages: /leetcode/top-interview-150/:slug ────── */

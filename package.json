@@ -5,7 +5,10 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "node server.js"
+    "dev": "node server.js",
+    "test": "node --test tests/lc-sync.test.js",
+    "update-list": "node scripts/update-list.js",
+    "update-list:dry": "node scripts/update-list.js --dry-run"
   },
   "dependencies": {
     "express": "^4.18.2"

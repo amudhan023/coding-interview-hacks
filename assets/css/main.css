@@ -866,7 +866,9 @@ p code, li code {
   transition: all 0.2s ease;
   pointer-events: none;
 }
-.toast.show { opacity: 1; transform: translateY(0); }
+.toast.toast--show  { opacity: 1; transform: translateY(0); }
+.toast.show         { opacity: 1; transform: translateY(0); }
+.toast.toast--error { background: var(--danger); color: white; max-width: 340px; white-space: pre-wrap; }
 
 /* ── Responsive ─────────────────────────────────────────────── */
 @media (max-width: 1024px) {

@@ -171,6 +171,109 @@ const LC150 = (() => {
     if (pctEl)    pctEl.textContent  = total ? Math.round(solved / total * 100) + '%' : '0%';
   }
 
+  /* ── Build slug→{title,diff,cat} map from the live DOM ─────────────── */
+  function buildSlugMeta() {
+    const map = {};
+    document.querySelectorAll('.lc150-cat').forEach(cat => {
+      const catName = cat.querySelector('.lc150-cat__name')?.textContent.trim() || '';
+      cat.querySelectorAll('[data-slug]').forEach(row => {
+        const slug    = row.dataset.slug;
+        const title   = row.querySelector('.lc150-title-link')?.textContent.trim() || slug;
+        const badge   = row.querySelector('.badge')?.textContent.trim() || '';
+        const diff    = badge === 'E' ? 'easy' : badge === 'M' ? 'medium' : 'hard';
+        map[slug] = { title, diff, cat: catName };
+      });
+    });
+    return map;
+  }
+
+  /* ── Render "My Solved" summary grouped by category ─────────────────── */
+  function renderSolvedSummary() {
+    const section = document.getElementById('lc150-solved-section');
+    const body    = document.getElementById('lc150-solved-body');
+    const label   = document.getElementById('lc150-solved-label');
+    if (!section || !body) return;
+
+    const meta  = buildSlugMeta();
+    const byCat = {};
+
+    for (const [slug, val] of Object.entries(solvedState)) {
+      if (!val) continue;
+      const info = meta[slug];
+      if (!info) continue;
+      if (!byCat[info.cat]) byCat[info.cat] = [];
+      byCat[info.cat].push({ slug, ...info });
+    }
+
+    const cats = Object.keys(byCat).sort();
+    if (!cats.length) { section.style.display = 'none'; return; }
+
+    const totalSolved = cats.reduce((n, c) => n + byCat[c].length, 0);
+    if (label) label.textContent = totalSolved + ' problem' + (totalSolved === 1 ? '' : 's') + ' solved';
+
+    body.innerHTML = cats.map(cat =>
+      `<div class="solved-cat-group">
+        <span class="solved-cat-label">${escHtml(cat)}</span>
+        ${byCat[cat].map(p =>
+          `<a class="solved-chip solved-chip--${p.diff}" href="leetcode/top-interview-150/${p.slug}" title="${escHtml(p.title)}">${escHtml(p.title)}</a>`
+        ).join('')}
+      </div>`
+    ).join('');
+
+    section.style.display = 'block';
+  }
+
+  function escHtml(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  /* ── Sync from LeetCode ─────────────────────────────────────────────── */
+  async function syncFromLeetCode() {
+    const btn = document.getElementById('lc150-sync-btn');
+    if (btn) { btn.classList.add('is-syncing'); btn.innerHTML = btn.innerHTML.replace('Sync LeetCode', 'Syncing…'); }
+
+    try {
+      const res  = await fetch('/api/sync-leetcode', { cache: 'no-store' });
+      const data = await res.json();
+
+      if (!res.ok) {
+        const msg = data.error || `HTTP ${res.status}`;
+        const help = data.help ? '\n\n' + data.help : '';
+        showToast('Sync failed: ' + msg + help, 'error');
+        return;
+      }
+
+      // Merge into local solvedState and re-apply to DOM
+      if (data.state) {
+        solvedState = data.state;
+        try { localStorage.setItem(LOCAL_KEY, JSON.stringify(solvedState)); } catch {}
+        document.querySelectorAll('[data-slug]').forEach(row => {
+          applyRowStyle(row, !!solvedState[row.dataset.slug]);
+        });
+        updateProgress();
+        renderSolvedSummary();
+      }
+
+      const msg = data.newlySolved > 0
+        ? `Synced! ${data.newlySolved} new problem${data.newlySolved === 1 ? '' : 's'} marked solved (${data.total} accepted on LeetCode).`
+        : `Up to date — ${data.total} accepted on LeetCode, ${data.solvedInList || 0} in this list.`;
+      showToast(msg);
+    } catch (err) {
+      showToast('Sync error: ' + err.message, 'error');
+    } finally {
+      if (btn) { btn.classList.remove('is-syncing'); btn.innerHTML = btn.innerHTML.replace('Syncing…', 'Sync LeetCode'); }
+    }
+  }
+
+  function showToast(msg, type) {
+    const toast = document.getElementById('toast');
+    if (!toast) return;
+    toast.textContent = msg;
+    toast.className   = 'toast toast--show' + (type === 'error' ? ' toast--error' : '');
+    clearTimeout(showToast._t);
+    showToast._t = setTimeout(() => { toast.className = 'toast'; }, type === 'error' ? 6000 : 3500);
+  }
+
   /* ── Main init ──────────────────────────────────────────────────────── */
   async function init() {
     await loadSolvedState();
@@ -183,6 +286,9 @@ const LC150 = (() => {
 
     // Inject progress bar into stats strip if it exists
     injectProgressBar();
+
+    // Render My Solved section
+    renderSolvedSummary();
   }
 
   function injectProgressBar() {
@@ -202,7 +308,7 @@ const LC150 = (() => {
     stats.after(wrap);
   }
 
-  return { init };
+  return { init, syncFromLeetCode };
 })();
 
 /* ── Auto-init when DOM is ready ─────────────────────────────────────── */

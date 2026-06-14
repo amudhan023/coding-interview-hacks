@@ -18,7 +18,7 @@ const express = require('express');
 const fs      = require('fs');
 const path    = require('path');
 const { parseAcceptedSlugs, parseProblemList, diffProblems, categoryForProblem, mergeSolvedState } = require('./lib/lc-sync');
-const { loginLeetCode } = require('./lib/lc-auth');
+const { getLeetCodeSession } = require('./lib/lc-chrome-session');
 
 const app         = express();
 const PORT        = process.env.PORT || 3000;
@@ -86,24 +86,21 @@ async function fetchAccepted(session) {
   return response.json();
 }
 
-const hasCredentials = !!(process.env.LEETCODE_EMAIL && process.env.LEETCODE_PASSWORD);
-
 /* ── API: GET /api/sync-leetcode → { autoAuth } ────────────── */
 app.get('/api/sync-leetcode', (req, res) => {
-  res.json({ autoAuth: hasCredentials });
+  // Always true locally — we can read Chrome cookies
+  res.json({ autoAuth: true });
 });
 
 /* ── API: POST /api/sync-leetcode ──────────────────────────── */
 app.post('/api/sync-leetcode', async (req, res) => {
-  // Session priority: body → credentials auto-login → static env var
+  // Session priority: body → Chrome cookies → static env var
   let session = (req.body && req.body.session) || process.env.LEETCODE_SESSION || '';
 
-  if (!session && hasCredentials) {
+  if (!session) {
     try {
-      session = await loginLeetCode(process.env.LEETCODE_EMAIL, process.env.LEETCODE_PASSWORD);
-    } catch (authErr) {
-      return res.status(401).json({ error: authErr.message, needsSession: true });
-    }
+      session = await getLeetCodeSession();
+    } catch { /* Chrome not installed or readable */ }
   }
 
   if (!session) {

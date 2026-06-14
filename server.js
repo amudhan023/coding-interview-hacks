@@ -18,7 +18,12 @@ const express = require('express');
 const fs      = require('fs');
 const path    = require('path');
 const { parseAcceptedSlugs, parseProblemList, diffProblems, categoryForProblem, mergeSolvedState } = require('./lib/lc-sync');
-const { getLeetCodeSession } = require('./lib/lc-chrome-session');
+const {
+  getAuthenticatedSession,
+  invalidateSession,
+  AuthenticationFailedError,
+  CaptchaDetectedError,
+} = require('./lib/lc-playwright-session');
 
 const app         = express();
 const PORT        = process.env.PORT || 3000;
@@ -86,21 +91,31 @@ async function fetchAccepted(session) {
   return response.json();
 }
 
+const hasCredentials = !!(process.env.LEETCODE_EMAIL && process.env.LEETCODE_PASSWORD);
+
 /* ── API: GET /api/sync-leetcode → { autoAuth } ────────────── */
 app.get('/api/sync-leetcode', (req, res) => {
-  // Always true locally — we can read Chrome cookies
-  res.json({ autoAuth: true });
+  res.json({ autoAuth: hasCredentials });
 });
 
 /* ── API: POST /api/sync-leetcode ──────────────────────────── */
 app.post('/api/sync-leetcode', async (req, res) => {
-  // Session priority: body → Chrome cookies → static env var
+  // Session priority: explicit body → Playwright auto-login → static env var
   let session = (req.body && req.body.session) || process.env.LEETCODE_SESSION || '';
 
   if (!session) {
     try {
-      session = await getLeetCodeSession();
-    } catch { /* Chrome not installed or readable */ }
+      const auth = await getAuthenticatedSession();
+      session = auth.leetcode_session;
+    } catch (err) {
+      if (err instanceof CaptchaDetectedError) {
+        return res.status(503).json({ error: err.message, captcha: true });
+      }
+      if (err instanceof AuthenticationFailedError) {
+        return res.status(401).json({ error: err.message, needsSession: true });
+      }
+      return res.status(401).json({ error: err.message, needsSession: true });
+    }
   }
 
   if (!session) {
@@ -118,6 +133,8 @@ app.post('/api/sync-leetcode', async (req, res) => {
     const solvedInList = Object.values(merged).filter(Boolean).length;
     res.json({ ok: true, total, newlySolved, solvedInList, state: merged });
   } catch (err) {
+    // If the session was stale, invalidate so next request re-auths
+    if (err.status === 401) invalidateSession();
     const status = err.status === 401 ? 401 : 502;
     res.status(status).json({ error: err.message });
   }
